@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Component Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { border: 2px solid #ccc; margin: 10px 0; padding: 10px; }
+        .test-section h3 { color: #333; margin-top: 0; }
+    </style>
+</head>
+<body>
+    <h1>Component Loading Test</h1>
+    
+    <div class="test-section">
+        <h3>1. Navbar Component</h3>
+        <div id="test-navbar"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Category Component</h3>
+        <div id="test-category"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Deal Component</h3>
+        <div id="test-deal"></div>
+    </div>
+
+    <script>
+        const testComponents = {
+            'navbar.html': 'test-navbar',
+            'shopbycategory.html': 'test-category',
+            'dealofday.html': 'test-deal'
+        };
+
+        Object.entries(testComponents).forEach(([file, containerId]) => {
+            fetch(file)
+                .then(response => response.ok ? response.text() : Promise.reject(`Failed: ${response.status}`))
+                .then(data => {
+                    document.getElementById(containerId).innerHTML = data;
+                    console.log(`✓ Loaded ${file}`);
+                })
+                .catch(error => {
+                    document.getElementById(containerId).innerHTML = `<p style="color:red;">Error: ${error}</p>`;
+                    console.error(`✗ Failed ${file}:`, error);
+                });
+        });
+    </script>
+</body>
+</html>

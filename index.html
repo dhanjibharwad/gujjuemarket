@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Fashi Template">
+  <meta name="keywords" content="Fashi, unica, creative, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Gujju E Market</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+  <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+  <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+  <!-- Page Preloder -->
+  <div id="preloder">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header Section Begin -->
+  <div id="navbar"></div>
+  <!-- Header End -->
+
+  <!-- Hero Section Begin -->
+  <section class="hero-section">
+    <div class="hero-items owl-carousel">
+      <div class="single-hero-items set-bg" data-setbg="img/hero99.png">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5">
+              <span>Phones, Laptop</span>
+              <h1>Electronic Sales</h1>
+              <p>Discover new upcoming brands here only</p>
+              <a href="./shop.html" class="primary-btn">Shop Now</a>
+            </div>
+          </div>
+          <div class="off-card">
+            <h2>Sale <span>50%</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="single-hero-items set-bg" data-setbg="img/hero15.png">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5">
+              <span>IPhones,Laptops</span>
+              <h1>Upcoming Brands</h1>
+              <p>Search the market and make your first buy.</p>
+              <a href="./shop.html" class="primary-btn">Shop Now</a>
+            </div>
+          </div>
+          <div class="off-card">
+            <h2>Sale <span>70%</span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Hero Section End -->
+
+
+  <!-- Shop by Category Section Begin -->
+  <div id="category"></div>
+  <!-- Shop by Category Section End -->
+
+
+
+  <!-- Deal Of The Week Section Begin-->
+  <div id="dealofd"></div>
+  <!-- Deal Of The Week Section End -->
+
+
+  <!-- Recently Viewed Section Begin -->
+  <div id="recently-viewed"></div>
+  <!-- Recently Viewed Section End -->
+
+
+  <!-- Women Banner Section Begin -->
+  <div id="women"></div>
+  <!-- Women Banner Section End -->
+
+
+
+  <!-- Man Banner Section Begin -->
+  <div id="men"></div>
+  <!-- Man Banner Section End -->
+
+
+
+  <!-- Electronic Section Begin -->
+  <div id="electronics"></div>
+  <!-- Electronic Section End -->
+
+
+  <!-- Partner Logo Section Begin -->
+  <div id="logosec"></div>
+  <!-- Partner Logo Section End -->
+
+
+
+  <!-- Footer Section Begin -->
+  <div id="footer"></div>
+  <!-- Footer Section End -->
+
+
+
+
+  <!-- Js Plugins -->
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/jquery.nice-select.min.js"></script>
+  <script src="js/jquery.zoom.min.js"></script>
+  <script src="js/jquery.dd.min.js"></script>
+  <script src="js/jquery.slicknav.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Component loading configuration
+      const components = {
+        "navbar.html": "navbar",
+        "dealofday.html": "dealofd",
+        "footer.html": "footer",
+        "recentviewed.html": "recently-viewed",
+        "womensection.html": "women",
+        "mensection.html": "men",
+        "electronic.html": "electronics",
+        "logosection.html": "logosec",
+        "shopbycategory.html": "category"
+      };
+
+      // Function to extract body content and clean it
+      function extractContent(html) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+
+        // Remove script tags to avoid conflicts
+        const scripts = tempDiv.querySelectorAll('script');
+        scripts.forEach(script => script.remove());
+
+        // Remove head tags and doctype
+        const heads = tempDiv.querySelectorAll('head');
+        heads.forEach(head => head.remove());
+
+        // Get body content or return all content if no body tag
+        const body = tempDiv.querySelector('body');
+        return body ? body.innerHTML : tempDiv.innerHTML;
+      }
+
+      // Load components sequentially
+      let loadedCount = 0;
+      const totalComponents = Object.keys(components).length;
+
+      function loadComponent(file, containerId) {
+        fetch(file)
+          .then(response => {
+            if (!response.ok) throw new Error(`Failed to load ${file}`);
+            return response.text();
+          })
+          .then(data => {
+            const cleanContent = extractContent(data);
+            document.getElementById(containerId).innerHTML = cleanContent;
+            loadedCount++;
+
+            // Initialize plugins after all components are loaded
+            if (loadedCount === totalComponents) {
+              initializePlugins();
+            }
+          })
+          .catch(error => {
+            console.error(`Error loading ${file}:`, error);
+            loadedCount++;
+            if (loadedCount === totalComponents) {
+              initializePlugins();
+            }
+          });
+      }
+
+      // Load all components
+      Object.entries(components).forEach(([file, containerId]) => {
+        loadComponent(file, containerId);
+      });
+
+      // Initialize all plugins after components load
+      function initializePlugins() {
+        // Initialize hero carousel
+        $('.hero-items').owlCarousel({
+          items: 1,
+          loop: true,
+          autoplay: true,
+          autoplayTimeout: 5000,
+          nav: false,
+          dots: true
+        });
+
+        // Initialize product sliders
+        $('.product-slider').owlCarousel({
+          items: 4,
+          loop: true,
+          autoplay: true,
+          autoplayTimeout: 3000,
+          nav: true,
+          dots: false,
+          responsive: {
+            0: { items: 1 },
+            576: { items: 2 },
+            768: { items: 3 },
+            992: { items: 4 }
+          }
+        });
+
+        // Initialize logo carousel
+        $('.logo-carousel').owlCarousel({
+          items: 5,
+          loop: true,
+          autoplay: true,
+          autoplayTimeout: 2000,
+          nav: false,
+          dots: false,
+          responsive: {
+            0: { items: 2 },
+            576: { items: 3 },
+            768: { items: 4 },
+            992: { items: 5 }
+          }
+        });
+
+        // Initialize nice select
+        $('select').niceSelect();
+
+        // Set background images
+        $('.set-bg').each(function () {
+          const bg = $(this).data('setbg');
+          $(this).css('background-image', 'url(' + bg + ')');
+        });
+
+        console.log('All components loaded and plugins initialized');
+      }
+    });
+  </script>
+</body>
+
+</html>

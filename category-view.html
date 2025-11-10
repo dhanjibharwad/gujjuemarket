@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Categories</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            padding: 60px 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .heading { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            font-size: 3rem; 
+            color: white; 
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            letter-spacing: -0.5px;
+        }
+        .categories { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+        .card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 0; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            overflow: hidden;
+            position: relative;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #F4631E, #ff8a50);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+        .card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25); 
+        }
+        .card img { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        .card-content { 
+            padding: 24px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card h3 { 
+            color: #2d3748; 
+            font-size: 1.25rem; 
+            font-weight: 600; 
+            margin: 0;
+            flex: 1;
+        }
+        .explore-btn { 
+            background: linear-gradient(135deg, #F4631E, #ff8a50); 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 25px; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(244, 99, 30, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .explore-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 99, 30, 0.4);
+        }
+        @media (max-width: 768px) { 
+            .heading { font-size: 2.5rem; }
+            .categories { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+            body { padding: 40px 15px; }
+        }
+        @media (max-width: 480px) { 
+            .heading { font-size: 2rem; }
+            .categories { grid-template-columns: 1fr; }
+            .card-content { flex-direction: column; gap: 15px; align-items: stretch; }
+            .explore-btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="heading">Explore Categories</h1>
+    
+    <div class="categories">
+        <div class="card">
+            <img src="https://www.stuff.tv/wp-content/uploads/sites/2/2025/04/Best-smartphones-on-sale-2025.jpg" alt="Smartphones">
+            <div class="card-content">
+                <h3>Smartphones</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://media.product.which.co.uk/prod/images/ar_2to1_1500x750/22a475e555d7-best-laptop-deals.jpg" alt="Laptop">
+            <div class="card-content">
+                <h3>Laptop</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/mhl-mens-cloth-huckberry-749-67c1ded533637.jpg?crop=0.213xw:0.426xh;0.402xw,0.135xh&resize=1120:*" alt="Mens Cloth">
+            <div class="card-content">
+                <h3>Mens Cloth</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://asset7.ckassets.com/blog/wp-content/uploads/sites/5/2021/12/Womens-Clothing.jpg" alt="Womens Cloth">
+            <div class="card-content">
+                <h3>Womens Cloth</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://5.imimg.com/data5/SELLER/Default/2023/1/SM/GS/DW/44069440/acce.png" alt="Laptop Accessories">
+            <div class="card-content">
+                <h3>Laptop Accessories</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://mate.net.in/public/uploads/all/UsReqZvujmEjMUb27qlTtRcCG8Pf18SyULO4HW7U.jpg" alt="Mobile Accessories">
+            <div class="card-content">
+                <h3>Mobile Accessories</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://flyinglocksmiths.com/wp-content/smush-webp/TFL_blog_security_cameras-e1557770076716.jpg.webp" alt="CCTV Cameras">
+            <div class="card-content">
+                <h3>CCTV Cameras</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://m.media-amazon.com/images/I/81FzSswwCVL._UF1000,1000_QL80_.jpg" alt="Speakers">
+            <div class="card-content">
+                <h3>Speakers</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://www.livemint.com/lm-img/img/2024/04/01/1600x900/81scfbSX679_1711967166156_1711967175333.jpg" alt="Printer">
+            <div class="card-content">
+                <h3>Printer</h3>
+                <button class="explore-btn">Explore →</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

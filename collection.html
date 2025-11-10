@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection - Gujjue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .banner {
+            background: linear-gradient(135deg, #ff1493, #ff6347, #ffa500);
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            color: white;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.3"/><circle cx="80" cy="30" r="1" fill="yellow" opacity="0.5"/><circle cx="60" cy="70" r="1.5" fill="white" opacity="0.4"/><circle cx="30" cy="80" r="1" fill="yellow" opacity="0.6"/></svg>') repeat;
+        }
+
+        .festival-info {
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .festival-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 50%;
+            text-align: center;
+        }
+
+        .festival-badge h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .festival-badge p {
+            font-size: 14px;
+        }
+
+        .prime-section {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .prime-btn {
+            background: #ff9900;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .early-deals {
+            z-index: 2;
+        }
+
+        .early-deals h2 {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .early-deals h3 {
+            font-size: 24px;
+            color: #ffff00;
+        }
+
+        .early-deals p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .collections-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .collection-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .product-item {
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            background: #f9f9f9;
+            transition: background 0.3s ease;
+        }
+
+        .product-item:hover {
+            background: #e9e9e9;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            background: #ddd;
+            border-radius: 4px;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .product-name {
+            font-size: 12px;
+            color: #333;
+        }
+
+        .explore-link {
+            color: #007185;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .explore-link:hover {
+            text-decoration: underline;
+        }
+
+        .headphones-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .brand-item {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .brand-logo {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .brand-price {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .signin-card {
+            text-align: center;
+        }
+
+        .signin-btn {
+            background: #ffd814;
+            color: #333;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .product-showcase {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .showcase-image {
+            width: 120px;
+            height: 120px;
+            background: #ddd;
+            border-radius: 8px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .product-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .product-rating {
+            color: #ff9900;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #B12704;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    
+    <!-- Banner Section -->
+    <div class="banner">
+        <div class="festival-info">
+            <div class="festival-badge">
+                <h3>Gujju E-Market Sales</h3>
+                <p>Starts 13th Sept</p>
+            </div>
+            <div class="prime-section">
+                <p>Starts 24 hours early for Prime members</p>
+                <button class="prime-btn">Join Prime now</button>
+            </div>
+        </div>
+        <div class="early-deals">
+            <h2>Early Deals</h2>
+            <h3>Live now</h3>
+            <p>Grab festive deals before the sale</p>
+        </div>
+    </div>
+
+    <!-- Collections Container -->
+    <div class="collections-container">
+        <!-- Home & Lifestyle Collection -->
+        <div class="collection-card">
+            <h3 class="card-title">Revamp your home in style</h3>
+            <div class="products-grid">
+                <a href="/collections/cushions-bedsheets" class="product-item">
+                    <div class="product-image">Cushion Image</div>
+                    <div class="product-name">Cushion covers, bedsheets & more</div>
+                </a>
+                <a href="/collections/figurines-vases" class="product-item">
+                    <div class="product-image">Figurine Image</div>
+                    <div class="product-name">Figurines, vases & more</div>
+                </a>
+                <a href="/collections/home-storage" class="product-item">
+                    <div class="product-image">Storage Image</div>
+                    <div class="product-name">Home storage</div>
+                </a>
+                <a href="/collections/lighting" class="product-item">
+                    <div class="product-image">Lighting Image</div>
+                    <div class="product-name">Lighting solutions</div>
+                </a>
+            </div>
+            <a href="/collections/home-lifestyle" class="explore-link">Explore all</a>
+        </div>
+
+        <!-- Appliances Collection -->
+        <div class="collection-card">
+            <h3 class="card-title">Appliances for your home | Up to 55% off</h3>
+            <div class="products-grid">
+                <a href="/collections/air-conditioners" class="product-item">
+                    <div class="product-image">AC Image</div>
+                    <div class="product-name">Air conditioners</div>
+                </a>
+                <a href="/collections/refrigerators" class="product-item">
+                    <div class="product-image">Fridge Image</div>
+                    <div class="product-name">Refrigerators</div>
+                </a>
+                <a href="/collections/microwaves" class="product-item">
+                    <div class="product-image">Microwave Image</div>
+                    <div class="product-name">Microwaves</div>
+                </a>
+                <a href="/collections/washing-machines" class="product-item">
+                    <div class="product-image">Washer Image</div>
+                    <div class="product-name">Washing machines</div>
+                </a>
+            </div>
+            <a href="/collections/appliances" class="explore-link">See more</a>
+        </div>
+
+        <!-- Headphones Collection -->
+        <div class="collection-card">
+            <h3 class="card-title">Starting ₹149 | Headphones</h3>
+            <div class="headphones-grid">
+                <a href="/collections/boat-headphones" class="brand-item">
+                    <div class="brand-logo">boAt</div>
+                    <div class="brand-price">Starting ₹249 | boAt</div>
+                </a>
+                <a href="/collections/boult-headphones" class="brand-item">
+                    <div class="brand-logo">BOULT</div>
+                    <div class="brand-price">Starting ₹349 | boult</div>
+                </a>
+                <a href="/collections/noise-headphones" class="brand-item">
+                    <div class="brand-logo">noise</div>
+                    <div class="brand-price">Starting ₹649 | Noise</div>
+                </a>
+                <a href="/collections/zebronics-headphones" class="brand-item">
+                    <div class="brand-logo">ZEBRONICS</div>
+                    <div class="brand-price">Starting ₹149 | Zebronics</div>
+                </a>
+            </div>
+            <a href="/collections/headphones" class="explore-link">See all offers</a>
+        </div>
+
+        <!-- Sign In Card -->
+        <div class="collection-card signin-card">
+            <h3 class="card-title">Sign in for your best experience</h3>
+            <button class="signin-btn">Sign in securely</button>
+            <div class="product-showcase">
+                <div class="showcase-image">Helmet Image</div>
+                <div class="product-title">Steelbird SBA-1 Cesar ISI Certified Full...</div>
+                <div class="product-rating">★★★★☆ 1,749</div>
+                <div class="product-price">₹2,099⁰⁰</div>
+            </div>
+        </div>
+
+        <!-- Electronics Collection -->
+        <!-- <div class="collection-card">
+            <h3 class="card-title">Electronics & Gadgets | Up to 70% off</h3>
+            <div class="products-grid">
+                <a href="/collections/smartphones" class="product-item">
+                    <div class="product-image">Phone Image</div>
+                    <div class="product-name">Smartphones</div>
+                </a>
+                <a href="/collections/laptops" class="product-item">
+                    <div class="product-image">Laptop Image</div>
+                    <div class="product-name">Laptops</div>
+                </a>
+                <a href="/collections/tablets" class="product-item">
+                    <div class="product-image">Tablet Image</div>
+                    <div class="product-name">Tablets</div>
+                </a>
+                <a href="/collections/smartwatches" class="product-item">
+                    <div class="product-image">Watch Image</div>
+                    <div class="product-name">Smart watches</div>
+                </a>
+
+            </div>
+            <a href="/collections/electronics" class="explore-link">See all electronics</a>
+        </div> -->
+
+        <div class="collection-card">
+  <h3 class="card-title">Electronics & Gadgets | Up to 70% off</h3>
+  <div class="products-grid">
+    <a href="/collections/smartphones" class="product-item">
+      <div class="product-image">
+        <img src="img/phone1.jpg" alt="Smartphones">
+      </div>
+      <div class="product-name">Smartphones</div>
+    </a>
+    <a href="/collections/laptops" class="product-item">
+      <div class="product-image">
+        <img src="img/phone1.jpg" alt="Laptops">
+      </div>
+      <div class="product-name">Laptops</div>
+    </a>
+    <a href="/collections/tablets" class="product-item">
+      <div class="product-image">
+        <img src="img/phone1.jpg" alt="Tablets">
+      </div>
+      <div class="product-name">Tablets</div>
+    </a>
+    <a href="/collections/smartwatches" class="product-item">
+      <div class="product-image">
+        <img src="img/phone1.jpg" alt="Smart Watches">
+      </div>
+      <div class="product-name">Smart Watches</div>
+    </a>
+  </div>
+  <a href="/collections/electronics" class="explore-link">See all electronics</a>
+</div>
+
+
+        <!-- Fashion Collection -->
+        <div class="collection-card">
+            <h3 class="card-title">Fashion & Lifestyle | Starting ₹199</h3>
+            <div class="products-grid">
+                <a href="/collections/mens-clothing" class="product-item">
+                    <div class="product-image">Men's Wear</div>
+                    <div class="product-name">Men's clothing</div>
+                </a>
+                <a href="/collections/womens-clothing" class="product-item">
+                    <div class="product-image">
+                        <img src="img/select-product-2.jpg" alt="women clothing">
+                    </div>
+                    <div class="product-name">Women's clothing</div>
+                </a>
+                <a href="/collections/footwear" class="product-item">
+                    <div class="product-image">Shoes Image</div>
+                    <div class="product-name">Footwear</div>
+                </a>
+                <a href="/collections/bags" class="product-item">
+                    <div class="product-image">Bags Image</div>
+                    <div class="product-name">Bags & luggage</div>
+                </a>
+            </div>
+            <a href="/collections/fashion" class="explore-link">Explore fashion</a>
+        </div>
+
+        <!-- Books & Media Collection -->
+        <div class="collection-card">
+            <h3 class="card-title">Books & Media | Starting ₹99</h3>
+            <div class="products-grid">
+                <a href="/collections/books" class="product-item">
+                    <div class="product-image">Books Image</div>
+                    <div class="product-name">Books</div>
+                </a>
+                <a href="/collections/ebooks" class="product-item">
+                    <div class="product-image">E-books Image</div>
+                    <div class="product-name">E-books</div>
+                </a>
+                <a href="/collections/audiobooks" class="product-item">
+                    <div class="product-image">Audiobooks Image</div>
+                    <div class="product-name">Audiobooks</div>
+                </a>
+                <a href="/collections/magazines" class="product-item">
+                    <div class="product-image">Magazines Image</div>
+                    <div class="product-name">Magazines</div>
+                </a>
+            </div>
+            <a href="/collections/books-media" class="explore-link">Explore all books</a>
+        </div>
+
+        <!-- Sports & Fitness Collection -->
+        <div class="collection-card">
+            <h3 class="card-title">Sports & Fitness | Up to 60% off</h3>
+            <div class="products-grid">
+                <a href="/collections/gym-equipment" class="product-item">
+                    <div class="product-image">Gym Equipment</div>
+                    <div class="product-name">Gym equipment</div>
+                </a>
+                <a href="/collections/sports-wear" class="product-item">
+                    <div class="product-image">Sports Wear</div>
+                    <div class="product-name">Sports wear</div>
+                </a>
+                <a href="/collections/outdoor-gear" class="product-item">
+                    <div class="product-image">Outdoor Gear</div>
+                    <div class="product-name">Outdoor gear</div>
+                </a>
+                <a href="/collections/supplements" class="product-item">
+                    <div class="product-image">Supplements</div>
+                    <div class="product-name">Supplements</div>
+                </a>
+            </div>
+            <a href="/collections/sports-fitness" class="explore-link">See all sports</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+   
+</body>
+</html>

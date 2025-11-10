@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 12px; padding: 24px; }
+        h2 { margin-bottom: 24px; color: #1d1d1f; font-size: 24px; }
+        .filters { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+        select, input { padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; }
+        select { cursor: pointer; min-width: 180px; }
+        input { flex: 1; min-width: 200px; }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 16px; flex-wrap: wrap; }
+        .toolbar-right { display: flex; gap: 12px; align-items: center; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+        .btn-primary { background: #FF6B35; color: white; }
+        .btn-primary:hover { background: #FF6B35; }
+        .btn-secondary { background: white; border: 1px solid #d2d2d7; color: #1d1d1f; }
+        .btn-secondary:hover { background: #f5f5f7; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; color: #86868b; font-size: 12px; font-weight: 600; text-transform: uppercase; border-bottom: 1px solid #e5e5ea; }
+        td { padding: 16px 12px; border-bottom: 1px solid #f5f5f7; vertical-align: middle; }
+        .product-info { display: flex; align-items: center; gap: 12px; }
+        .product-img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: #f5f5f7; }
+        .product-details h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #1d1d1f; }
+        .product-details p { font-size: 12px; color: #86868b; }
+        .category { display: flex; align-items: center; gap: 8px; }
+        .category-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .toggle { position: relative; width: 44px; height: 24px; background: #d2d2d7; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        .toggle.active { background: #FF6B35; }
+        .toggle::after { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; background: white; top: 2px; left: 2px; transition: 0.3s; }
+        .toggle.active::after { left: 22px; }
+        .status { padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; display: inline-block; }
+        .status-publish { background: #d1f4e0; color: #0d6832; }
+        .status-scheduled { background: #fff4e5; color: #b85c00; }
+        .status-inactive { background: #ffe5e5; color: #c41e3a; }
+        .actions { display: flex; gap: 8px; }
+        .icon-btn { width: 32px; height: 32px; border: none; background: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .icon-btn:hover { background: #f5f5f7; }
+        .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .pagination-info { font-size: 14px; color: #86868b; }
+        .pagination-btns { display: flex; gap: 8px; }
+        .page-btn { width: 36px; height: 36px; border: 1px solid #d2d2d7; background: white; border-radius: 6px; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .page-btn:hover { background: #f5f5f7; }
+        .page-btn.active { background: #FF6B35; color: white; border-color: #FF6B35; }
+        input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Filter</h2>
+        <div class="filters">
+            <select id="statusFilter">
+                <option value="">Status</option>
+                <option value="publish">Publish</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="inactive">Inactive</option>
+            </select>
+            <select id="categoryFilter">
+                <option value="">Category</option>
+                <option value="shoes">Shoes</option>
+                <option value="electronics">Electronics</option>
+                <option value="accessories">Accessories</option>
+                <option value="household">Household</option>
+            </select>
+            <select id="stockFilter">
+                <option value="">Stock</option>
+                <option value="in">In Stock</option>
+                <option value="low">Low Stock</option>
+                <option value="out">Out of Stock</option>
+            </select>
+        </div>
+
+        <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="Search Product">
+            <div class="toolbar-right">
+                <select style="min-width: 60px;">
+                    <option>7</option>
+                    <option>10</option>
+                    <option>25</option>
+                    <option>50</option>
+                </select>
+                <button class="btn btn-secondary">↓ Export</button>
+                <button class="btn btn-primary">+ Add Product</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>PRODUCT</th>
+                    <th>CATEGORY</th>
+                    <th>STOCK</th>
+                    <th>SKU</th>
+                    <th>PRICE</th>
+                    <th>QTY</th>
+                    <th>STATUS</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody id="productTable"></tbody>
+        </table>
+
+        <div class="pagination">
+            <div class="pagination-info">Showing 1 to 7 of 100 entries</div>
+            <div class="pagination-btns">
+                <button class="page-btn">«</button>
+                <button class="page-btn">‹</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">5</button>
+                <button class="page-btn">...</button>
+                <button class="page-btn">15</button>
+                <button class="page-btn">›</button>
+                <button class="page-btn">»</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { name: "Air Jordan", desc: "Air Jordan is a line of basketball shoes produced by Nike", category: "Shoes", icon: "👟", color: "#d1f4e0", stock: false, sku: "31063", price: "$125", qty: 942, status: "inactive" },
+            { name: "Amazon Fire TV", desc: "4K UHD smart TV, stream live TV without cable", category: "Electronics", icon: "📺", color: "#ffe5e5", stock: false, sku: "5829", price: "$263.49", qty: 587, status: "scheduled" },
+            { name: "Apple iPad", desc: "10.2-inch Retina Display, 64GB", category: "Electronics", icon: "📱", color: "#ffe5e5", stock: true, sku: "35946", price: "$248.39", qty: 468, status: "publish" },
+            { name: "Apple Watch Series 7", desc: "Starlight Aluminum Case with Starlight Sport Band.", category: "Accessories", icon: "⌚", color: "#f5f5f7", stock: false, sku: "46658", price: "$799", qty: 851, status: "scheduled" },
+            { name: "BANGE Anti Theft Backpack", desc: "Smart Business Laptop Fits 15.6 Inch Notebook", category: "Accessories", icon: "🎒", color: "#f5f5f7", stock: true, sku: "41867", price: "$79.99", qty: 519, status: "inactive" },
+            { name: "Canon EOS Rebel T7", desc: "18-55mm Lens | Built-in Wi-Fi | 24.1 MP CMOS Sensor", category: "Electronics", icon: "📷", color: "#ffe5e5", stock: true, sku: "63474", price: "$399", qty: 810, status: "scheduled" },
+            { name: "Dohioue Wall Clock", desc: "Modern 10 Inch Battery Operated Wall Clocks", category: "Household", icon: "🏠", color: "#fff4e5", stock: false, sku: "29540", price: "$16.34", qty: 804, status: "publish" }
+        ];
+
+        const tbody = document.getElementById('productTable');
+        
+        function renderProducts(data = products) {
+            tbody.innerHTML = data.map(p => `
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <div class="product-info">
+                            <div class="product-img"></div>
+                            <div class="product-details">
+                                <h4>${p.name}</h4>
+                                <p>${p.desc}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="category">
+                            <div class="category-icon" style="background: ${p.color}">${p.icon}</div>
+                            ${p.category}
+                        </div>
+                    </td>
+                    <td><div class="toggle ${p.stock ? 'active' : ''}" onclick="this.classList.toggle('active')"></div></td>
+                    <td>${p.sku}</td>
+                    <td>${p.price}</td>
+                    <td>${p.qty}</td>
+                    <td><span class="status status-${p.status}">${p.status.charAt(0).toUpperCase() + p.status.slice(1)}</span></td>
+                    <td>
+                        <div class="actions">
+                            <button class="icon-btn">✏️</button>
+                            <button class="icon-btn">⋮</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(val) || 
+                p.desc.toLowerCase().includes(val)
+            );
+            renderProducts(filtered);
+        });
+
+        document.getElementById('statusFilter').addEventListener('change', filterProducts);
+        document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+
+        function filterProducts() {
+            const status = document.getElementById('statusFilter').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value.toLowerCase();
+            
+            const filtered = products.filter(p => {
+                const matchStatus = !status || p.status === status;
+                const matchCategory = !category || p.category.toLowerCase() === category;
+                return matchStatus && matchCategory;
+            });
+            renderProducts(filtered);
+        }
+
+        document.getElementById('selectAll').addEventListener('change', (e) => {
+            document.querySelectorAll('tbody input[type="checkbox"]').forEach(cb => cb.checked = e.target.checked);
+        });
+
+        renderProducts();
+    </script>
+</body>
+</html>

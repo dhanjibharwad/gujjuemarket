@@ -8,83 +8,70 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-orange: #FF6B35;
-            --secondary-orange: #F7931E;
-            --light-orange: #FFF4EF;
-            --dark-gray: #5e5873;
-            --medium-gray: #6e6b7b;
-            --light-gray: #b4b7bd;
+            --primary: #FF6B35;
+            --secondary: #F7931E;
+            --light: #FFF4EF;
+            --dark: #5e5873;
+            --medium: #6e6b7b;
+            --gray: #b4b7bd;
+            --sidebar-width: 280px;
+            --sidebar-collapsed: 80px;
         }
 
+        * { box-sizing: border-box; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f8f9fa;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
             margin: 0;
-            padding: 0;
+            overflow-x: hidden;
         }
 
+        /* Sidebar */
         .sidebar {
-            height: 100vh;
-            background-color: #fff;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.08);
-            width: 280px;
             position: fixed;
             top: 0;
             left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: #fff;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.08);
             overflow-y: auto;
-            overflow-x: hidden;
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
         }
 
-        .sidebar.collapsed {
-            width: 80px;
-        }
+        .sidebar.collapsed { width: var(--sidebar-collapsed); }
+        .sidebar::-webkit-scrollbar { width: 2px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--gray); border-radius: 3px; }
 
-        .sidebar::-webkit-scrollbar {
-            width: 2px;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--light-gray);
-            border-radius: 3px;
-        }
-
+        /* Brand */
         .brand-logo {
-            padding: 1.5rem 1.25rem;
-            border-bottom: 1px solid #f0f0f0;
             display: flex;
             align-items: center;
             justify-content: space-between;
             min-height: 80px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1.5rem 1.25rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s;
         }
 
-        .sidebar.collapsed .brand-logo {
-            justify-content: center;
-            padding: 1.5rem 0.5rem;
-        }
+        .sidebar.collapsed .brand-logo { justify-content: center; padding: 1.5rem 0.5rem; }
 
         .brand-content {
             display: flex;
             align-items: center;
             overflow: hidden;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s;
         }
 
-        .sidebar.collapsed .brand-content {
-            opacity: 0;
-            width: 0;
-            height: 0;
-            overflow: hidden;
-        }
+        .sidebar.collapsed .brand-content { opacity: 0; width: 0; height: 0; }
 
         .brand-icon {
             min-width: 40px;
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -92,39 +79,25 @@
             color: white;
             font-size: 1.1rem;
             box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-            overflow: hidden;
         }
 
-        .brand-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .brand-text {
-            margin-left: 0.75rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--dark-gray);
-            white-space: nowrap;
-        }
+        .brand-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+        .brand-text { margin-left: 0.75rem; font-size: 1.1rem; font-weight: 700; color: var(--dark); white-space: nowrap; }
 
         .toggle-sidebar-btn {
             min-width: 32px;
             width: 32px;
             height: 32px;
-            background: var(--light-orange);
+            background: var(--light);
             border: none;
             border-radius: 8px;
-            color: var(--primary-orange);
+            color: var(--primary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             flex-shrink: 0;
-            position: relative;
         }
 
         .sidebar.collapsed .toggle-sidebar-btn {
@@ -134,78 +107,47 @@
             transform: translateX(-50%);
         }
 
-        .toggle-sidebar-btn:hover {
-            background: var(--primary-orange);
-            color: white;
-            transform: scale(1.1);
-        }
+        .toggle-sidebar-btn:hover { background: var(--primary); color: white; transform: scale(1.1); }
+        .sidebar.collapsed .toggle-sidebar-btn:hover { transform: translateX(-50%) scale(1.1); }
+        .toggle-sidebar-btn .fa-plus { transition: transform 0.3s; }
+        .sidebar.collapsed .toggle-sidebar-btn .fa-plus { transform: rotate(45deg); }
 
-        .sidebar.collapsed .toggle-sidebar-btn:hover {
-            transform: translateX(-50%) scale(1.1);
-        }
-
-        .toggle-sidebar-btn .fa-plus {
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar.collapsed .toggle-sidebar-btn .fa-plus {
-            transform: rotate(45deg);
-        }
-
+        /* Navigation */
         .nav-section-title {
             font-size: 0.7rem;
             font-weight: 700;
-            color: var(--light-gray);
+            color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.8px;
             padding: 1.5rem 1.25rem 0.5rem;
             white-space: nowrap;
-            overflow: hidden;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s;
         }
 
-        .sidebar.collapsed .nav-section-title {
-            opacity: 0;
-            padding: 1rem 0 0.25rem;
-            text-align: center;
-        }
+        .sidebar.collapsed .nav-section-title { opacity: 0; padding: 1rem 0 0.25rem; }
 
         .nav-link {
-            color: var(--medium-gray);
+            color: var(--medium);
             padding: 0.75rem 1.25rem;
-            border-radius: 0;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             text-decoration: none;
-            position: relative;
-            overflow: visible;
             border-left: 3px solid transparent;
         }
 
-        .nav-link:hover {
-            background: linear-gradient(90deg, var(--light-orange) 0%, transparent 100%);
-            color: var(--primary-orange);
-            border-left-color: var(--primary-orange);
+        .nav-link:hover,
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--light) 0%, transparent 100%);
+            color: var(--primary);
+            border-left-color: var(--primary);
         }
 
-        .nav-link.active {
-            background: linear-gradient(90deg, var(--light-orange) 0%, transparent 100%);
-            color: var(--primary-orange);
-            border-left-color: var(--primary-orange);
-            font-weight: 600;
-        }
+        .nav-link.active { font-weight: 600; }
 
         .sidebar.collapsed .nav-link {
             justify-content: center;
-            padding: 0.75rem 1.25rem;
-            border-left-color: transparent;
-            position: relative;
-        }
-
-        .sidebar.collapsed .nav-link:hover,
-        .sidebar.collapsed .nav-link.active {
-            border-left-color: transparent;
+            border-left-color: transparent !important;
         }
 
         .sidebar.collapsed .nav-link.dropdown-toggle-custom::before {
@@ -216,94 +158,45 @@
             transform: translateY(-50%);
             width: 4px;
             height: 4px;
-            background: var(--primary-orange);
+            background: var(--primary);
             border-radius: 50%;
             opacity: 0.6;
         }
 
-        .nav-link-content {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-
-        .nav-link i {
-            width: 20px;
-            min-width: 20px;
-            text-align: center;
-            margin-right: 0.75rem;
-            font-size: 1.1rem;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar.collapsed .nav-link i {
-            margin-right: 0;
-            font-size: 1.2rem;
-        }
-
-        .nav-link span {
-            white-space: nowrap;
-            opacity: 1;
-            transition: opacity 0.2s ease;
-        }
-
-        .sidebar.collapsed .nav-link span {
-            opacity: 0;
-            width: 0;
-            overflow: hidden;
-        }
+        .nav-link-content { display: flex; align-items: center; flex: 1; }
+        .nav-link i { width: 20px; min-width: 20px; text-align: center; margin-right: 0.75rem; font-size: 1.1rem; }
+        .sidebar.collapsed .nav-link i { margin-right: 0; font-size: 1.2rem; }
+        .nav-link span { white-space: nowrap; transition: opacity 0.2s; }
+        .sidebar.collapsed .nav-link span { opacity: 0; width: 0; overflow: hidden; }
 
         .arrow-icon {
             font-size: 0.75rem;
-            color: var(--light-gray);
-            transition: transform 0.3s ease, opacity 0.2s ease;
+            color: var(--gray);
+            transition: transform 0.3s, opacity 0.2s;
             margin-left: auto;
         }
 
-        .sidebar.collapsed .arrow-icon {
-            opacity: 0;
-            width: 0;
-        }
+        .sidebar.collapsed .arrow-icon { opacity: 0; width: 0; }
+        .arrow-icon.rotated { transform: rotate(90deg); }
 
-        .arrow-icon.rotated {
-            transform: rotate(90deg);
-        }
-
+        /* Dropdown */
         .dropdown-menu-custom {
-            background-color: #fafafa;
+            background: #fafafa;
             padding-left: 3rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s;
         }
 
-        .sidebar.collapsed .dropdown-menu-custom {
-            padding-left: 0;
-            display: none;
-        }
+        .sidebar.collapsed .dropdown-menu-custom { display: none; }
+        .dropdown-menu-custom.show { max-height: 500px; }
+        .dropdown-menu-custom .nav-link { padding: 0.5rem 1.25rem; font-size: 0.9rem; }
+        .dropdown-menu-custom .nav-link i { font-size: 0.5rem; }
 
-        .dropdown-menu-custom.show {
-            max-height: 500px;
-        }
-
-        .dropdown-menu-custom .nav-link {
-            padding: 0.5rem 1.25rem;
-            font-size: 0.9rem;
-        }
-
-        .sidebar.collapsed .dropdown-menu-custom .nav-link {
-            padding: 0.5rem 0;
-        }
-
-        .dropdown-menu-custom .nav-link i {
-            font-size: 0.5rem;
-            margin-right: 0.75rem;
-        }
-
-        /* Floating dropdown for collapsed sidebar */
+        /* Floating Dropdown */
         .floating-dropdown {
             position: fixed;
-            left: 80px;
+            left: var(--sidebar-collapsed);
             background: white;
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -312,64 +205,70 @@
             z-index: 2000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.15s ease, transform 0.15s ease;
+            transition: opacity 0.15s, transform 0.15s;
             display: none;
             transform: translateX(-10px);
         }
 
-        .floating-dropdown.show {
-            opacity: 1;
-            pointer-events: auto;
-            display: block;
-            transform: translateX(0);
-        }
-
-        .floating-dropdown .dropdown-item {
-            padding: 0.75rem 1.5rem;
-            color: var(--medium-gray);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            transition: all 0.15s ease;
-            cursor: pointer;
-            white-space: nowrap;
-            border-left: 3px solid transparent;
-        }
-
-        .floating-dropdown .dropdown-item:hover {
-            background: var(--light-orange);
-            color: var(--primary-orange);
-            border-left-color: var(--primary-orange);
-        }
-
-        .floating-dropdown .dropdown-item i {
-            font-size: 0.5rem;
-            margin-right: 0.75rem;
-            width: 12px;
-        }
+        .floating-dropdown.show { opacity: 1; pointer-events: auto; display: block; transform: translateX(0); }
 
         .floating-dropdown-title {
             padding: 0.5rem 1.5rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--light-gray);
+            color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border-bottom: 1px solid #f0f0f0;
             margin-bottom: 0.25rem;
         }
 
+        .floating-dropdown .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            color: var(--medium);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.15s;
+            cursor: pointer;
+            white-space: nowrap;
+            border-left: 3px solid transparent;
+        }
+
+        .floating-dropdown .dropdown-item:hover {
+            background: var(--light);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .floating-dropdown .dropdown-item i { font-size: 0.5rem; margin-right: 0.75rem; width: 12px; }
+
+        /* Tooltip */
+        .sidebar.collapsed .nav-link:not(.dropdown-toggle-custom):hover::after {
+            content: attr(data-title);
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            margin-left: 1rem;
+            font-size: 0.875rem;
+            z-index: 1000;
+        }
+
+        /* Main Content */
         .main-content {
-            margin-left: 280px;
+            margin-left: var(--sidebar-width);
             padding: 2rem;
             transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 100vh;
-            overflow-y: auto;
         }
 
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 80px;
-        }
+        .sidebar.collapsed ~ .main-content { margin-left: var(--sidebar-collapsed); }
 
         .page-header {
             margin-bottom: 2rem;
@@ -377,90 +276,23 @@
             border-bottom: 1px solid #dee2e6;
         }
 
-        .page-header h1 {
-            color: var(--dark-gray);
-            font-weight: 700;
-        }
+        .page-header h1 { color: var(--dark); font-weight: 700; }
 
         .card {
             border: none;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
 
-        .bg-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        }
+        .bg-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; }
+        .bg-success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important; }
+        .bg-warning { background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%) !important; }
+        .bg-info { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important; }
 
-        .bg-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
-        }
-
-        .bg-warning {
-            background: linear-gradient(135deg, var(--secondary-orange) 0%, var(--primary-orange) 100%) !important;
-        }
-
-        .bg-info {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
-        }
-
-        /* Tooltip for collapsed state */
-        .sidebar.collapsed .nav-link:not(.dropdown-toggle-custom) {
-            position: relative;
-        }
-
-        .sidebar.collapsed .nav-link:not(.dropdown-toggle-custom)::after {
-            content: attr(data-title);
-            position: absolute;
-            left: 100%;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--dark-gray);
-            color: white;
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            margin-left: 1rem;
-            font-size: 0.875rem;
-            z-index: 1000;
-        }
-
-        .sidebar.collapsed .nav-link:not(.dropdown-toggle-custom):hover::after {
-            opacity: 1;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.mobile-open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-
-            .mobile-menu-btn {
-                display: block !important;
-            }
-
-            .floating-dropdown {
-                display: none !important;
-            }
-        }
-
+        /* Mobile */
         .mobile-menu-btn {
             display: none;
             position: fixed;
@@ -473,8 +305,16 @@
             width: 48px;
             height: 48px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            color: var(--primary-orange);
+            color: var(--primary);
             font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.mobile-open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 1rem; }
+            .mobile-menu-btn { display: block !important; }
+            .floating-dropdown { display: none !important; }
         }
     </style>
 </head>
@@ -487,7 +327,7 @@
         <div class="brand-logo">
             <div class="brand-content">
                 <div class="brand-icon">
-                    <img src="img/lg.jpg" alt="Gujju E-Market Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <img src="img/lg.jpg" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <i class="fas fa-shopping-bag" style="display: none;"></i>
                 </div>
                 <span class="brand-text">Gujju E-Market</span>
@@ -515,22 +355,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
             <div class="dropdown-menu-custom" id="brandDropdown">
-                <a class="nav-link" href="#" data-title="List">
-                    <i class="far fa-circle"></i>
-                    <span>List</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Add">
-                    <i class="far fa-circle"></i>
-                    <span>Add</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Edit">
-                    <i class="far fa-circle"></i>
-                    <span>Edit</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Delete">
-                    <i class="far fa-circle"></i>
-                    <span>Delete</span>
-                </a>
+                <a class="nav-link" href="#" data-title="List"><i class="far fa-circle"></i><span>Available Brands</span></a>
+                <a class="nav-link" href="#" data-title="Add"><i class="far fa-circle"></i><span>Add Brands</span></a>
             </div>
 
             <a class="nav-link dropdown-toggle-custom" href="#" data-dropdown="categoryDropdown" data-title="Category">
@@ -541,22 +367,7 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
             <div class="dropdown-menu-custom" id="categoryDropdown">
-                <a class="nav-link" href="#" data-title="List">
-                    <i class="far fa-circle"></i>
-                    <span>List</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Add">
-                    <i class="far fa-circle"></i>
-                    <span>Add</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Edit">
-                    <i class="far fa-circle"></i>
-                    <span>Edit</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Delete">
-                    <i class="far fa-circle"></i>
-                    <span>Delete</span>
-                </a>
+                <a class="nav-link" href="#" data-title="List"><i class="far fa-circle"></i><span>Category List</span></a>
             </div>
 
             <a class="nav-link dropdown-toggle-custom" href="#" data-dropdown="subcategoryDropdown" data-title="Subcategory">
@@ -567,40 +378,22 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
             <div class="dropdown-menu-custom" id="subcategoryDropdown">
-                <a class="nav-link" href="#" data-title="List">
-                    <i class="far fa-circle"></i>
-                    <span>List</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Add">
-                    <i class="far fa-circle"></i>
-                    <span>Add</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Edit">
-                    <i class="far fa-circle"></i>
-                    <span>Edit</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Delete">
-                    <i class="far fa-circle"></i>
-                    <span>Delete</span>
-                </a>
+                <a class="nav-link" href="#" data-title="List"><i class="far fa-circle"></i><span>List</span></a>
+                <a class="nav-link" href="#" data-title="Add"><i class="far fa-circle"></i><span>Add</span></a>
+                <a class="nav-link" href="#" data-title="Edit"><i class="far fa-circle"></i><span>Edit</span></a>
+                <a class="nav-link" href="#" data-title="Delete"><i class="far fa-circle"></i><span>Delete</span></a>
             </div>
 
             <a class="nav-link dropdown-toggle-custom" href="#" data-dropdown="productDropdown" data-title="Add Product">
                 <div class="nav-link-content">
                     <i class="fas fa-box"></i>
-                    <span>Add Product</span>
+                    <span>Products</span>
                 </div>
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
             <div class="dropdown-menu-custom" id="productDropdown">
-                <a class="nav-link" href="#" data-title="List Products">
-                    <i class="far fa-circle"></i>
-                    <span>List Products</span>
-                </a>
-                <a class="nav-link" href="addproduct.html" data-title="Add New">
-                    <i class="far fa-circle"></i>
-                    <span>Add New</span>
-                </a>
+                <a class="nav-link" href="#" data-title="List Products"><i class="far fa-circle"></i><span>Product List</span></a>
+                <a class="nav-link" href="addproduct.html" data-title="Add New"><i class="far fa-circle"></i><span>Add New Product</span></a>
             </div>
 
             <a class="nav-link dropdown-toggle-custom" href="#" data-dropdown="couponDropdown" data-title="Product Coupon">
@@ -611,14 +404,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
             <div class="dropdown-menu-custom" id="couponDropdown">
-                <a class="nav-link" href="#" data-title="List">
-                    <i class="far fa-circle"></i>
-                    <span>List</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Add">
-                    <i class="far fa-circle"></i>
-                    <span>Add</span>
-                </a>
+                <a class="nav-link" href="#" data-title="List"><i class="far fa-circle"></i><span>List</span></a>
+                <a class="nav-link" href="#" data-title="Add"><i class="far fa-circle"></i><span>Add</span></a>
             </div>
 
             <a class="nav-link" href="#" data-title="Inventory Management">
@@ -638,14 +425,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
             <div class="dropdown-menu-custom" id="ordersDropdown">
-                <a class="nav-link" href="#" data-title="Order List">
-                    <i class="far fa-circle"></i>
-                    <span>Order List</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Order Details">
-                    <i class="far fa-circle"></i>
-                    <span>Order Details</span>
-                </a>
+                <a class="nav-link" href="#" data-title="Order List"><i class="far fa-circle"></i><span>Order List</span></a>
+                <a class="nav-link" href="#" data-title="Order Details"><i class="far fa-circle"></i><span>Order Details</span></a>
             </div>
 
             <a class="nav-link dropdown-toggle-custom" href="#" data-dropdown="returnsDropdown" data-title="Order Returns">
@@ -656,14 +437,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
             <div class="dropdown-menu-custom" id="returnsDropdown">
-                <a class="nav-link" href="#" data-title="Return List">
-                    <i class="far fa-circle"></i>
-                    <span>Return List</span>
-                </a>
-                <a class="nav-link" href="#" data-title="Return Details">
-                    <i class="far fa-circle"></i>
-                    <span>Return Details</span>
-                </a>
+                <a class="nav-link" href="#" data-title="Return List"><i class="far fa-circle"></i><span>Return List</span></a>
+                <a class="nav-link" href="#" data-title="Return Details"><i class="far fa-circle"></i><span>Return Details</span></a>
             </div>
 
             <div class="nav-section-title">CUSTOMER MANAGEMENT</div>
@@ -700,7 +475,6 @@
         </nav>
     </div>
 
-    <!-- Floating dropdown for collapsed sidebar -->
     <div class="floating-dropdown" id="floatingDropdown"></div>
 
     <div class="main-content">
@@ -744,7 +518,6 @@
                 </div>
             </div>
 
-            <!-- Additional content to demonstrate scrolling -->
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
@@ -779,7 +552,6 @@
                                             <td><span class="badge bg-warning">Pending</span></td>
                                             <td>2024-01-14</td>
                                         </tr>
-                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -845,238 +617,125 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('toggleSidebarBtn');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const floatingDropdown = document.getElementById('floatingDropdown');
+        const $ = (id) => document.getElementById(id);
+        const $$ = (sel) => document.querySelectorAll(sel);
+        
+        const sidebar = $('sidebar');
+        const floatingDropdown = $('floatingDropdown');
+        let hoverTimeout, currentLink, overFloat = false, overLink = false;
 
-        let currentHoverTimeout = null;
-        let currentDropdownLink = null;
-        let isOverFloatingDropdown = false;
-        let isOverSidebarLink = false;
-
-        toggleBtn.addEventListener('click', function(e) {
+        $('toggleSidebarBtn').onclick = (e) => {
             e.preventDefault();
             sidebar.classList.toggle('collapsed');
-            hideFloatingDropdown();
-            
-            // Close all expanded dropdowns when toggling
-            document.querySelectorAll('.dropdown-menu-custom').forEach(dropdown => {
-                dropdown.classList.remove('show');
-            });
-            document.querySelectorAll('.arrow-icon').forEach(arrow => {
-                arrow.classList.remove('rotated');
-            });
-        });
+            floatingDropdown.classList.remove('show');
+            $$('.dropdown-menu-custom').forEach(d => d.classList.remove('show'));
+            $$('.arrow-icon').forEach(a => a.classList.remove('rotated'));
+        };
 
-        mobileMenuBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('mobile-open');
-        });
+        $('mobileMenuBtn').onclick = () => sidebar.classList.toggle('mobile-open');
 
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                if (!sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                    sidebar.classList.remove('mobile-open');
-                }
+        document.onclick = (e) => {
+            if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !$('mobileMenuBtn').contains(e.target)) {
+                sidebar.classList.remove('mobile-open');
             }
-        });
+            if (!sidebar.contains(e.target) && !floatingDropdown.contains(e.target)) {
+                floatingDropdown.classList.remove('show');
+            }
+        };
 
-        // Regular dropdown toggle for expanded sidebar
-        document.querySelectorAll('.dropdown-toggle-custom').forEach(link => {
-            link.addEventListener('click', function(e) {
+        $$('.dropdown-toggle-custom').forEach(link => {
+            link.onclick = (e) => {
                 e.preventDefault();
-                
-                // If sidebar is not collapsed, use regular dropdown
                 if (!sidebar.classList.contains('collapsed')) {
-                    const dropdownId = this.getAttribute('data-dropdown');
-                    const dropdown = document.getElementById(dropdownId);
-                    const arrow = this.querySelector('.arrow-icon');
-                    
-                    // Close other dropdowns
-                    document.querySelectorAll('.dropdown-menu-custom').forEach(d => {
-                        if (d !== dropdown) {
-                            d.classList.remove('show');
-                        }
-                    });
-                    document.querySelectorAll('.arrow-icon').forEach(a => {
-                        if (a !== arrow) {
-                            a.classList.remove('rotated');
-                        }
-                    });
-                    
+                    const dropdown = $(link.dataset.dropdown);
+                    const arrow = link.querySelector('.arrow-icon');
+                    $$('.dropdown-menu-custom').forEach(d => d !== dropdown && d.classList.remove('show'));
+                    $$('.arrow-icon').forEach(a => a !== arrow && a.classList.remove('rotated'));
                     dropdown.classList.toggle('show');
-                    if (arrow) {
-                        arrow.classList.toggle('rotated');
-                    }
+                    arrow?.classList.toggle('rotated');
                 }
-            });
+            };
 
-            // Hover functionality for collapsed sidebar
-            link.addEventListener('mouseenter', function(e) {
+            link.onmouseenter = () => {
                 if (sidebar.classList.contains('collapsed')) {
-                    isOverSidebarLink = true;
-                    
-                    // Clear any pending hide timeout
-                    if (currentHoverTimeout) {
-                        clearTimeout(currentHoverTimeout);
-                        currentHoverTimeout = null;
-                    }
-                    
-                    currentDropdownLink = this;
-                    showFloatingDropdown(this);
+                    overLink = true;
+                    clearTimeout(hoverTimeout);
+                    currentLink = link;
+                    showFloat(link);
                 }
-            });
+            };
 
-            link.addEventListener('mouseleave', function(e) {
+            link.onmouseleave = () => {
                 if (sidebar.classList.contains('collapsed')) {
-                    isOverSidebarLink = false;
-                    
-                    // Delay hiding to allow moving to floating dropdown
-                    currentHoverTimeout = setTimeout(() => {
-                        if (!isOverFloatingDropdown && !isOverSidebarLink) {
-                            hideFloatingDropdown();
-                        }
-                    }, 150);
+                    overLink = false;
+                    hoverTimeout = setTimeout(() => !overFloat && !overLink && floatingDropdown.classList.remove('show'), 150);
                 }
-            });
+            };
         });
 
-        // Keep floating dropdown visible when hovering over it
-        floatingDropdown.addEventListener('mouseenter', function() {
-            isOverFloatingDropdown = true;
-            
-            if (currentHoverTimeout) {
-                clearTimeout(currentHoverTimeout);
-                currentHoverTimeout = null;
-            }
-        });
+        floatingDropdown.onmouseenter = () => {
+            overFloat = true;
+            clearTimeout(hoverTimeout);
+        };
 
-        floatingDropdown.addEventListener('mouseleave', function() {
-            isOverFloatingDropdown = false;
-            
-            // Delay hiding to allow moving back to sidebar
-            currentHoverTimeout = setTimeout(() => {
-                if (!isOverSidebarLink && !isOverFloatingDropdown) {
-                    hideFloatingDropdown();
-                }
-            }, 150);
-        });
+        floatingDropdown.onmouseleave = () => {
+            overFloat = false;
+            hoverTimeout = setTimeout(() => !overLink && !overFloat && floatingDropdown.classList.remove('show'), 150);
+        };
 
-        function showFloatingDropdown(link) {
-            const dropdownId = link.getAttribute('data-dropdown');
-            const dropdown = document.getElementById(dropdownId);
-            
+        function showFloat(link) {
+            const dropdown = $(link.dataset.dropdown);
             if (!dropdown) return;
             
-            const title = link.getAttribute('data-title');
+            const title = link.dataset.title;
             const rect = link.getBoundingClientRect();
-
-            // Get all dropdown items
             const items = dropdown.querySelectorAll('.nav-link');
             
-            // Build floating dropdown content
-            let content = `<div class="floating-dropdown-title">${title}</div>`;
+            let html = `<div class="floating-dropdown-title">${title}</div>`;
             items.forEach(item => {
-                const itemTitle = item.getAttribute('data-title');
-                const iconEl = item.querySelector('i');
-                const icon = iconEl ? iconEl.outerHTML : '<i class="far fa-circle"></i>';
-                content += `<a class="dropdown-item" href="#" data-item="${itemTitle}">${icon}<span>${itemTitle}</span></a>`;
+                const itemTitle = item.dataset.title;
+                const icon = item.querySelector('i')?.outerHTML || '<i class="far fa-circle"></i>';
+                html += `<a class="dropdown-item" href="#" data-item="${itemTitle}">${icon}<span>${itemTitle}</span></a>`;
             });
 
-            floatingDropdown.innerHTML = content;
+            floatingDropdown.innerHTML = html;
             floatingDropdown.style.top = rect.top + 'px';
             floatingDropdown.classList.add('show');
 
-            // Add click handlers to floating dropdown items
             floatingDropdown.querySelectorAll('.dropdown-item').forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.onclick = (e) => {
                     e.preventDefault();
-                    const itemName = this.getAttribute('data-item');
-                    console.log('Clicked:', itemName);
-                    
-                    // Add visual feedback
-                    this.style.background = 'var(--primary-orange)';
-                    this.style.color = 'white';
-                    
-                    // You can add navigation or action here
-                    // For now, just log the action
-                    setTimeout(() => {
-                        hideFloatingDropdown();
-                    }, 200);
-                });
+                    console.log('Clicked:', item.dataset.item);
+                    item.style.background = 'var(--primary)';
+                    item.style.color = 'white';
+                    setTimeout(() => floatingDropdown.classList.remove('show'), 200);
+                };
             });
         }
 
-        function hideFloatingDropdown() {
-            floatingDropdown.classList.remove('show');
-            currentDropdownLink = null;
-            
-            // Clear timeout if any
-            if (currentHoverTimeout) {
-                clearTimeout(currentHoverTimeout);
-                currentHoverTimeout = null;
-            }
-        }
-
-        // Regular nav link active state
-        document.querySelectorAll('.nav-link:not(.dropdown-toggle-custom)').forEach(link => {
-            link.addEventListener('click', function(e) {
+        $('.nav-link:not(.dropdown-toggle-custom)').forEach(link => {
+            link.onclick = (e) => {
                 e.preventDefault();
-                
-                // Remove active state from all nav links
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                
-                console.log('Navigated to:', this.getAttribute('data-title'));
-                
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.remove('mobile-open');
-                }
-            });
+                $('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                console.log('Navigated to:', link.dataset.title);
+                if (window.innerWidth <= 768) sidebar.classList.remove('mobile-open');
+            };
         });
 
-        // Dropdown items in expanded sidebar
-        document.querySelectorAll('.dropdown-menu-custom .nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
+        $('.dropdown-menu-custom .nav-link').forEach(link => {
+            link.onclick = (e) => {
                 if (!sidebar.classList.contains('collapsed')) {
                     e.preventDefault();
-                    
-                    // Remove active state from all nav links
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    console.log('Navigated to:', this.getAttribute('data-title'));
-                    
-                    if (window.innerWidth <= 768) {
-                        sidebar.classList.remove('mobile-open');
-                    }
+                    $('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    console.log('Navigated to:', link.dataset.title);
+                    if (window.innerWidth <= 768) sidebar.classList.remove('mobile-open');
                 }
-            });
+            };
         });
 
-        // Hide floating dropdown when scrolling sidebar
-        sidebar.addEventListener('scroll', function() {
-            if (sidebar.classList.contains('collapsed')) {
-                hideFloatingDropdown();
-            }
-        });
-
-        // Hide floating dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!sidebar.contains(e.target) && !floatingDropdown.contains(e.target)) {
-                hideFloatingDropdown();
-            }
-        });
-
-        // Prevent default behavior on all nav links in collapsed state dropdowns
-        document.querySelectorAll('.dropdown-menu-custom .nav-link').forEach(link => {
-            const originalHref = link.getAttribute('href');
-            if (originalHref === '#') {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                });
-            }
-        });
+        sidebar.onscroll = () => sidebar.classList.contains('collapsed') && floatingDropdown.classList.remove('show');
     </script>
 </body>
 </html>

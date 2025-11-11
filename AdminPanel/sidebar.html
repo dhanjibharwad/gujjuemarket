@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -338,7 +338,7 @@
         </div>
 
         <nav class="nav flex-column">
-            <a class="nav-link active" href="#" data-title="Dashboard">
+            <a class="nav-link active" href="#" data-title="Dashboard" data-page="maindashboard.html">
                 <div class="nav-link-content">
                     <i class="fas fa-home"></i>
                     <span>Dashboard</span>
@@ -356,7 +356,7 @@
             </a>
             <div class="dropdown-menu-custom" id="brandDropdown">
                 <a class="nav-link" href="#" data-title="List"><i class="far fa-circle"></i><span>Available Brands</span></a>
-                <a class="nav-link" href="#" data-title="Add"><i class="far fa-circle"></i><span>Add Brands</span></a>
+                <a class="nav-link" href="" data-title="Add" data-page="add-brand.html"><i class="far fa-circle"></i><span>Add Brands</span></a>
             </div>
 
             <a class="nav-link dropdown-toggle-custom" href="#" data-dropdown="categoryDropdown" data-title="Category">
@@ -393,7 +393,7 @@
             </a>
             <div class="dropdown-menu-custom" id="productDropdown">
                 <a class="nav-link" href="#" data-title="List Products"><i class="far fa-circle"></i><span>Product List</span></a>
-                <a class="nav-link" href="addproduct.html" data-title="Add New"><i class="far fa-circle"></i><span>Add New Product</span></a>
+                <a class="nav-link" href="#" data-title="Add New" data-page="addproduct.html"><i class="far fa-circle"></i><span>Add New Product</span></a>
             </div>
 
             <a class="nav-link dropdown-toggle-custom" href="#" data-dropdown="couponDropdown" data-title="Product Coupon">
@@ -476,144 +476,6 @@
     </div>
 
     <div class="floating-dropdown" id="floatingDropdown"></div>
-
-    <div class="main-content">
-        <div class="container-fluid">
-            <div class="page-header">
-                <h1 class="mb-1">Welcome to Gujju E-Market Admin Panel</h1>
-                <p class="text-muted mb-0">Manage your online store efficiently</p>
-            </div>
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <div class="card text-white bg-primary">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Products</h5>
-                            <h2>1,245</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card text-white bg-success">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Orders</h5>
-                            <h2>856</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card text-white bg-warning">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Customers</h5>
-                            <h2>432</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card text-white bg-info">
-                        <div class="card-body">
-                            <h5 class="card-title">Revenue</h5>
-                            <h2>₹2.5L</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Recent Orders</h5>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Customer</th>
-                                            <th>Product</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#ORD-001</td>
-                                            <td>Rajesh Kumar</td>
-                                            <td>Premium Cotton Shirt</td>
-                                            <td>₹1,299</td>
-                                            <td><span class="badge bg-success">Delivered</span></td>
-                                            <td>2024-01-15</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#ORD-002</td>
-                                            <td>Priya Patel</td>
-                                            <td>Designer Saree</td>
-                                            <td>₹3,499</td>
-                                            <td><span class="badge bg-warning">Pending</span></td>
-                                            <td>2024-01-14</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Top Selling Products</h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Premium Cotton Shirt
-                                    <span class="badge bg-primary rounded-pill">245 sold</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Designer Saree
-                                    <span class="badge bg-primary rounded-pill">189 sold</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Leather Wallet
-                                    <span class="badge bg-primary rounded-pill">156 sold</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Recent Activities</h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <i class="fas fa-box text-primary"></i> New product added: Silk Dupatta
-                                    <br><small class="text-muted">2 hours ago</small>
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="fas fa-shopping-cart text-success"></i> Order #ORD-008 completed
-                                    <br><small class="text-muted">3 hours ago</small>
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="fas fa-user text-info"></i> New customer registered
-                                    <br><small class="text-muted">5 hours ago</small>
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="fas fa-undo text-warning"></i> Return request for Order #ORD-005
-                                    <br><small class="text-muted">6 hours ago</small>
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="fas fa-tag text-danger"></i> New coupon created: SAVE20
-                                    <br><small class="text-muted">8 hours ago</small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -713,9 +575,28 @@
             });
         }
 
+        // Load page content
+        function loadPage(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const body = doc.body.innerHTML;
+                    document.getElementById('contentArea').innerHTML = body;
+                })
+                .catch(error => {
+                    console.error('Error loading page:', error);
+                    document.getElementById('contentArea').innerHTML = '<div class="alert alert-danger">Error loading page</div>';
+                });
+        }
+        
         $('.nav-link:not(.dropdown-toggle-custom)').forEach(link => {
             link.onclick = (e) => {
                 e.preventDefault();
+                if (link.dataset.page) {
+                    loadPage(link.dataset.page);
+                }
                 $('.nav-link').forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
                 console.log('Navigated to:', link.dataset.title);
@@ -727,6 +608,9 @@
             link.onclick = (e) => {
                 if (!sidebar.classList.contains('collapsed')) {
                     e.preventDefault();
+                    if (link.dataset.page) {
+                        loadPage(link.dataset.page);
+                    }
                     $('.nav-link').forEach(l => l.classList.remove('active'));
                     link.classList.add('active');
                     console.log('Navigated to:', link.dataset.title);
@@ -738,4 +622,4 @@
         sidebar.onscroll = () => sidebar.classList.contains('collapsed') && floatingDropdown.classList.remove('show');
     </script>
 </body>
-</html>
+</html> -->

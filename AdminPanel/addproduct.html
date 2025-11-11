@@ -202,6 +202,37 @@
 
         .remove-link:hover { color: var(--dark-gray); text-decoration: underline; }
 
+        .custom-select { position: relative; }
+        .custom-select select { display: none; }
+        .select-selected {
+            padding: 10px 36px 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%235e5873' d='M6 9L1 4h10z'/%3E%3C/svg%3E") no-repeat right 12px center;
+            color: var(--dark-gray);
+        }
+        .select-items {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 4px 16px rgba(0,0,0,.12);
+            z-index: 99;
+            width: 100%;
+            max-height: 280px;
+            overflow-y: auto;
+            display: none;
+            margin-top: 4px;
+        }
+        .select-items.show { display: block; }
+        .select-search-wrapper { padding: 12px; border-bottom: 1px solid #e8e8e8; background: #fafafa; }
+        .select-search { padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; width: 100%; font-size: 14px; outline: none; }
+        .select-search:focus { border-color: #5e5adb; box-shadow: 0 0 0 3px rgba(94,90,219,.1); }
+        .select-item { padding: 10px 12px; cursor: pointer; font-size: 14px; color: var(--dark-gray); }
+        .select-item:hover { background: #f5f5f5; }
+
         @media (max-width: 768px) {
             .form-row { grid-template-columns: 1fr; }
         }
@@ -226,39 +257,54 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Select Category</label>
-                    <select name="category">
-                        <option value="">Select Category</option>
-                        <option value="electronics">Electronics</option>
-                        <option value="clothing">Clothing</option>
-                        <option value="furniture">Furniture</option>
-                    </select>
+                    <div class="custom-select">
+                        <select name="category">
+                            <option value="">Select Category</option>
+                            <option value="household">Household</option>
+                            <option value="management">Management</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="office">Office</option>
+                            <option value="automotive">Automotive</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="furniture">Furniture</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Select Brand</label>
-                    <select name="brand">
-                        <option value="">Select Brand</option>
-                        <option value="brand1">Brand 1</option>
-                        <option value="brand2">Brand 2</option>
-                    </select>
+                    <div class="custom-select">
+                        <select name="brand">
+                            <option value="">Select Brand</option>
+                            <option value="brand1">Brand 1</option>
+                            <option value="brand2">Brand 2</option>
+                            <option value="brand3">Brand 3</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label>Select Brand Category</label>
-                    <select name="brandCategory">
-                        <option value="">Select Brand Category</option>
-                        <option value="premium">Premium</option>
-                        <option value="standard">Standard</option>
-                    </select>
+                    <div class="custom-select">
+                        <select name="brandCategory">
+                            <option value="">Select Brand Category</option>
+                            <option value="premium">Premium</option>
+                            <option value="standard">Standard</option>
+                            <option value="economy">Economy</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Select Subcategory (Optional)</label>
-                    <select name="subcategory">
-                        <option value="">Select Subcategory</option>
-                        <option value="sub1">Subcategory 1</option>
-                        <option value="sub2">Subcategory 2</option>
-                    </select>
+                    <div class="custom-select">
+                        <select name="subcategory">
+                            <option value="">Select Subcategory</option>
+                            <option value="sub1">Subcategory 1</option>
+                            <option value="sub2">Subcategory 2</option>
+                            <option value="sub3">Subcategory 3</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -274,28 +320,26 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Color Code</label>
                     <input type="text" name="colorCode" placeholder="#000000">
-                </div>
+                </div> -->
                 <div class="form-group">
-                    <label>RRP (Price)</label>
+                    <label>MRP (Price)</label>
                     <input type="number" name="rrp" step="0.01" min="0">
                 </div>
-            </div>
-
-            <div class="form-row">
                 <div class="form-group">
                     <label>Cost Price</label>
                     <input type="number" name="costPrice" step="0.01" min="0">
                 </div>
+            </div>
+
+            <div class="form-row">
+                
                 <div class="form-group">
                     <label>Discount Price</label>
                     <input type="number" name="discountPrice" step="0.01" value="-0.01">
                 </div>
-            </div>
-
-            <div class="form-row">
                 <div class="form-group">
                     <label>Lead Time</label>
                     <input type="text" name="leadTime" placeholder="e.g., 3-5 days">
@@ -410,6 +454,66 @@
     </div>
 
     <script>
+        // Custom Searchable Dropdown
+        document.querySelectorAll('.custom-select').forEach(customSelect => {
+            const select = customSelect.querySelector('select');
+            const selected = document.createElement('div');
+            selected.className = 'select-selected';
+            selected.textContent = select.options[0].text;
+            customSelect.appendChild(selected);
+
+            const itemsDiv = document.createElement('div');
+            itemsDiv.className = 'select-items';
+            
+            const searchWrapper = document.createElement('div');
+            searchWrapper.className = 'select-search-wrapper';
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.className = 'select-search';
+            searchInput.placeholder = 'Search...';
+            searchWrapper.appendChild(searchInput);
+            itemsDiv.appendChild(searchWrapper);
+
+            for (let i = 1; i < select.options.length; i++) {
+                const item = document.createElement('div');
+                item.className = 'select-item';
+                item.textContent = select.options[i].text;
+                item.dataset.value = select.options[i].value;
+                itemsDiv.appendChild(item);
+            }
+            customSelect.appendChild(itemsDiv);
+
+            selected.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.querySelectorAll('.select-items').forEach(el => {
+                    if (el !== itemsDiv) el.classList.remove('show');
+                });
+                itemsDiv.classList.toggle('show');
+                if (itemsDiv.classList.contains('show')) searchInput.focus();
+            });
+
+            searchInput.addEventListener('input', function() {
+                const filter = this.value.toLowerCase();
+                itemsDiv.querySelectorAll('.select-item').forEach(item => {
+                    item.style.display = item.textContent.toLowerCase().includes(filter) ? 'block' : 'none';
+                });
+            });
+
+            itemsDiv.querySelectorAll('.select-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    select.value = this.dataset.value;
+                    selected.textContent = this.textContent;
+                    itemsDiv.classList.remove('show');
+                    searchInput.value = '';
+                    itemsDiv.querySelectorAll('.select-item').forEach(i => i.style.display = 'block');
+                });
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.select-items').forEach(el => el.classList.remove('show'));
+        });
+
         // Tab switching
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', function() {

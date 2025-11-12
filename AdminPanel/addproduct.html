@@ -1,4 +1,11 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
         :root {
             --primary-orange: #FF6B35;
             --secondary-orange: #F7931E;
@@ -173,8 +180,15 @@
             box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
         }
 
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
         .image-preview {
-            display: inline-block;
+            position: relative;
             background: white;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -183,24 +197,25 @@
         }
 
         .image-preview img {
-            max-width: 150px;
-            max-height: 150px;
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
             border-radius: 4px;
-            display: block;
             margin-bottom: 8px;
         }
 
-        .image-info { font-size: 13px; color: var(--medium-gray); margin-bottom: 4px; }
-        .image-size { font-size: 12px; color: var(--light-gray); margin-bottom: 8px; }
+        .image-info { font-size: 12px; color: var(--medium-gray); margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .image-size { font-size: 11px; color: var(--light-gray); margin-bottom: 8px; }
 
         .remove-link {
-            color: var(--medium-gray);
+            color: #dc3545;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
+            font-weight: 500;
         }
 
-        .remove-link:hover { color: var(--dark-gray); text-decoration: underline; }
+        .remove-link:hover { color: #c82333; text-decoration: underline; }
 
         .custom-select { position: relative; }
         .custom-select select { display: none; }
@@ -229,7 +244,7 @@
         .select-items.show { display: block; }
         .select-search-wrapper { padding: 12px; border-bottom: 1px solid #e8e8e8; background: #fafafa; }
         .select-search { padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; width: 100%; font-size: 14px; outline: none; }
-        .select-search:focus { border-color: #5e5adb; box-shadow: 0 0 0 3px rgba(94,90,219,.1); }
+        .select-search:focus { border-color: #F7931E; box-shadow: 0 0 0 3px rgba(94,90,219,.1); }
         .select-item { padding: 10px 12px; cursor: pointer; font-size: 14px; color: var(--dark-gray); }
         .select-item:hover { background: #f5f5f5; }
 
@@ -271,31 +286,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Select Brand</label>
-                    <div class="custom-select">
-                        <select name="brand">
-                            <option value="">Select Brand</option>
-                            <option value="brand1">Brand 1</option>
-                            <option value="brand2">Brand 2</option>
-                            <option value="brand3">Brand 3</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Select Brand Category</label>
-                    <div class="custom-select">
-                        <select name="brandCategory">
-                            <option value="">Select Brand Category</option>
-                            <option value="premium">Premium</option>
-                            <option value="standard">Standard</option>
-                            <option value="economy">Economy</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label>Select Subcategory (Optional)</label>
                     <div class="custom-select">
                         <select name="subcategory">
@@ -303,6 +293,17 @@
                             <option value="sub1">Subcategory 1</option>
                             <option value="sub2">Subcategory 2</option>
                             <option value="sub3">Subcategory 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Select Brand</label>
+                    <div class="custom-select">
+                        <select name="brand">
+                            <option value="">Select Brand</option>
+                            <option value="brand1">Brand 1</option>
+                            <option value="brand2">Brand 2</option>
+                            <option value="brand3">Brand 3</option>
                         </select>
                     </div>
                 </div>
@@ -320,10 +321,6 @@
             </div>
 
             <div class="form-row">
-                <!-- <div class="form-group">
-                    <label>Color Code</label>
-                    <input type="text" name="colorCode" placeholder="#000000">
-                </div> -->
                 <div class="form-group">
                     <label>MRP (Price)</label>
                     <input type="number" name="rrp" step="0.01" min="0">
@@ -335,7 +332,6 @@
             </div>
 
             <div class="form-row">
-                
                 <div class="form-group">
                     <label>Discount Price</label>
                     <input type="number" name="discountPrice" step="0.01" value="-0.01">
@@ -351,15 +347,16 @@
                     <label style="margin: 0;">Product Image</label>
                     <a href="#" style="color: var(--primary-orange); text-decoration: none; font-size: 14px; font-weight: 500;">Add media from URL</a>
                 </div>
-                <div class="image-upload-area">
-                    <input type="file" name="mainImage" accept="image/*" id="mainImage" style="display: none;">
+                <div class="image-upload-area" id="uploadArea">
+                    <input type="file" name="productImages" accept="image/*" id="mainImage" multiple style="display: none;">
                     <div class="upload-icon">
                         <i class="fas fa-upload"></i>
                     </div>
-                    <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop your image here</p>
+                    <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop images here</p>
                     <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
-                    <button type="button" class="browse-btn" onclick="document.getElementById('mainImage').click()">Browse image</button>
+                    <button type="button" class="browse-btn">Browse images</button>
                 </div>
+                <div class="images-grid" id="imagesGrid"></div>
             </div>
 
             <div class="tabs">
@@ -551,66 +548,145 @@
             });
         });
 
-        // Image upload
-        const uploadArea = document.querySelector('.image-upload-area');
+        // Multi-Image Upload - Optimized
+        const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('mainImage');
+        const imagesGrid = document.getElementById('imagesGrid');
+        let uploadedFiles = [];
 
-        uploadArea.addEventListener('click', () => fileInput.click());
-
-        ['dragover', 'dragleave', 'drop'].forEach(evt => {
-            uploadArea.addEventListener(evt, (e) => {
+        // Click handler - only trigger on specific targets
+        uploadArea.addEventListener('click', (e) => {
+            // Don't trigger if clicking on image previews or remove links
+            if (e.target.closest('.image-preview') || e.target.classList.contains('remove-link')) {
+                return;
+            }
+            // Trigger on upload area, icon, text, or browse button
+            if (e.target === uploadArea || 
+                e.target.closest('.upload-icon') || 
+                e.target.tagName === 'P' ||
+                e.target.classList.contains('browse-btn')) {
                 e.preventDefault();
-                uploadArea.style.borderColor = evt === 'dragover' ? 'var(--primary-orange)' : '#d0d0d0';
-                uploadArea.style.background = evt === 'dragover' ? 'var(--light-orange)' : '#fafafa';
-                
-                if (evt === 'drop' && e.dataTransfer.files.length) {
-                    fileInput.files = e.dataTransfer.files;
-                    displayImage(e.dataTransfer.files[0]);
+                fileInput.click();
+            }
+        });
+
+        // Drag and drop handlers
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.borderColor = 'var(--primary-orange)';
+            uploadArea.style.background = 'var(--light-orange)';
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.borderColor = '#d0d0d0';
+            uploadArea.style.background = '#fafafa';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.borderColor = '#d0d0d0';
+            uploadArea.style.background = '#fafafa';
+            
+            if (e.dataTransfer.files.length) {
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+
+        // File input change handler
+        fileInput.addEventListener('change', function(e) {
+            e.stopPropagation();
+            if (this.files.length) {
+                handleFiles(this.files);
+            }
+            // Reset to allow same files to be selected again
+            this.value = '';
+        });
+
+        // Handle and validate files
+        function handleFiles(files) {
+            const imageFiles = Array.from(files).filter(file => {
+                if (!file.type.startsWith('image/')) {
+                    console.warn(`Skipped non-image file: ${file.name}`);
+                    return false;
                 }
+                if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                    console.warn(`Skipped large file (>10MB): ${file.name}`);
+                    return false;
+                }
+                return true;
             });
-        });
 
-        fileInput.addEventListener('change', function() {
-            if (this.files.length) displayImage(this.files[0]);
-        });
+            if (imageFiles.length === 0) return;
 
+            imageFiles.forEach(file => {
+                uploadedFiles.push(file);
+                displayImage(file);
+            });
+        }
+
+        // Display image preview
         function displayImage(file) {
             const reader = new FileReader();
+            const index = uploadedFiles.indexOf(file);
+            
             reader.onload = (e) => {
-                uploadArea.innerHTML = `
-                    <div class="image-preview">
-                        <img src="${e.target.result}" alt="Product">
-                        <div class="image-info">${file.name}</div>
-                        <div class="image-size">${(file.size / (1024 * 1024)).toFixed(1)} MB</div>
-                        <a class="remove-link" onclick="removeImage()">Remove file</a>
-                    </div>
+                const preview = document.createElement('div');
+                preview.className = 'image-preview';
+                preview.dataset.index = index;
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="${file.name}">
+                    <div class="image-info" title="${file.name}">${file.name}</div>
+                    <div class="image-size">${(file.size / 1024).toFixed(0)} KB</div>
+                    <a class="remove-link" data-index="${index}">Remove</a>
                 `;
+                imagesGrid.appendChild(preview);
             };
+            
+            reader.onerror = () => {
+                console.error(`Failed to read file: ${file.name}`);
+            };
+            
             reader.readAsDataURL(file);
         }
 
-        window.removeImage = function() {
-            fileInput.value = '';
-            uploadArea.innerHTML = `
-                <div class="upload-icon"><i class="fas fa-upload"></i></div>
-                <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop your image here</p>
-                <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
-                <button type="button" class="browse-btn" onclick="document.getElementById('mainImage').click()">Browse image</button>
-            `;
-        };
+        // Remove image handler using event delegation
+        imagesGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-link')) {
+                e.preventDefault();
+                e.stopPropagation();
+                const index = parseInt(e.target.dataset.index);
+                removeImage(index);
+            }
+        });
+
+        function removeImage(index) {
+            uploadedFiles.splice(index, 1);
+            // Re-render all images with updated indices
+            imagesGrid.innerHTML = '';
+            uploadedFiles.forEach(file => displayImage(file));
+        }
 
         // Form submission
         document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
             
+            // Remove default file input and add uploaded files
+            formData.delete('productImages');
+            uploadedFiles.forEach((file, i) => formData.append(`productImages[${i}]`, file));
+            
+            const data = Object.fromEntries(formData.entries());
             ['short', 'long', 'features', 'included'].forEach(tab => {
                 data[`${tab}Description`] = document.querySelector(`#${tab} .editor-content`).innerHTML;
             });
             
             console.log('Product Data:', data);
-            alert('Product saved successfully!');
+            console.log('Uploaded Images:', uploadedFiles.length, 'files');
+            alert(`Product saved successfully with ${uploadedFiles.length} image(s)!`);
         });
 
         // Editor placeholder effect
@@ -624,3 +700,5 @@
             });
         });
     </script>
+</body>
+</html>

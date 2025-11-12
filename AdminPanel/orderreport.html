@@ -1,0 +1,233 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; }
+    h1 { margin-bottom: 30px; color: #1d1d1f; font-size: 24px; }
+    .controls { display: flex; gap: 15px; margin-bottom: 30px; align-items: center; flex-wrap: wrap; }
+    select { padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
+    .download-btns { display: flex; gap: 10px; }
+    button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    .btn-excel { background: #217346; color: white; }
+    .btn-pdf { background: #d32f2f; color: white; }
+    button:hover { opacity: 0.9; }
+    .table-wrapper { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 1200px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #f5f5f7; font-size: 13px; }
+    th { background: #fafafa; font-weight: 600; color: #86868b; white-space: nowrap; font-size: 12px; text-transform: uppercase; }
+    td:nth-child(7), td:nth-child(13), td:nth-child(14), td:nth-child(15) { text-align: center; }
+    tr:hover { background: #fafafa; }
+</style>
+    <div class="container">
+        <h1>Order Report</h1>
+        <div class="controls">
+            <label>Select days for report:</label>
+            <select id="daysSelect">
+                <option value="7">7 days</option>
+                <option value="10">10 days</option>
+                <option value="15">15 days</option>
+                <option value="30">1 month</option>
+                <option value="90">3 months</option>
+                <option value="180">6 months</option>
+                <option value="365">12 months</option>
+            </select>
+            <div class="download-btns">
+                <button class="btn-excel" onclick="downloadExcel()">Download Excel</button>
+                <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table id="orderTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Purchase Date</th>
+                        <th>Buyer Name</th>
+                        <th>Buyer Email</th>
+                        <th>SKU</th>
+                        <th>Product Name</th>
+                        <th>Quantity Purchased</th>
+                        <th>Item Price</th>
+                        <th>Item Tax</th>
+                        <th>Ship Address 1</th>
+                        <th>Ship City</th>
+                        <th>State</th>
+                        <th>Postal Code</th>
+                        <th>Payment Method</th>
+                        <th>Payment Received Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td>ORD-10001</td>
+                        <td>2024-01-15</td>
+                        <td>John Smith</td>
+                        <td>john.smith@email.com</td>
+                        <td>SKU001</td>
+                        <td>Wireless Mouse</td>
+                        <td>2</td>
+                        <td>$25.00</td>
+                        <td>$3.50</td>
+                        <td>123 Main Street</td>
+                        <td>New York</td>
+                        <td>NY</td>
+                        <td>10001</td>
+                        <td>Credit Card</td>
+                        <td>$53.50</td>
+                    </tr>
+                    <tr>
+                        <td>ORD-10002</td>
+                        <td>2024-01-14</td>
+                        <td>Sarah Johnson</td>
+                        <td>sarah.j@email.com</td>
+                        <td>SKU002</td>
+                        <td>Laptop Stand</td>
+                        <td>1</td>
+                        <td>$75.00</td>
+                        <td>$5.25</td>
+                        <td>456 Oak Avenue</td>
+                        <td>Los Angeles</td>
+                        <td>CA</td>
+                        <td>90001</td>
+                        <td>PayPal</td>
+                        <td>$80.25</td>
+                    </tr>
+                    <tr>
+                        <td>ORD-10003</td>
+                        <td>2024-01-13</td>
+                        <td>Michael Brown</td>
+                        <td>m.brown@email.com</td>
+                        <td>SKU003</td>
+                        <td>Mechanical Keyboard</td>
+                        <td>1</td>
+                        <td>$120.00</td>
+                        <td>$8.40</td>
+                        <td>789 Pine Road</td>
+                        <td>Chicago</td>
+                        <td>IL</td>
+                        <td>60601</td>
+                        <td>Debit Card</td>
+                        <td>$128.40</td>
+                    </tr>
+                    <tr>
+                        <td>ORD-10004</td>
+                        <td>2024-01-12</td>
+                        <td>Emily Davis</td>
+                        <td>emily.d@email.com</td>
+                        <td>SKU004</td>
+                        <td>Monitor 27 inch</td>
+                        <td>1</td>
+                        <td>$350.00</td>
+                        <td>$24.50</td>
+                        <td>321 Elm Street</td>
+                        <td>Houston</td>
+                        <td>TX</td>
+                        <td>77001</td>
+                        <td>Credit Card</td>
+                        <td>$374.50</td>
+                    </tr>
+                    <tr>
+                        <td>ORD-10005</td>
+                        <td>2024-01-11</td>
+                        <td>David Wilson</td>
+                        <td>d.wilson@email.com</td>
+                        <td>SKU005</td>
+                        <td>Webcam HD</td>
+                        <td>3</td>
+                        <td>$85.00</td>
+                        <td>$17.85</td>
+                        <td>654 Maple Drive</td>
+                        <td>Phoenix</td>
+                        <td>AZ</td>
+                        <td>85001</td>
+                        <td>PayPal</td>
+                        <td>$272.85</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<script>
+        function getTableData() {
+            const rows = document.querySelectorAll('#orderTable tbody tr');
+            const data = [];
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                data.push({
+                    orderId: cells[0].textContent,
+                    purchaseDate: cells[1].textContent,
+                    buyerName: cells[2].textContent,
+                    buyerEmail: cells[3].textContent,
+                    sku: cells[4].textContent,
+                    productName: cells[5].textContent,
+                    quantityPurchased: cells[6].textContent,
+                    itemPrice: cells[7].textContent,
+                    itemTax: cells[8].textContent,
+                    shipAddress1: cells[9].textContent,
+                    shipCity: cells[10].textContent,
+                    state: cells[11].textContent,
+                    postalCode: cells[12].textContent,
+                    paymentMethod: cells[13].textContent,
+                    paymentReceivedAmount: cells[14].textContent
+                });
+            });
+            return data;
+        }
+
+        function downloadExcel() {
+            const data = getTableData();
+            const ws = XLSX.utils.json_to_sheet(data.map(item => ({
+                'order-id': item.orderId,
+                'purchase-date': item.purchaseDate,
+                'buyer-name': item.buyerName,
+                'buyer-email': item.buyerEmail,
+                'sku': item.sku,
+                'product-name': item.productName,
+                'quantity-purchased': item.quantityPurchased,
+                'item-price': item.itemPrice,
+                'item-tax': item.itemTax,
+                'ship-address-1': item.shipAddress1,
+                'ship-city': item.shipCity,
+                'State': item.state,
+                'Postal code': item.postalCode,
+                'payment-method': item.paymentMethod,
+                'payment received amount': item.paymentReceivedAmount
+            })));
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Order Report');
+            const days = document.getElementById('daysSelect').value;
+            XLSX.writeFile(wb, `order_report_${days}days.xlsx`);
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('l', 'mm', 'a4');
+            const days = document.getElementById('daysSelect').value;
+            
+            doc.setFontSize(18);
+            doc.text('Order Report', 14, 15);
+            doc.setFontSize(11);
+            doc.text(`Report Period: ${days} days`, 14, 22);
+            
+            const data = getTableData();
+            const tableData = data.map(item => [
+                item.orderId, item.purchaseDate, item.buyerName, item.buyerEmail, 
+                item.sku, item.productName, item.quantityPurchased, item.itemPrice, 
+                item.itemTax, item.shipAddress1, item.shipCity, item.state, 
+                item.postalCode, item.paymentMethod, item.paymentReceivedAmount
+            ]);
+            
+            doc.autoTable({
+                head: [['Order ID', 'Purchase Date', 'Buyer Name', 'Buyer Email', 'SKU', 'Product Name', 
+                        'Qty', 'Price', 'Tax', 'Address', 'City', 'State', 'Postal', 'Payment', 'Amount']],
+                body: tableData,
+                startY: 28,
+                styles: { fontSize: 7 },
+                headStyles: { fontSize: 8 }
+            });
+            
+            doc.save(`order_report_${days}days.pdf`);
+        }
+</script>

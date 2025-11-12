@@ -1,0 +1,77 @@
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; }
+    h1 { margin-bottom: 30px; color: #1d1d1f; font-size: 24px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #f5f5f7; }
+    th { background: #fafafa; font-weight: 600; color: #86868b; font-size: 12px; text-transform: uppercase; }
+    tr:hover { background: #fafafa; }
+    .defect-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+    td:nth-child(5) { text-align: center; }
+    .status-pending { color: #f57c00; font-weight: 600; }
+    .status-approved { color: #2e7d32; font-weight: 600; }
+    .status-rejected { color: #c62828; font-weight: 600; }
+</style>
+<div class="container">
+    <h1>Order Return List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Order Id</th>
+                <th>Customer Name</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Product Defective Photo</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2024-01-15</td>
+                <td>ORD-10001</td>
+                <td>John Smith</td>
+                <td>Wireless Mouse</td>
+                <td>$25.00</td>
+                <td><img src="https://via.placeholder.com/60" alt="Defect" class="defect-img"></td>
+                <td><span class="status-pending">Pending</span></td>
+            </tr>
+            <tr>
+                <td>2024-01-14</td>
+                <td>ORD-10002</td>
+                <td>Sarah Johnson</td>
+                <td>Laptop Stand</td>
+                <td>$75.00</td>
+                <td><img src="https://via.placeholder.com/60" alt="Defect" class="defect-img"></td>
+                <td><span class="status-approved">Approved</span></td>
+            </tr>
+            <tr>
+                <td>2024-01-13</td>
+                <td>ORD-10003</td>
+                <td>Michael Brown</td>
+                <td>Mechanical Keyboard</td>
+                <td>$120.00</td>
+                <td><img src="https://via.placeholder.com/60" alt="Defect" class="defect-img"></td>
+                <td><span class="status-rejected">Rejected</span></td>
+            </tr>
+            <tr>
+                <td>2024-01-12</td>
+                <td>ORD-10004</td>
+                <td>Emily Davis</td>
+                <td>Monitor 27 inch</td>
+                <td>$350.00</td>
+                <td><img src="https://via.placeholder.com/60" alt="Defect" class="defect-img"></td>
+                <td><span class="status-approved">Approved</span>
+            </tr>
+            <tr>
+                <td>2024-01-11</td>
+                <td>ORD-10005</td>
+                <td>David Wilson</td>
+                <td>Webcam HD</td>
+                <td>$85.00</td>
+                <td><img src="https://via.placeholder.com/60" alt="Defect" class="defect-img"></td>
+                <td><span class="status-pending">Pending</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,233 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; }
+        h1 { margin-bottom: 30px; color: #1d1d1f; font-size: 24px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; color: #333; }
+        select, input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; outline: none; }
+        select:focus, input:focus { border-color: #FF6B35; }
+        .image-upload-area { border: 2px dashed #d0d0d0; border-radius: 8px; padding: 60px 20px; text-align: center; background: #fafafa; cursor: pointer; transition: all 0.3s; }
+        .image-upload-area:hover { border-color: #FF6B35; background: #FFF4EF; }
+        .upload-icon { width: 60px; height: 60px; background: #e8e8e8; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+        .upload-icon i { font-size: 24px; color: #999; }
+        .browse-btn { border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; background: #FFF4EF; color: #FF6B35; }
+        .browse-btn:hover { background: #ffe8dc; }
+        .btn-save { background: #FF6B35; color: white; padding: 12px 40px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 20px; }
+        .btn-save:hover { background: #F7931E; }
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+        .image-preview { position: relative; background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px; text-align: center; }
+        .image-preview img { width: 100%; height: 120px; object-fit: cover; border-radius: 4px; margin-bottom: 8px; }
+        .image-info { font-size: 12px; color: #666; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .image-size { font-size: 11px; color: #999; margin-bottom: 8px; }
+        .remove-link { color: #dc3545; text-decoration: none; font-size: 12px; cursor: pointer; font-weight: 500; }
+        .remove-link:hover { color: #c82333; text-decoration: underline; }
+        .custom-select { position: relative; }
+        .custom-select select { display: none; }
+        .select-selected { padding: 10px 36px 10px 12px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; cursor: pointer; background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%235e5873' d='M6 9L1 4h10z'/%3E%3C/svg%3E") no-repeat right 12px center; color: #333; }
+        .select-items { position: absolute; background: white; border: 1px solid #ddd; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,.12); z-index: 99; width: 100%; max-height: 280px; overflow-y: auto; display: none; margin-top: 4px; }
+        .select-items.show { display: block; }
+        .select-search-wrapper { padding: 12px; border-bottom: 1px solid #e8e8e8; background: #fafafa; }
+        .select-search { padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; width: 100%; font-size: 14px; outline: none; }
+        .select-search:focus { border-color: #FF6B35; }
+        .select-item { padding: 10px 12px; cursor: pointer; font-size: 14px; color: #333; }
+        .select-item:hover { background: #f5f5f5; }
+</style>
+<div class="container">
+        <h1>Subcategory</h1>
+        <form id="subcategoryForm">
+            <div class="form-group">
+                <label>Select Category</label>
+                <div class="custom-select">
+                    <select name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="household">Household</option>
+                        <option value="automotive">Automotive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Enter Subcategory</label>
+                <input type="text" name="subcategory" placeholder="Enter subcategory name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Image Upload</label>
+                <div class="image-upload-area" id="uploadArea">
+                    <input type="file" name="subcategoryImage" accept="image/*" id="imageInput" multiple style="display: none;">
+                    <div class="upload-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop images here</p>
+                    <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
+                    <button type="button" class="browse-btn">Browse images</button>
+                </div>
+                <div class="images-grid" id="imagesGrid"></div>
+            </div>
+
+            <button type="submit" class="btn-save">Save Subcategory</button>
+    </form>
+</div>
+
+<script>
+        // Custom Searchable Dropdown
+        document.querySelectorAll('.custom-select').forEach(customSelect => {
+            const select = customSelect.querySelector('select');
+            const selected = document.createElement('div');
+            selected.className = 'select-selected';
+            selected.textContent = select.options[0].text;
+            customSelect.appendChild(selected);
+
+            const itemsDiv = document.createElement('div');
+            itemsDiv.className = 'select-items';
+            
+            const searchWrapper = document.createElement('div');
+            searchWrapper.className = 'select-search-wrapper';
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.className = 'select-search';
+            searchInput.placeholder = 'Search...';
+            searchWrapper.appendChild(searchInput);
+            itemsDiv.appendChild(searchWrapper);
+
+            for (let i = 1; i < select.options.length; i++) {
+                const item = document.createElement('div');
+                item.className = 'select-item';
+                item.textContent = select.options[i].text;
+                item.dataset.value = select.options[i].value;
+                itemsDiv.appendChild(item);
+            }
+            customSelect.appendChild(itemsDiv);
+
+            selected.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.querySelectorAll('.select-items').forEach(el => {
+                    if (el !== itemsDiv) el.classList.remove('show');
+                });
+                itemsDiv.classList.toggle('show');
+                if (itemsDiv.classList.contains('show')) searchInput.focus();
+            });
+
+            searchInput.addEventListener('input', function() {
+                const filter = this.value.toLowerCase();
+                itemsDiv.querySelectorAll('.select-item').forEach(item => {
+                    item.style.display = item.textContent.toLowerCase().includes(filter) ? 'block' : 'none';
+                });
+            });
+
+            itemsDiv.querySelectorAll('.select-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    select.value = this.dataset.value;
+                    selected.textContent = this.textContent;
+                    itemsDiv.classList.remove('show');
+                    searchInput.value = '';
+                    itemsDiv.querySelectorAll('.select-item').forEach(i => i.style.display = 'block');
+                });
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.select-items').forEach(el => el.classList.remove('show'));
+        });
+
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('imageInput');
+        const imagesGrid = document.getElementById('imagesGrid');
+        let uploadedFiles = [];
+
+        uploadArea.addEventListener('click', (e) => {
+            if (e.target.closest('.image-preview') || e.target.classList.contains('remove-link')) return;
+            if (e.target === uploadArea || e.target.closest('.upload-icon') || e.target.tagName === 'P' || e.target.classList.contains('browse-btn')) {
+                e.preventDefault();
+                fileInput.click();
+            }
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.borderColor = '#FF6B35';
+            uploadArea.style.background = '#FFF4EF';
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.borderColor = '#d0d0d0';
+            uploadArea.style.background = '#fafafa';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.style.borderColor = '#d0d0d0';
+            uploadArea.style.background = '#fafafa';
+            if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            e.stopPropagation();
+            if (this.files.length) handleFiles(this.files);
+            this.value = '';
+        });
+
+        function handleFiles(files) {
+            const imageFiles = Array.from(files).filter(file => {
+                if (!file.type.startsWith('image/')) return false;
+                if (file.size > 10 * 1024 * 1024) return false;
+                return true;
+            });
+            if (imageFiles.length === 0) return;
+            imageFiles.forEach(file => {
+                uploadedFiles.push(file);
+                displayImage(file);
+            });
+        }
+
+        function displayImage(file) {
+            const reader = new FileReader();
+            const index = uploadedFiles.indexOf(file);
+            reader.onload = (e) => {
+                const preview = document.createElement('div');
+                preview.className = 'image-preview';
+                preview.dataset.index = index;
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="${file.name}">
+                    <div class="image-info" title="${file.name}">${file.name}</div>
+                    <div class="image-size">${(file.size / 1024).toFixed(0)} KB</div>
+                    <a class="remove-link" data-index="${index}">Remove</a>
+                `;
+                imagesGrid.appendChild(preview);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        imagesGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-link')) {
+                e.preventDefault();
+                e.stopPropagation();
+                const index = parseInt(e.target.dataset.index);
+                removeImage(index);
+            }
+        });
+
+        function removeImage(index) {
+            uploadedFiles.splice(index, 1);
+            imagesGrid.innerHTML = '';
+            uploadedFiles.forEach(file => displayImage(file));
+        }
+
+        document.getElementById('subcategoryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            formData.delete('subcategoryImage');
+            uploadedFiles.forEach((file, i) => formData.append(`subcategoryImage[${i}]`, file));
+            console.log('Subcategory Data:', Object.fromEntries(formData.entries()));
+            console.log('Uploaded Images:', uploadedFiles.length, 'files');
+            alert(`Subcategory saved successfully with ${uploadedFiles.length} image(s)!`);
+        });
+</script>

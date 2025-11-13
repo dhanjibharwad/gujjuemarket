@@ -233,6 +233,30 @@
         .actions-btn:hover {
             color: #1d1d1f;
         }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .product-count {
+            background: #FF6B35;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        td:nth-child(6) {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -302,10 +326,11 @@
                         <th>ORDER ID</th>
                         <th>DATE</th>
                         <th>CUSTOMER NAME</th>
-                        <th>PRODUCT NAME</th>
-                        <th>Quantity</th>
+                        <th>PRODUCTS</th>
+                        <th>QUANTITY</th>
                         <th>PAYMENT</th>
-                        <th>STATUS</th>
+                        <th>PAYMENT STATUS</th>
+                        <th>ORDER STATUS</th>
                         <th>METHOD</th>
                         <th>ACTIONS</th>
                     </tr>
@@ -324,7 +349,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Wireless Headphones</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">Wireless Headphones</span>
+                                <span class="product-count">+2</span>
+                            </div>
+                        </td>
                         <td>3</td>
                         <td><span class="amount">$1,245.00</span></td>
                         <td><span class="badge pending">Pending</span></td>
@@ -335,7 +365,7 @@
                                 <span>... 2356</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></i></button></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
@@ -350,7 +380,11 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Smart Watch Pro</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">Smart Watch Pro</span>
+                            </div>
+                        </td>
                         <td>2</td>
                         <td><span class="amount">$892.50</span></td>
                         <td><span class="badge failed">Failed</span></td>
@@ -361,7 +395,7 @@
                                 <span>... 2077</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></button></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
@@ -376,7 +410,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Gaming Laptop</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">Gaming Laptop</span>
+                                <span class="product-count">+3</span>
+                            </div>
+                        </td>
                         <td>1</td>
                         <td><span class="amount">$2,150.00</span></td>
                         <td><span class="badge cancelled">Cancelled</span></td>
@@ -387,7 +426,7 @@
                                 <span>... @gmail.com</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></button></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
@@ -402,7 +441,11 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Office Chair</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">Office Chair</span>
+                            </div>
+                        </td>
                         <td>2</td>
                         <td><span class="amount">$675.25</span></td>
                         <td><span class="badge paid">Paid</span></td>
@@ -413,7 +456,7 @@
                                 <span>... 1555</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></button></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
@@ -428,7 +471,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td>4K Monitor</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">4K Monitor</span>
+                                <span class="product-count">+1</span>
+                            </div>
+                        </td>
                         <td>2</td>
                         <td><span class="amount">$1,890.00</span></td>
                         <td><span class="badge cancelled">Cancelled</span></td>
@@ -439,7 +487,7 @@
                                 <span>... @gmail.com</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></button></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
@@ -454,7 +502,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Bluetooth Speaker</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">Bluetooth Speaker</span>
+                                <span class="product-count">+4</span>
+                            </div>
+                        </td>
                         <td>5</td>
                         <td><span class="amount">$425.75</span></td>
                         <td><span class="badge failed">Failed</span></td>
@@ -465,7 +518,7 @@
                                 <span>... 4509</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></button></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
@@ -480,7 +533,11 @@
                                 </div>
                             </div>
                         </td>
-                        <td>MacBook Pro</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">MacBook Pro</span>
+                            </div>
+                        </td>
                         <td>1</td>
                         <td><span class="amount">$3,200.00</span></td>
                         <td><span class="badge cancelled">Cancelled</span></td>
@@ -491,7 +548,7 @@
                                 <span>... 3507</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></button></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
@@ -506,7 +563,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Mechanical Keyboard</td>
+                        <td>
+                            <div class="product-info">
+                                <span class="product-name">Mechanical Keyboard</span>
+                                <span class="product-count">+2</span>
+                            </div>
+                        </td>
                         <td>4</td>
                         <td><span class="amount">$1,550.00</span></td>
                         <td><span class="badge cancelled">Cancelled</span></td>
@@ -517,7 +579,7 @@
                                 <span>... @gmail.com</span>
                             </div>
                         </td>
-                        <td><button class="actions-btn">⋮</button></td>
+                        <td><button class="actions-btn"><i class="fas fa-eye"></button></td>
                     </tr>
                 </tbody>
             </table>

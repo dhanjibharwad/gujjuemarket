@@ -1,12 +1,14 @@
-<style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Manager</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #f5f5f7;
             padding: 20px;
         }
@@ -26,56 +28,80 @@
             align-items: center;
             padding: 20px 24px;
             border-bottom: 1px solid #e5e5e5;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
-        .search-box {
-            padding: 10px 16px;
+        input, select, textarea, button {
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input[type="text"], select, textarea {
+            padding: 10px 12px;
             border: 1px solid #d1d1d6;
             border-radius: 8px;
-            font-size: 14px;
-            width: 240px;
-            outline: none;
-            transition: border-color 0.2s;
         }
 
-        .search-box:focus {
+        input[type="text"]:focus, textarea:focus {
             border-color: #FF6B35;
         }
 
-        .header-right {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
+        .search-box { width: 240px; }
+
+        .header-right { display: flex; gap: 12px; align-items: center; }
 
         .entries-select {
             padding: 8px 32px 8px 12px;
-            border: 1px solid #d1d1d6;
-            border-radius: 8px;
-            font-size: 14px;
             background: white;
             cursor: pointer;
-            outline: none;
         }
 
-        .add-btn {
+        .btn {
             padding: 10px 20px;
-            background: #FF6B35;
-            color: white;
             border: none;
             border-radius: 8px;
-            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: background 0.2s;
         }
 
-        .add-btn:hover {
+        .btn-primary {
             background: #FF6B35;
+            color: white;
         }
+
+        .btn-primary:hover { background: #e85a2a; }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover { background: #e5e7eb; }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-edit {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-edit:hover { background: #45a049; }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover { background: #c82333; }
 
         table {
             width: 100%;
@@ -97,18 +123,14 @@
             letter-spacing: 0.5px;
         }
 
-        th:first-child {
-            width: 40px;
-        }
+        th:first-child { width: 40px; }
 
         td {
             padding: 20px 24px;
             border-bottom: 1px solid #f0f0f0;
         }
 
-        tbody tr:hover {
-            background: #fafafa;
-        }
+        tbody tr:hover { background: #fafafa; }
 
         .checkbox {
             width: 18px;
@@ -123,15 +145,30 @@
             gap: 16px;
         }
 
-        .category-icon {
+        .category-icon, .category-image {
             width: 48px;
             height: 48px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
             flex-shrink: 0;
+            background: #f9fafb;
+        }
+
+        .category-image {
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .category-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-icon {
+            font-size: 24px;
         }
 
         .category-info h3 {
@@ -147,34 +184,10 @@
             line-height: 1.4;
         }
 
-        .number-cell {
-            font-size: 15px;
-            color: #1f2937;
-            font-weight: 500;
-        }
-
         .actions-cell {
             display: flex;
             gap: 8px;
             align-items: center;
-        }
-
-        .icon-btn {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            transition: background 0.2s;
-            color: #6b7280;
-        }
-
-        .icon-btn:hover {
-            background: #f3f4f6;
         }
 
         .pagination {
@@ -183,6 +196,8 @@
             align-items: center;
             padding: 20px 24px;
             border-top: 1px solid #e5e5e5;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .pagination-info {
@@ -190,10 +205,7 @@
             color: #6b7280;
         }
 
-        .pagination-buttons {
-            display: flex;
-            gap: 8px;
-        }
+        .pagination-buttons { display: flex; gap: 8px; }
 
         .page-btn {
             width: 36px;
@@ -202,8 +214,6 @@
             background: white;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -236,24 +246,26 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            padding: 20px;
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-content {
             background: white;
             padding: 32px;
             border-radius: 12px;
-            width: 90%;
+            width: 100%;
             max-width: 500px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-content h2 {
             margin-bottom: 24px;
             font-size: 20px;
+            color: #1f2937;
         }
 
         .form-group {
@@ -263,23 +275,56 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-size: 14px;
             font-weight: 500;
             color: #374151;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #d1d1d6;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            font-family: inherit;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .image-upload-area {
+            border: 2px dashed #d1d1d6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .image-upload-area:hover {
             border-color: #FF6B35;
+            background: #fff5f2;
+        }
+
+        .image-upload-area.has-image {
+            border-style: solid;
+            padding: 10px;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-text {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
         }
 
         .modal-buttons {
@@ -289,19 +334,30 @@
             margin-top: 24px;
         }
 
-        .btn-secondary {
-            padding: 10px 20px;
-            background: #f3f4f6;
-            color: #374151;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
+        .empty-state {
+            padding: 60px 24px;
+            text-align: center;
+            color: #6b7280;
         }
 
-        .btn-secondary:hover {
-            background: #e5e7eb;
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        input[type="file"] { display: none; }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box { width: 100%; }
+            .header-right { justify-content: space-between; }
+            .pagination {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -316,206 +372,377 @@
                     <option value="25">25</option>
                     <option value="50">50</option>
                 </select>
-                <button class="add-btn" onclick="openModal()">
+                <button class="btn btn-primary" id="addCategoryBtn">
                     <span>+</span> Add Category
                 </button>
             </div>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th><input type="checkbox" class="checkbox" id="selectAll"></th>
-                    <th>CATEGORIES</th>
-                    <th>TOTAL PRODUCTS</th>
-                    <th>TOTAL EARNING</th>
-                    <th>ACTIONS</th>
-                </tr>
-            </thead>
-            <tbody id="categoryTable">
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkbox" id="selectAll"></th>
+                        <th>CATEGORY NAME</th>
+                        <th>IMAGE UPLOAD</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="categoryTable"></tbody>
+            </table>
+        </div>
 
         <div class="pagination">
-            <div class="pagination-info" id="paginationInfo">Showing 1 to 7 of 14 entries</div>
-            <div class="pagination-buttons">
-                <button class="page-btn" onclick="goToPage('first')" id="firstBtn">«</button>
-                <button class="page-btn" onclick="goToPage('prev')" id="prevBtn">‹</button>
-                <button class="page-btn active" onclick="goToPage(1)">1</button>
-                <button class="page-btn" onclick="goToPage(2)">2</button>
-                <button class="page-btn" onclick="goToPage('next')" id="nextBtn">›</button>
-                <button class="page-btn" onclick="goToPage('last')" id="lastBtn">»</button>
-            </div>
+            <div class="pagination-info" id="paginationInfo"></div>
+            <div class="pagination-buttons" id="paginationButtons"></div>
         </div>
     </div>
 
-    <div class="modal" id="addModal">
+    <div class="modal" id="categoryModal">
         <div class="modal-content">
-            <h2>Add New Category</h2>
+            <h2 id="modalTitle">Add New Category</h2>
             <form id="categoryForm">
+                <input type="hidden" id="categoryId">
                 <div class="form-group">
-                    <label>Category Name</label>
+                    <label for="categoryName">Category Name</label>
                     <input type="text" id="categoryName" required>
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
+                    <label for="categoryDesc">Description</label>
                     <textarea id="categoryDesc" rows="3" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Icon Emoji</label>
+                    <label for="categoryIcon">Icon Emoji</label>
                     <input type="text" id="categoryIcon" placeholder="🎯" maxlength="2">
                 </div>
+                <div class="form-group">
+                    <label>Category Image</label>
+                    <div class="image-upload-area" id="imageUploadArea">
+                        <div id="uploadPlaceholder">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-text">Click to upload image</div>
+                        </div>
+                        <div id="imagePreviewContainer" style="display: none;">
+                            <div class="image-preview">
+                                <img id="imagePreview" src="" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*">
+                </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="add-btn">Add Category</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Add Category</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        let categories = [
-            { id: 1, name: 'Travel', desc: 'Choose from wide range of travel accessories from popular brands', icon: '🎒', products: 4186, earning: 7912.99 },
-            { id: 2, name: 'Smart Phone', desc: 'Choose from wide range of smartphones from popular brands', icon: '📱', products: 1947, earning: 99129 },
-            { id: 3, name: 'Shoes', desc: 'Explore the latest shoes from Top brands', icon: '👟', products: 4940, earning: 3612.98 },
-            { id: 4, name: 'Jewellery', desc: 'Choose from wide range of Jewellery from popular brands', icon: '💍', products: 4186, earning: 7912.99 },
-            { id: 5, name: 'Home Decor', desc: 'Choose from wide range of home decor from popular brands', icon: '🛋️', products: 9184, earning: 19120.45 },
-            { id: 6, name: 'Grocery', desc: 'Get fresh groceries delivered at your doorstep', icon: '🛒', products: 4186, earning: 7912.99 },
-            { id: 7, name: 'Games', desc: 'Dive into world of Virtual Reality with latest games', icon: '🎮', products: 5764, earning: 29129 },
-            { id: 8, name: 'Electronics', desc: 'Latest electronics and gadgets for tech enthusiasts', icon: '⚡', products: 3521, earning: 15890.50 },
-            { id: 9, name: 'Books', desc: 'Discover bestsellers and classic literature', icon: '📚', products: 6234, earning: 8450.75 },
-            { id: 10, name: 'Sports', desc: 'Equipment and gear for all your sporting needs', icon: '⚽', products: 2987, earning: 12340.25 },
-            { id: 11, name: 'Music', desc: 'Instruments, audio equipment, and more', icon: '🎵', products: 1876, earning: 9875.60 },
-            { id: 12, name: 'Fashion', desc: 'Trendy clothing and accessories', icon: '👔', products: 8765, earning: 34560.80 },
-            { id: 13, name: 'Beauty', desc: 'Cosmetics and skincare products', icon: '💄', products: 4532, earning: 18920.35 },
-            { id: 14, name: 'Toys', desc: 'Fun and educational toys for kids', icon: '🧸', products: 3298, earning: 11234.90 }
-        ];
+        const state = {
+            categories: [
+                { id: 1, name: 'Travel', desc: 'Choose from wide range of travel accessories', icon: '🎒', image: null },
+                { id: 2, name: 'Smart Phone', desc: 'Choose from wide range of smartphones', icon: '📱', image: null },
+                { id: 3, name: 'Shoes', desc: 'Explore the latest shoes from Top brands', icon: '👟', image: null },
+                { id: 4, name: 'Jewellery', desc: 'Choose from wide range of Jewellery', icon: '💍', image: null },
+                { id: 5, name: 'Home Decor', desc: 'Choose from wide range of home decor', icon: '🛋️', image: null },
+                { id: 6, name: 'Grocery', desc: 'Get fresh groceries delivered', icon: '🛒', image: null },
+                { id: 7, name: 'Games', desc: 'Dive into world of Virtual Reality', icon: '🎮', image: null }
+            ],
+            currentPage: 1,
+            entriesPerPage: 7,
+            searchQuery: '',
+            editingId: null,
+            currentImage: null
+        };
 
-        let currentPage = 1;
-        let entriesPerPage = 7;
-        let filteredCategories = [...categories];
+        const el = {
+            searchInput: document.getElementById('searchInput'),
+            entriesSelect: document.getElementById('entriesSelect'),
+            addCategoryBtn: document.getElementById('addCategoryBtn'),
+            selectAll: document.getElementById('selectAll'),
+            categoryTable: document.getElementById('categoryTable'),
+            paginationInfo: document.getElementById('paginationInfo'),
+            paginationButtons: document.getElementById('paginationButtons'),
+            modal: document.getElementById('categoryModal'),
+            modalTitle: document.getElementById('modalTitle'),
+            categoryForm: document.getElementById('categoryForm'),
+            categoryId: document.getElementById('categoryId'),
+            categoryName: document.getElementById('categoryName'),
+            categoryDesc: document.getElementById('categoryDesc'),
+            categoryIcon: document.getElementById('categoryIcon'),
+            cancelBtn: document.getElementById('cancelBtn'),
+            submitBtn: document.getElementById('submitBtn'),
+            imageInput: document.getElementById('imageInput'),
+            imageUploadArea: document.getElementById('imageUploadArea'),
+            uploadPlaceholder: document.getElementById('uploadPlaceholder'),
+            imagePreviewContainer: document.getElementById('imagePreviewContainer'),
+            imagePreview: document.getElementById('imagePreview')
+        };
 
-        function renderTable() {
-            const start = (currentPage - 1) * entriesPerPage;
-            const end = start + entriesPerPage;
-            const pageCategories = filteredCategories.slice(start, end);
+        const escapeHtml = (text) => {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        };
+
+        const getFilteredCategories = () => {
+            if (!state.searchQuery) return state.categories;
+            const q = state.searchQuery.toLowerCase();
+            return state.categories.filter(c => 
+                c.name.toLowerCase().includes(q) || 
+                c.desc.toLowerCase().includes(q)
+            );
+        };
+
+        const getPaginatedData = () => {
+            const filtered = getFilteredCategories();
+            const start = (state.currentPage - 1) * state.entriesPerPage;
+            return {
+                items: filtered.slice(start, start + state.entriesPerPage),
+                total: filtered.length
+            };
+        };
+
+        const getTotalPages = () => {
+            return Math.ceil(getFilteredCategories().length / state.entriesPerPage);
+        };
+
+        const renderTable = () => {
+            const { items, total } = getPaginatedData();
             
-            const tbody = document.getElementById('categoryTable');
-            tbody.innerHTML = pageCategories.map(cat => `
-                <tr>
-                    <td><input type="checkbox" class="checkbox"></td>
+            if (items.length === 0) {
+                el.categoryTable.innerHTML = `
+                    <tr><td colspan="4">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📦</div>
+                            <p>No categories found</p>
+                        </div>
+                    </td></tr>`;
+                renderPagination();
+                return;
+            }
+
+            el.categoryTable.innerHTML = items.map(c => `
+                <tr data-id="${c.id}">
+                    <td><input type="checkbox" class="checkbox row-checkbox"></td>
                     <td>
                         <div class="category-cell">
-                            <div class="category-icon">${cat.icon}</div>
+                            ${c.image ? 
+                                `<div class="category-image"><img src="${c.image}" alt="${escapeHtml(c.name)}"></div>` :
+                                `<div class="category-icon">${escapeHtml(c.icon)}</div>`
+                            }
                             <div class="category-info">
-                                <h3>${cat.name}</h3>
-                                <p>${cat.desc}</p>
+                                <h3>${escapeHtml(c.name)}</h3>
+                                <p>${escapeHtml(c.desc)}</p>
                             </div>
                         </div>
                     </td>
-                    <td class="number-cell">${cat.products.toLocaleString()}</td>
-                    <td class="number-cell">$${cat.earning.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" data-action="upload" data-id="${c.id}">
+                            ${c.image ? 'Change Image' : 'Upload Image'}
+                        </button>
+                    </td>
                     <td>
                         <div class="actions-cell">
-                            <button class="icon-btn" onclick="editCategory(${cat.id})" title="Edit">✏️</button>
-                            <button class="icon-btn" onclick="deleteCategory(${cat.id})" title="Delete">🗑️</button>
+                            <button class="btn btn-edit btn-sm" data-action="edit" data-id="${c.id}">Edit</button>
+                            <button class="btn btn-delete btn-sm" data-action="delete" data-id="${c.id}">Delete</button>
                         </div>
                     </td>
                 </tr>
             `).join('');
 
-            updatePagination();
-        }
+            renderPagination();
+        };
 
-        function updatePagination() {
-            const total = filteredCategories.length;
-            const start = (currentPage - 1) * entriesPerPage + 1;
-            const end = Math.min(start + entriesPerPage - 1, total);
-            
-            document.getElementById('paginationInfo').textContent = 
-                `Showing ${start} to ${end} of ${total} entries`;
-            
-            const totalPages = Math.ceil(total / entriesPerPage);
-            document.getElementById('prevBtn').disabled = currentPage === 1;
-            document.getElementById('firstBtn').disabled = currentPage === 1;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages;
-            document.getElementById('lastBtn').disabled = currentPage === totalPages;
-        }
+        const renderPagination = () => {
+            const { total } = getPaginatedData();
+            const totalPages = getTotalPages();
+            const start = total === 0 ? 0 : (state.currentPage - 1) * state.entriesPerPage + 1;
+            const end = Math.min(start + state.entriesPerPage - 1, total);
 
-        function goToPage(page) {
-            const totalPages = Math.ceil(filteredCategories.length / entriesPerPage);
-            
-            if (page === 'first') currentPage = 1;
-            else if (page === 'prev') currentPage = Math.max(1, currentPage - 1);
-            else if (page === 'next') currentPage = Math.min(totalPages, currentPage + 1);
-            else if (page === 'last') currentPage = totalPages;
-            else currentPage = page;
-            
+            el.paginationInfo.textContent = `Showing ${start} to ${end} of ${total} entries`;
+
+            const buttons = [];
+            buttons.push(`<button class="page-btn" data-page="first" ${state.currentPage === 1 ? 'disabled' : ''}>«</button>`);
+            buttons.push(`<button class="page-btn" data-page="prev" ${state.currentPage === 1 ? 'disabled' : ''}>‹</button>`);
+
+            let startPage = Math.max(1, state.currentPage - 1);
+            let endPage = Math.min(totalPages, startPage + 2);
+            if (endPage - startPage < 2) startPage = Math.max(1, endPage - 2);
+
+            for (let i = startPage; i <= endPage; i++) {
+                buttons.push(`<button class="page-btn ${i === state.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+            }
+
+            buttons.push(`<button class="page-btn" data-page="next" ${state.currentPage === totalPages ? 'disabled' : ''}>›</button>`);
+            buttons.push(`<button class="page-btn" data-page="last" ${state.currentPage === totalPages ? 'disabled' : ''}>»</button>`);
+
+            el.paginationButtons.innerHTML = buttons.join('');
+        };
+
+        const handleImageUpload = (file) => {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    state.currentImage = e.target.result;
+                    el.imagePreview.src = state.currentImage;
+                    el.uploadPlaceholder.style.display = 'none';
+                    el.imagePreviewContainer.style.display = 'block';
+                    el.imageUploadArea.classList.add('has-image');
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        const openModal = (category = null) => {
+            if (category) {
+                state.editingId = category.id;
+                el.modalTitle.textContent = 'Edit Category';
+                el.categoryId.value = category.id;
+                el.categoryName.value = category.name;
+                el.categoryDesc.value = category.desc;
+                el.categoryIcon.value = category.icon;
+                el.submitBtn.textContent = 'Update Category';
+                
+                if (category.image) {
+                    state.currentImage = category.image;
+                    el.imagePreview.src = category.image;
+                    el.uploadPlaceholder.style.display = 'none';
+                    el.imagePreviewContainer.style.display = 'block';
+                    el.imageUploadArea.classList.add('has-image');
+                }
+            } else {
+                state.editingId = null;
+                el.modalTitle.textContent = 'Add New Category';
+                el.categoryForm.reset();
+                el.submitBtn.textContent = 'Add Category';
+                state.currentImage = null;
+                el.uploadPlaceholder.style.display = 'block';
+                el.imagePreviewContainer.style.display = 'none';
+                el.imageUploadArea.classList.remove('has-image');
+            }
+            el.modal.classList.add('active');
+        };
+
+        const closeModal = () => {
+            el.modal.classList.remove('active');
+            el.categoryForm.reset();
+            state.editingId = null;
+            state.currentImage = null;
+            el.uploadPlaceholder.style.display = 'block';
+            el.imagePreviewContainer.style.display = 'none';
+            el.imageUploadArea.classList.remove('has-image');
+        };
+
+        const addCategory = (data) => {
+            const newId = Math.max(...state.categories.map(c => c.id), 0) + 1;
+            state.categories.push({ id: newId, ...data });
             renderTable();
-        }
+        };
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const search = e.target.value.toLowerCase();
-            filteredCategories = categories.filter(cat => 
-                cat.name.toLowerCase().includes(search) || 
-                cat.desc.toLowerCase().includes(search)
-            );
-            currentPage = 1;
+        const updateCategory = (id, data) => {
+            const idx = state.categories.findIndex(c => c.id === id);
+            if (idx !== -1) {
+                state.categories[idx] = { ...state.categories[idx], ...data };
+                renderTable();
+            }
+        };
+
+        const deleteCategory = (id) => {
+            if (confirm('Are you sure you want to delete this category?')) {
+                state.categories = state.categories.filter(c => c.id !== id);
+                const totalPages = getTotalPages();
+                if (state.currentPage > totalPages && totalPages > 0) {
+                    state.currentPage = totalPages;
+                }
+                renderTable();
+            }
+        };
+
+        const goToPage = (page) => {
+            const totalPages = getTotalPages();
+            if (page === 'first') state.currentPage = 1;
+            else if (page === 'prev') state.currentPage = Math.max(1, state.currentPage - 1);
+            else if (page === 'next') state.currentPage = Math.min(totalPages, state.currentPage + 1);
+            else if (page === 'last') state.currentPage = totalPages;
+            else state.currentPage = parseInt(page);
+            renderTable();
+        };
+
+        el.searchInput.addEventListener('input', (e) => {
+            state.searchQuery = e.target.value.trim();
+            state.currentPage = 1;
             renderTable();
         });
 
-        document.getElementById('entriesSelect').addEventListener('change', (e) => {
-            entriesPerPage = parseInt(e.target.value);
-            currentPage = 1;
+        el.entriesSelect.addEventListener('change', (e) => {
+            state.entriesPerPage = parseInt(e.target.value);
+            state.currentPage = 1;
             renderTable();
         });
 
-        document.getElementById('selectAll').addEventListener('change', (e) => {
-            document.querySelectorAll('tbody .checkbox').forEach(cb => {
-                cb.checked = e.target.checked;
-            });
+        el.selectAll.addEventListener('change', (e) => {
+            document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = e.target.checked);
         });
 
-        function openModal() {
-            document.getElementById('addModal').classList.add('active');
-        }
+        el.addCategoryBtn.addEventListener('click', () => openModal());
+        el.cancelBtn.addEventListener('click', closeModal);
 
-        function closeModal() {
-            document.getElementById('addModal').classList.remove('active');
-            document.getElementById('categoryForm').reset();
-        }
+        el.modal.addEventListener('click', (e) => {
+            if (e.target === el.modal) closeModal();
+        });
 
-        document.getElementById('categoryForm').addEventListener('submit', (e) => {
+        el.imageUploadArea.addEventListener('click', () => el.imageInput.click());
+
+        el.imageInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) handleImageUpload(e.target.files[0]);
+        });
+
+        el.categoryForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const newCat = {
-                id: categories.length + 1,
-                name: document.getElementById('categoryName').value,
-                desc: document.getElementById('categoryDesc').value,
-                icon: document.getElementById('categoryIcon').value || '📦',
-                products: Math.floor(Math.random() * 10000),
-                earning: Math.random() * 50000
+            
+            const data = {
+                name: el.categoryName.value.trim(),
+                desc: el.categoryDesc.value.trim(),
+                icon: el.categoryIcon.value.trim() || '📦',
+                image: state.currentImage
             };
-            categories.push(newCat);
-            filteredCategories = [...categories];
-            renderTable();
+
+            if (state.editingId) {
+                updateCategory(state.editingId, data);
+            } else {
+                addCategory(data);
+            }
+            
             closeModal();
         });
 
-        function editCategory(id) {
-            alert(`Edit category ${id} - Feature coming soon!`);
-        }
-
-        function deleteCategory(id) {
-            if (confirm('Are you sure you want to delete this category?')) {
-                categories = categories.filter(cat => cat.id !== id);
-                filteredCategories = [...categories];
-                renderTable();
+        el.categoryTable.addEventListener('click', (e) => {
+            const action = e.target.dataset.action;
+            const id = parseInt(e.target.dataset.id);
+            
+            if (action === 'edit') {
+                const cat = state.categories.find(c => c.id === id);
+                if (cat) openModal(cat);
+            } else if (action === 'delete') {
+                deleteCategory(id);
+            } else if (action === 'upload') {
+                const cat = state.categories.find(c => c.id === id);
+                if (cat) openModal(cat);
             }
-        }
+        });
 
-        document.getElementById('addModal').addEventListener('click', (e) => {
-            if (e.target.id === 'addModal') closeModal();
+        el.paginationButtons.addEventListener('click', (e) => {
+            const page = e.target.dataset.page;
+            if (page && !e.target.disabled) goToPage(page);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && el.modal.classList.contains('active')) closeModal();
         });
 
         renderTable();
     </script>
+</body>
+</html>

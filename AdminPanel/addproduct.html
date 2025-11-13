@@ -250,8 +250,21 @@
         .select-item { padding: 10px 12px; cursor: pointer; font-size: 14px; color: var(--dark-gray); }
         .select-item:hover { background: #f5f5f5; }
 
+        textarea { padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; outline: none; color: var(--dark-gray); font-family: inherit; resize: vertical; min-height: 100px; }
+        textarea:focus { border-color: var(--primary-orange); }
+
+        .variation-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; padding: 15px; background: #f9f9f9; border-radius: 6px; margin-bottom: 15px; position: relative; }
+        .variation-row input { background: white; }
+        .btn-add-variation { background: var(--light-orange); color: var(--primary-orange); border: 1px dashed var(--primary-orange); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; width: 100%; margin-top: 10px; }
+        .btn-add-variation:hover { background: #ffe8dc; }
+        .btn-remove-variation { position: absolute; top: 10px; right: 10px; background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .btn-remove-variation:hover { background: #c82333; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .section-title { font-size: 18px; font-weight: 600; color: var(--dark-gray); margin: 30px 0 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+
         @media (max-width: 768px) {
             .form-row { grid-template-columns: 1fr; }
+            .variation-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -445,6 +458,51 @@
                         <button type="button"><i class="fas fa-remove-format"></i></button>
                     </div>
                     <div class="editor-content" contenteditable="true">Enter what's included here...</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Variation Options</h2>
+            <div id="variationsContainer"></div>
+            <button type="button" class="btn-add-variation" onclick="addVariation()"><i class="fas fa-plus"></i> Add Variation</button>
+
+            <h2 class="section-title">Packing Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Length (cm)</label>
+                    <input type="number" name="length" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Width (cm)</label>
+                    <input type="number" name="width" step="0.01" min="0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Height (cm)</label>
+                    <input type="number" name="height" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" name="weight" step="0.01" min="0">
+                </div>
+            </div>
+
+            <h2 class="section-title">Tax Information</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>HSN Code</label>
+                    <input type="text" name="hsnCode">
+                </div>
+                <div class="form-group">
+                    <label>Tax Code (GST Rate)</label>
+                    <select name="taxCode">
+                        <option value="">Select GST Rate</option>
+                        <option value="0">0%</option>
+                        <option value="5">5%</option>
+                        <option value="12">12%</option>
+                        <option value="18">18%</option>
+                        <option value="28">28%</option>
+                    </select>
                 </div>
             </div>
 
@@ -701,6 +759,58 @@
                 if (!this.textContent.trim()) this.textContent = placeholder;
             });
         });
+
+        // Variation Management
+        let variationCount = 0;
+
+        function addVariation() {
+            variationCount++;
+            const container = document.getElementById('variationsContainer');
+            const variationRow = document.createElement('div');
+            variationRow.className = 'variation-row';
+            variationRow.id = `variation-${variationCount}`;
+            variationRow.innerHTML = `
+                <button type="button" class="btn-remove-variation" onclick="removeVariation(${variationCount})"><i class="fas fa-times"></i></button>
+                <div class="form-group">
+                    <label>Variation Title</label>
+                    <input type="text" name="variations[${variationCount}][title]" placeholder="e.g., Color, Size">
+                </div>
+                <div class="form-group">
+                    <label>Size</label>
+                    <input type="text" name="variations[${variationCount}][size]" placeholder="e.g., M, L, XL">
+                </div>
+                <div class="form-group">
+                    <label>MRP</label>
+                    <input type="number" name="variations[${variationCount}][mrp]" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Cost Price</label>
+                    <input type="number" name="variations[${variationCount}][costPrice]" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Sell Price</label>
+                    <input type="number" name="variations[${variationCount}][sellPrice]" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" name="variations[${variationCount}][quantity]" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Variation SKU</label>
+                    <input type="text" name="variations[${variationCount}][sku]" placeholder="Unique SKU">
+                </div>
+                <div class="form-group">
+                    <label>Upload Image</label>
+                    <input type="file" name="variations[${variationCount}][image]" accept="image/*" style="padding: 8px;">
+                </div>
+            `;
+            container.appendChild(variationRow);
+        }
+
+        function removeVariation(id) {
+            const element = document.getElementById(`variation-${id}`);
+            if (element) element.remove();
+        }
     </script>
 </body>
 </html>

@@ -4469,8 +4469,8 @@ ol {
 .pd-features img.feature-icon {
   display: block;         /* forces image on its own line */
   margin: 0 auto 6px;     /* centers image and adds space below */
-  width: 40px;            /* adjust size */
-  height: 40px;
+  width: 35px;            /* adjust size */
+  height: 35px;
 }
 
 .pd-features span {
@@ -4511,11 +4511,11 @@ ol {
 }
 
 .feature-item span {
-	font-size: 12px;
-	color: #333;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
+  font-size: 9px;
+  color: #444;
+  font-weight: 400;
+  opacity: 0.8;
+  letter-spacing: 0.4px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -4999,4 +4999,309 @@ ol {
 		font-size: 10px;
 		max-width: 70px;
 	}
+}
+/* Flipkart-style Color Variant Picker */
+.color-variant-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.variant-item {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.variant-item:hover {
+    border-color: #2874f0;
+    transform: scale(1.05);
+}
+
+.variant-item.active {
+    border-color: #2874f0;
+    box-shadow: 0 0 0 1px #2874f0;
+}
+
+.variant-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.more-colors {
+    color: #2874f0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.more-colors:hover {
+    background-color: #f0f7ff;
+}
+/* Enhanced Price Section */
+.price-section {
+    margin: 15px 0;
+}
+
+.deal-badge {
+    background-color: #cc0c39;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.price-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.discount {
+    color: #cc0c39;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.current-price {
+    color: #0f1111;
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.price-details {
+    font-size: 14px;
+    color: #565959;
+    margin-bottom: 8px;
+}
+
+.mrp-label {
+    margin-right: 5px;
+}
+
+.original-price {
+    text-decoration: line-through;
+}
+
+.fulfillment-badge {
+    background-color: #232f3e;
+    color: white;
+    padding: 2px 6px;
+    font-size: 11px;
+    border-radius: 2px;
+    display: inline-block;
+}
+/* Available Offers Section */
+.available-offers {
+    margin: 20px 0;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #fafafa;
+}
+
+.available-offers h6 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #212121;
+}
+
+.offer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+	margin-top: 10px;
+}
+
+.offer-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.offer-icon {
+    font-size: 16px;
+    color: #388e3c;
+}
+
+.offer-type {
+    color: #388e3c;
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.offer-text {
+    color: #212121;
+    flex: 1;
+}
+
+.offer-tnc {
+    color: #2874f0;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+}
+/* Size Section */
+.pd-size {
+    margin: 20px 0;
+}
+
+.size-header {
+    margin-bottom: 10px;
+}
+
+.size-label {
+    font-size: 14px;
+    color: #212121;
+}
+
+.size-options {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.size-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #d4d4d4;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.size-btn:hover {
+    border-color: #2874f0;
+}
+
+.size-btn.active {
+    border-color: #2874f0;
+    background-color: #2874f0;
+    color: white;
+}
+
+.size-recommendation {
+    font-size: 13px;
+    color: #878787;
+    margin-bottom: 10px;
+}
+
+.size-chart-dropdown {
+    position: relative;
+}
+
+.size-chart-btn {
+    background: none;
+    border: none;
+    color: #2874f0;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.size-chart-popup {
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    background: white;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    min-width: 300px;
+}
+
+.size-chart-popup.show {
+    display: block;
+}
+
+.chart-content {
+    padding: 15px;
+}
+
+.chart-content h4 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    color: #212121;
+}
+
+.size-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.size-table th,
+.size-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 13px;
+}
+
+.size-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+/* Product Action Buttons */
+.product-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn-add-cart,
+.btn-buy-now {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-add-cart {
+    background-color: #ff9f00;
+    color: white;
+}
+
+.btn-add-cart:hover {
+    background-color: #e68900;
+}
+
+.btn-buy-now {
+    background-color: #fb641b;
+    color: white;
+}
+
+.btn-buy-now:hover {
+    background-color: #e55a19;
+}
+
+.btn-add-cart i,
+.btn-buy-now i {
+    margin-right: 8px;
 }

@@ -248,3 +248,60 @@
 	});
 
 })(jQuery);
+// Color Variant Picker Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const variantItems = document.querySelectorAll('.variant-item');
+    const mainImage = document.getElementById('main-image');
+    
+    variantItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove active class from all items
+            variantItems.forEach(v => v.classList.remove('active'));
+            
+            // Add active class to clicked item
+            this.classList.add('active');
+            
+            // Update main image
+            const newImageSrc = this.querySelector('img').src;
+            if (mainImage) {
+                mainImage.src = newImageSrc;
+            }
+        });
+    });
+});
+// Size Chart Dropdown Functionality
+function toggleSizeChart() {
+    const popup = document.getElementById('sizeChartPopup');
+    popup.classList.toggle('show');
+}
+
+// Size Button Selection
+document.addEventListener('DOMContentLoaded', function() {
+    const sizeButtons = document.querySelectorAll('.size-btn');
+    const sizeLabel = document.querySelector('.size-label strong');
+    
+    sizeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            sizeButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Update size label
+            if (sizeLabel) {
+                sizeLabel.textContent = this.textContent;
+            }
+        });
+    });
+    
+    // Close size chart when clicking outside
+    document.addEventListener('click', function(event) {
+        const popup = document.getElementById('sizeChartPopup');
+        const chartBtn = document.querySelector('.size-chart-btn');
+        
+        if (!popup.contains(event.target) && !chartBtn.contains(event.target)) {
+            popup.classList.remove('show');
+        }
+    });
+});

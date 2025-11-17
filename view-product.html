@@ -22,6 +22,75 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <style>
+        /* Zoom Functionality Styles */
+        .product-pic-container {
+            position: relative;
+        }
+
+        .product-details-pic-item {
+            position: relative;
+            cursor: crosshair;
+            overflow: visible !important;
+        }
+
+        .product-details-pic-item-large {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Zoom Selection Box */
+        .zoom-selector {
+            position: absolute;
+            border: 2px solid #007bff;
+            background: rgba(173, 216, 230, 0.3);
+            pointer-events: none;
+            display: none;
+            z-index: 10;
+            width: 150px;
+            height: 150px;
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        }
+
+        /* Zoomed Preview Panel */
+        .zoom-panel {
+            position: absolute;
+            left: calc(100% + 20px);
+            top: 0;
+            width: 600px;
+            height: 700px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            overflow: hidden;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .zoom-panel img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            max-width: none;
+            max-height: none;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Responsive - Hide zoom on smaller screens */
+        @media (max-width: 1200px) {
+            .zoom-panel {
+                display: none !important;
+            }
+            
+            .product-details-pic-item {
+                cursor: default;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -58,8 +127,8 @@
                     <div class="product-details-pic">
                         <div class="product-pic-container">
                             <div class="product-thumbnails">
-                                <div class="thumb-item active" onclick="changeMainImage('img/products/ph.png')">
-                                    <img src="img/products/ph.png" alt="">
+                                <div class="thumb-item active" onclick="changeMainImage('img/products/phonee.jpg')">
+                                    <img src="img/products/phonee.jpg" alt="">
                                 </div>
                                 <div class="thumb-item" onclick="changeMainImage('img/products/spk.png')">
                                     <img src="img/products/spk.png" alt="">
@@ -70,10 +139,24 @@
                                 <div class="thumb-item" onclick="changeMainImage('img/products/ph.png')">
                                     <img src="img/products/ph.png" alt="">
                                 </div>
+                                <div class="thumb-item" onclick="changeMainImage('img/products/ph.png')">
+                                    <img src="img/products/ph.png" alt="">
+                                </div>
+                                <div class="thumb-item" onclick="changeMainImage('img/products/ph.png')">
+                                    <img src="img/products/ph.png" alt="">
+                                </div>
+                                
+                                
                             </div>
-                            <div class="product-details-pic-item">
+                            <div class="product-details-pic-item" id="mainImageContainer">
                                 <img class="product-details-pic-item-large" id="main-image" src="img/products/ph.png"
                                     alt="">
+                                <div class="zoom-selector" id="zoomSelector"></div>
+                                
+                                <!-- Zoom Preview Panel -->
+                                <div class="zoom-panel" id="zoomPanel">
+                                    <img id="zoomImage" src="img/products/ph.png" alt="Zoomed view">
+                                </div>
                             </div>
                         </div>
                         <div class="product-brand-info">
@@ -154,29 +237,6 @@
                             <li><span>CATEGORIES</span>: <span id="tags">Electronics, Phone</span></li>
                             <li><span>TAGS</span>: <span>Phone, Apple, Smartphone</span></li>
                         </ul>
-                        <!-- <div class="pd-features">
-                            <div class="feature-item">
-                                <i class="fa fa-shield"></i>
-                                <span>1 Year Warranty</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fa fa-lock"></i>
-                                <span>Secure Transaction</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fa fa-refresh"></i>
-                                <span>Replacement/Return</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fa fa-money"></i>
-                                <span>Cash/Pay on Delivery</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fa fa-truck"></i>
-                                <span>Free Delivery</span>
-                            </div>
-
-                        </div> -->
                         <div class="pd-features">
                             <div class="feature-item">
                                 <img src="img/icons/warranty.png" alt="Warranty Icon" class="feature-icon">
@@ -199,8 +259,6 @@
                                 <span>Free Delivery</span>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -303,11 +361,6 @@
                     <div class="product-item">
                         <div class="pi-pic">
                             <img src="img/products/spk.png" alt="">
-                            <!-- <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul> -->
                         </div>
                         <div class="pi-text">
                             <div class="catagory-name">Accessories</div>
@@ -322,11 +375,6 @@
                     <div class="product-item">
                         <div class="pi-pic">
                             <img src="img/products/len.png" alt="">
-                            <!-- <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul> -->
                         </div>
                         <div class="pi-text">
                             <div class="catagory-name">Accessories</div>
@@ -341,11 +389,6 @@
                     <div class="product-item">
                         <div class="pi-pic">
                             <img src="img/products/ph.png" alt="">
-                            <!-- <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul> -->
                         </div>
                         <div class="pi-text">
                             <div class="catagory-name">Accessories</div>
@@ -360,11 +403,6 @@
                     <div class="product-item">
                         <div class="pi-pic">
                             <img src="img/products/spk.png" alt="">
-                            <!-- <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul> -->
                         </div>
                         <div class="pi-text">
                             <div class="catagory-name">Accessories</div>
@@ -395,11 +433,6 @@
                     <div class="product-item">
                         <div class="pi-pic">
                             <img src="img/products/spk.png" alt="">
-                            <!-- <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul> -->
                         </div>
                         <div class="pi-text">
                             <div class="catagory-name">Electronics</div>
@@ -414,11 +447,6 @@
                     <div class="product-item">
                         <div class="pi-pic">
                             <img src="img/products/len.png" alt="">
-                            <!-- <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul> -->
                         </div>
                         <div class="pi-text">
                             <div class="catagory-name">Electronics</div>
@@ -435,7 +463,6 @@
     <!-- Related Product Section End -->
 
     <!-- Product Description Images Section Begin -->
-
     <section class="product-description-images spad">
         <div class="container">
             <div class="row">
@@ -449,12 +476,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="image-description">
-                        <h4>Elegant Craftsmanship</h4>
-                        <p>Every curve and detail has been meticulously designed to create a device that's not just
-                            functional, but beautiful. The premium materials and flawless finish make this more than
-                            just a phone - it's a statement of style.</p>
-                    </div> -->
                 </div>
             </div>
             <div class="row">
@@ -498,7 +519,6 @@
             </div>
         </div>
     </section>
-
     <!-- Product Description Images Section End -->
 
     <!-- Footer Section Begin -->
@@ -507,6 +527,88 @@
 
     <!-- Js Plugins -->
     <script>
+        // ============================================
+        // ZOOM FUNCTIONALITY - START
+        // ============================================
+        
+        function initializeZoom() {
+            const ZOOM_LEVEL = 2.5;
+            const SELECTOR_SIZE = 150;
+
+            const mainImageContainer = document.getElementById('mainImageContainer');
+            const mainImage = document.getElementById('main-image');
+            const zoomSelector = document.getElementById('zoomSelector');
+            const zoomPanel = document.getElementById('zoomPanel');
+            const zoomImage = document.getElementById('zoomImage');
+
+            if (!mainImageContainer || !zoomSelector || !zoomPanel || !zoomImage) {
+                console.log('Zoom elements not found');
+                return;
+            }
+
+            console.log('Zoom initialized');
+
+            // Mouse Enter - Show zoom elements
+            mainImageContainer.addEventListener('mouseenter', function(e) {
+                if (window.innerWidth > 1200) {
+                    zoomSelector.style.display = 'block';
+                    zoomPanel.style.display = 'block';
+                    console.log('Zoom activated');
+                }
+            });
+
+            // Mouse Leave - Hide zoom elements
+            mainImageContainer.addEventListener('mouseleave', function() {
+                zoomSelector.style.display = 'none';
+                zoomPanel.style.display = 'none';
+            });
+
+            // Mouse Move - Update zoom
+            mainImageContainer.addEventListener('mousemove', function(e) {
+                if (window.innerWidth <= 1200) return;
+
+                const rect = mainImageContainer.getBoundingClientRect();
+                
+                // Calculate mouse position relative to container
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+
+                // Calculate selector position (centered on cursor)
+                let selectorX = x - (SELECTOR_SIZE / 2);
+                let selectorY = y - (SELECTOR_SIZE / 2);
+
+                // Constrain selector within image bounds
+                selectorX = Math.max(0, Math.min(selectorX, rect.width - SELECTOR_SIZE));
+                selectorY = Math.max(0, Math.min(selectorY, rect.height - SELECTOR_SIZE));
+
+                // Update selector position
+                zoomSelector.style.left = selectorX + 'px';
+                zoomSelector.style.top = selectorY + 'px';
+
+                // Calculate zoom ratio based on zoom panel size
+                const zoomRatioX = zoomPanel.offsetWidth / SELECTOR_SIZE;
+                const zoomRatioY = zoomPanel.offsetHeight / SELECTOR_SIZE;
+
+                // Calculate the size of the zoomed image
+                const zoomedWidth = rect.width * zoomRatioX;
+                const zoomedHeight = rect.height * zoomRatioY;
+
+                // Calculate position to show the correct portion
+                const zoomX = -(selectorX * zoomRatioX);
+                const zoomY = -(selectorY * zoomRatioY);
+
+                // Update zoomed image
+                zoomImage.style.width = zoomedWidth + 'px';
+                zoomImage.style.height = zoomedHeight + 'px';
+                zoomImage.style.left = zoomX + 'px';
+                zoomImage.style.top = zoomY + 'px';
+            });
+        }
+
+        // ============================================
+        // ZOOM FUNCTIONALITY - END
+        // ============================================
+
         // Product data
         const products = {
             'iphone-17-pro': {
@@ -568,6 +670,7 @@
                 document.getElementById('category').textContent = product.category;
                 document.getElementById('price').innerHTML = product.price + ' <span id="original-price">' + product.originalPrice + '</span>';
                 document.getElementById('main-image').src = product.image;
+                document.getElementById('zoomImage').src = product.image;
                 document.getElementById('description').textContent = product.description;
                 document.getElementById('brand').textContent = product.brand;
                 document.getElementById('model').textContent = product.model;
@@ -591,6 +694,7 @@
         // Change main image function
         function changeMainImage(imageSrc) {
             document.getElementById('main-image').src = imageSrc;
+            document.getElementById('zoomImage').src = imageSrc;
 
             // Update active thumbnail
             document.querySelectorAll('.thumb-item').forEach(item => {
@@ -626,6 +730,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             loadProduct();
             initTabs();
+            initializeZoom(); // Initialize zoom functionality
         });
     </script>
 

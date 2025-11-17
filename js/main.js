@@ -305,3 +305,71 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+// Initialize zoom functionality when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize zoom
+    initializeZoom();
+});
+
+// Zoom initialization function
+function initializeZoom() {
+    const ZOOM_LEVEL = 2.5;
+    const SELECTOR_SIZE = 150;
+
+    const mainImageContainer = document.getElementById('mainImageContainer');
+    const mainImage = document.getElementById('main-image');
+    const zoomSelector = document.getElementById('zoomSelector');
+    const zoomPanel = document.getElementById('zoomPanel');
+    const zoomImage = document.getElementById('zoomImage');
+
+    if (!mainImageContainer || !zoomSelector || !zoomPanel || !zoomImage) {
+        return;
+    }
+
+    // Mouse Enter - Show zoom elements
+    mainImageContainer.addEventListener('mouseenter', function(e) {
+        if (window.innerWidth > 1200) {
+            zoomSelector.style.display = 'block';
+            zoomPanel.style.display = 'block';
+        }
+    });
+
+    // Mouse Leave - Hide zoom elements
+    mainImageContainer.addEventListener('mouseleave', function() {
+        zoomSelector.style.display = 'none';
+        zoomPanel.style.display = 'none';
+    });
+
+    // Mouse Move - Update zoom
+    mainImageContainer.addEventListener('mousemove', function(e) {
+        if (window.innerWidth <= 1200) return;
+
+        const rect = mainImageContainer.getBoundingClientRect();
+        
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        let selectorX = x - (SELECTOR_SIZE / 2);
+        let selectorY = y - (SELECTOR_SIZE / 2);
+
+        selectorX = Math.max(0, Math.min(selectorX, rect.width - SELECTOR_SIZE));
+        selectorY = Math.max(0, Math.min(selectorY, rect.height - SELECTOR_SIZE));
+
+        zoomSelector.style.left = selectorX + 'px';
+        zoomSelector.style.top = selectorY + 'px';
+
+        const zoomRatioX = zoomPanel.offsetWidth / SELECTOR_SIZE;
+        const zoomRatioY = zoomPanel.offsetHeight / SELECTOR_SIZE;
+
+        const zoomedWidth = rect.width * zoomRatioX;
+        const zoomedHeight = rect.height * zoomRatioY;
+
+        const zoomX = -(selectorX * zoomRatioX);
+        const zoomY = -(selectorY * zoomRatioY);
+
+        zoomImage.style.width = zoomedWidth + 'px';
+        zoomImage.style.height = zoomedHeight + 'px';
+        zoomImage.style.left = zoomX + 'px';
+        zoomImage.style.top = zoomY + 'px';
+    });
+}

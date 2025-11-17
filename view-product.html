@@ -90,6 +90,49 @@
                 cursor: default;
             }
         }
+
+        /* Product Action Buttons */
+        .product-action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .btn-add-cart,
+        .btn-buy-now {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-add-cart {
+            background-color: #ff9f00;
+            color: white;
+        }
+
+        .btn-add-cart:hover {
+            background-color: #e68900;
+        }
+
+        .btn-buy-now {
+            background-color: #fb641b;
+            color: white;
+        }
+
+        .btn-buy-now:hover {
+            background-color: #e55a19;
+        }
+
+        .btn-add-cart i,
+        .btn-buy-now i {
+            margin-right: 8px;
+        }
     </style>
 </head>
 
@@ -127,10 +170,7 @@
                     <div class="product-details-pic">
                         <div class="product-pic-container">
                             <div class="product-thumbnails">
-                                <div class="thumb-item active" onclick="changeMainImage('img/products/gi3.jpg')">
-                                    <img src="img/products/gi3.jpg" alt="">
-                                </div>
-                                <div class="thumb-item" onclick="changeMainImage('img/products/gi.jpg')">
+                                <div class="thumb-item active" onclick="changeMainImage('img/products/gi.jpg')">
                                     <img src="img/products/gi.jpg" alt="">
                                 </div>
                                 <div class="thumb-item" onclick="changeMainImage('img/products/gi2.jpg')">
@@ -139,17 +179,20 @@
                                 <div class="thumb-item" onclick="changeMainImage('img/products/gi3.jpg')">
                                     <img src="img/products/gi3.jpg" alt="">
                                 </div>
-                                <div class="thumb-item" onclick="changeMainImage('img/products/gi2.jpg')">
-                                    <img src="img/products/gi2.jpg" alt="">
+                                <div class="thumb-item" onclick="changeMainImage('img/products/ph.png')">
+                                    <img src="img/products/ph.png" alt="">
                                 </div>
-                                <div class="thumb-item" onclick="changeMainImage('img/products/gi3.jpg')">
-                                    <img src="img/products/gi3.jpg" alt="">
+                                <div class="thumb-item" onclick="changeMainImage('img/products/phonee.jpg')">
+                                    <img src="img/products/phonee.jpg" alt="">
+                                </div>
+                                <div class="thumb-item" onclick="changeMainImage('img/products/ph.png')">
+                                    <img src="img/products/ph.png" alt="">
                                 </div>
                                 
                                 
                             </div>
                             <div class="product-details-pic-item" id="mainImageContainer">
-                                <img class="product-details-pic-item-large" id="main-image" src="img/products/gi3.jpg"
+                                <img class="product-details-pic-item-large" id="main-image" src="img/products/ph.png"
                                     alt="">
                                 <div class="zoom-selector" id="zoomSelector"></div>
                                 
@@ -170,7 +213,7 @@
                         <div class="product-brand-info">
                             <div class="brand-badge">
                                 <span class="badge-label">Top Brand</span>
-                                <span class="brand-name">Gucchi</span>
+                                <span class="brand-name">Apple</span>
                             </div>
                             <ul class="brand-features">
                                 <li><i class="fa fa-check-circle"></i> 83% positive ratings from 100K+ customers</li>
@@ -184,7 +227,7 @@
                     <div class="product-details-text">
                         <div class="pd-title">
                             <span id="category">Electronics</span>
-                            <h3 id="title">rytras Women's Rayon Printed Flared Kurti</h3>
+                            <h3 id="title">iPhone 17 Pro</h3>
                             <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                         </div>
                         <div class="pd-rating">
@@ -254,10 +297,10 @@
                                     <img src="img/products/gi.jpg" alt="Red variant">
                                 </div>
                                 <div class="variant-item" data-color="purple">
-                                    <img src="img/products/gi3.jpg" alt="Purple variant">
+                                    <img src="img/products/gi2.jpg" alt="Purple variant">
                                 </div>
                                 <div class="variant-item" data-color="orange">
-                                    <img src="img/products/gi2.jpg" alt="Orange variant">
+                                    <img src="img/products/phonee.jpg" alt="Orange variant">
                                 </div>
                                 <div class="more-colors">+2 more</div>
                             </div>
@@ -708,7 +751,7 @@
         // Product data
         const products = {
             'iphone-17-pro': {
-                name: 'rytras Womens Rayon Printed Flared Kurti',
+                name: 'iPhone 17 Pro',
                 category: 'Electronics',
                 price: '₹14.00',
                 originalPrice: '₹35.00',

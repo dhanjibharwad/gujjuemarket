@@ -1,6 +1,6 @@
     <!-- Header Section Begin -->
     <header class="header-section">
-        <div class="header-top">
+        <!-- <div class="header-top">
             <div class="container">
                 <div class="ht-left">
                     <div class="mail-service">
@@ -15,27 +15,31 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
+        </div> -->
+        <div class="container-fluid">
             <div class="inner-header">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                         <div class="logo">
                             <a href="./index.html">
                                <img src="img/lg.jpg" alt="" style="height: 48px; width: 105px;">
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-md-7">
+                    <div class="col-lg-5 col-md-9 col-sm-8 col-12 order-lg-2 order-md-2 order-3">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">Search Here</button>
+                            <button type="button" class="category-btn">Search</button>
                             <div class="input-group">
                                 <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <!-- <button type="button"><i class="ti-search"></i></button> -->
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 text-right col-md-3">
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-12 order-lg-3 order-md-4 order-4 navbar-links">
+                        <a href="/track-order.html"><i class="fa fa-truck"></i> Track Order</a>
+                        <a href="/register.html"><i class="fa fa-user"></i> Register Here</a>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-6 text-right order-lg-4 order-md-3 order-2">
                         <ul class="nav-right">
                             <li class="heart-icon">
                                 <a href="#">
@@ -87,7 +91,9 @@
                                         <a href="#" class="primary-btn view-card">VIEW CARD</a>
                                         <a href="/check-out.html" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
+                                    
                                 </div>
+                                
                             </li>
                             <li class="cart-price">Rs 150.00</li>
                         </ul>
@@ -96,7 +102,7 @@
             </div>
         </div>
         <div class="nav-item">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
@@ -362,6 +368,50 @@
     </header>
 
 <style>
+/* Responsive Navbar Styles */
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.navbar-links a {
+    font-size: 14px;
+    color: #1c1c1c;
+    white-space: nowrap;
+}
+
+@media (max-width: 991px) {
+    .navbar-links {
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .advanced-search {
+        margin-top: 10px;
+    }
+    
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-right {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 575px) {
+    .logo img {
+        height: 40px !important;
+        width: 90px !important;
+    }
+}
+
 /* Multi-Level Dropdown Navigation Styles */
 .nav-item .nav-depart .depart-btn .depart-hover .sub-menu {
     position: absolute;

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Multi-Column Dropdown Navbar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item > a {
+            display: block;
+            padding: 20px 0;
+            text-decoration: none;
+            color: #1c1c1c;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-item > a:hover {
+            color: #e91e63;
+        }
+
+        .mega-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 800px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px 40px;
+        }
+
+        .nav-item:hover .mega-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e91e63;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .dropdown-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .dropdown-links a {
+            font-size: 12px;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.2s, padding-left 0.2s;
+        }
+
+        .dropdown-links a:hover {
+            color: #e91e63;
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu" id="navMenu">
+                <!-- Navigation items will be dynamically generated here -->
+            </ul>
+        </div>
+    </nav>
+
+    <script>
+        // Dynamic navbar data structure
+        const navData = [
+            {
+                title: "MEN",
+                categories: [
+                    {
+                        name: "Indian & Fusion Wear",
+                        links: ["Kurtas & Suits", "Kurtis, Tunics & Tops", "Sarees", "Ethnic Wear", "Leggings, Salwars & Churidars", "Skirts & Palazzos", "Dress Materials", "Lehenga Cholis", "Dupattas & Shawls", "Jackets"]
+                    },
+                    {
+                        name: "Belts, Scarves & More",
+                        links: []
+                    },
+                    {
+                        name: "Watches & Wearables",
+                        links: []
+                    }
+                ]
+            },
+            {
+                title: "WOMEN",
+                categories: [
+                    {
+                        name: "Indian & Fusion Wear",
+                        links: ["Kurtas & Suits", "Kurtis, Tunics & Tops", "Sarees", "Ethnic Wear", "Leggings, Salwars & Churidars", "Skirts & Palazzos", "Dress Materials", "Lehenga Cholis", "Dupattas & Shawls", "Jackets"]
+                    },
+                    {
+                        name: "Western Wear",
+                        links: ["Dresses", "Tops", "Tshirts", "Jeans", "Trousers & Capris", "Shorts & Skirts", "Co-ords", "Playsuits", "Jumpsuits", "Shrugs", "Sweaters & Sweatshirts", "Jackets & Coats", "Blazers & Waistcoats"]
+                    },
+                    {
+                        name: "Plus Size",
+                        links: []
+                    },
+                    {
+                        name: "Maternity",
+                        links: []
+                    },
+                    {
+                        name: "Sunglasses & Frames",
+                        links: []
+                    },
+                    {
+                        name: "Footwear",
+                        links: ["Flats", "Casual Shoes", "Heels", "Boots", "Sports Shoes & Floaters"]
+                    },
+                    {
+                        name: "Sports & Active Wear",
+                        links: ["Clothing", "Footwear", "Sports Accessories", "Sports Equipment"]
+                    },
+                    {
+                        name: "Lingerie & Sleepwear",
+                        links: ["Bra", "Briefs", "Shapewear", "Sleepwear & Loungewear", "Swimwear", "Camisoles & Thermals"]
+                    },
+                    {
+                        name: "Beauty & Personal Care",
+                        links: ["Makeup", "Skincare", "Premium Beauty", "Lipsticks", "Fragrances"]
+                    },
+                    {
+                        name: "Gadgets",
+                        links: ["Smart Wearables", "Fitness Gadgets", "Headphones", "Speakers"]
+                    },
+                    {
+                        name: "Jewellery",
+                        links: ["Fashion Jewellery", "Fine Jewellery", "Earrings"]
+                    },
+                    {
+                        name: "Backpacks",
+                        links: []
+                    },
+                    {
+                        name: "Handbags, Bags & Wallets",
+                        links: []
+                    },
+                    {
+                        name: "Luggages & Trolleys",
+                        links: []
+                    }
+                ]
+            },
+            {
+                title: "KIDS",
+                categories: [
+                    {
+                        name: "Boys Clothing",
+                        links: ["T-Shirts", "Shirts", "Shorts", "Jeans", "Trousers", "Clothing Sets", "Ethnic Wear", "Track Pants & Pyjamas", "Jacket, Sweater & Sweatshirts"]
+                    },
+                    {
+                        name: "Girls Clothing",
+                        links: ["Dresses", "Tops", "Tshirts", "Clothing Sets", "Lehenga Choli", "Kurta Sets", "Party Wear", "Dungarees & Jumpsuits"]
+                    },
+                    {
+                        name: "Footwear",
+                        links: ["Casual Shoes", "Flipflops", "Sports Shoes", "Flats", "Sandals", "Heels", "School Shoes", "Socks"]
+                    },
+                    {
+                        name: "Toys & Games",
+                        links: ["Learning & Development", "Activity Toys", "Soft Toys", "Action Figure & Collectibles"]
+                    },
+                    {
+                        name: "Infants",
+                        links: ["Bodysuits", "Rompers & Sleepsuits", "Clothing Sets", "Tshirts & Tops", "Dresses", "Bottom Wear"]
+                    },
+                    {
+                        name: "Kids Accessories",
+                        links: ["Bags & Backpacks", "Watches", "Jewellery & Hair Accessories", "Sunglasses", "Masks & Protective Gears", "Caps & Hats"]
+                    }
+                ]
+            },
+            {
+                title: "HOME",
+                categories: [
+                    {
+                        name: "Bed Linen & Furnishing",
+                        links: ["Bed Runners", "Mattress Protectors", "Bedsheets", "Bedding Sets", "Blankets, Quilts & Dohars", "Pillows & Pillow Covers", "Bed Covers"]
+                    },
+                    {
+                        name: "Flooring",
+                        links: ["Floor Runners", "Carpets", "Floor Mats & Dhurries", "Door Mats"]
+                    },
+                    {
+                        name: "Bath",
+                        links: ["Bath Towels", "Hand & Face Towels", "Beach Towels", "Towels Set", "Bath Rugs", "Bath Robes", "Bathroom Accessories"]
+                    },
+                    {
+                        name: "Lamps & Lighting",
+                        links: ["Floor Lamps", "Ceiling Lamps", "Table Lamps", "Wall Lamps", "Outdoor Lamps", "String Lights"]
+                    }
+                ]
+            },
+            {
+                title: "BEAUTY",
+                categories: [
+                    {
+                        name: "Makeup",
+                        links: ["Lipstick", "Lip Gloss", "Lip Liner", "Mascara", "Eyeliner", "Kajal", "Eyeshadow", "Foundation", "Primer", "Concealer", "Compact", "Nail Polish"]
+                    },
+                    {
+                        name: "Skincare, Bath & Body",
+                        links: ["Face Moisturiser", "Cleanser", "Masks & Peel", "Sunscreen", "Serum", "Face Wash", "Eye Cream", "Lip Balm", "Body Lotion", "Body Wash", "Hand Cream"]
+                    },
+                    {
+                        name: "Haircare",
+                        links: ["Shampoo", "Conditioner", "Hair Cream", "Hair Oil", "Hair Gel", "Hair Color", "Hair Serum", "Hair Accessory"]
+                    },
+                    {
+                        name: "Fragrances",
+                        links: ["Perfume", "Deodorant", "Body Mist"]
+                    }
+                ]
+            },
+            {
+                title: "GENZ",
+                categories: [
+                    {
+                        name: "Trending Now",
+                        links: ["Streetwear", "Oversized Tees", "Graphic Hoodies", "Cargo Pants", "Sneakers", "Bucket Hats", "Chain Accessories"]
+                    }
+                ]
+            },
+            {
+                title: "STUDIO",
+                badge: "NEW",
+                categories: [
+                    {
+                        name: "Studio Collections",
+                        links: ["Designer Wear", "Limited Edition", "Exclusive Launches", "Collaborations"]
+                    }
+                ]
+            }
+        ];
+
+        // Function to generate navbar
+        function generateNavbar() {
+            const navMenu = document.getElementById('navMenu');
+            
+            navData.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'nav-item';
+                
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = item.title;
+                if (item.badge) {
+                    const badge = document.createElement('sup');
+                    badge.style.color = '#e91e63';
+                    badge.style.fontSize = '9px';
+                    badge.textContent = item.badge;
+                    link.appendChild(badge);
+                }
+                
+                li.appendChild(link);
+                
+                if (item.categories && item.categories.length > 0) {
+                    const dropdown = document.createElement('div');
+                    dropdown.className = 'mega-dropdown';
+                    
+                    item.categories.forEach(category => {
+                        const column = document.createElement('div');
+                        column.className = 'dropdown-column';
+                        
+                        const title = document.createElement('div');
+                        title.className = 'dropdown-title';
+                        title.textContent = category.name;
+                        column.appendChild(title);
+                        
+                        if (category.links && category.links.length > 0) {
+                            const linksContainer = document.createElement('div');
+                            linksContainer.className = 'dropdown-links';
+                            
+                            category.links.forEach(linkText => {
+                                const a = document.createElement('a');
+                                a.href = '#';
+                                a.textContent = linkText;
+                                linksContainer.appendChild(a);
+                            });
+                            
+                            column.appendChild(linksContainer);
+                        }
+                        
+                        dropdown.appendChild(column);
+                    });
+                    
+                    li.appendChild(dropdown);
+                }
+                
+                navMenu.appendChild(li);
+            });
+        }
+
+        // Initialize navbar on page load
+        generateNavbar();
+    </script>
+</body>
+</html>

@@ -1,28 +1,11 @@
-    <!-- Header Section Begin -->
-    <header class="header-section">
-        <!-- <div class="header-top">
-            <div class="container">
-                <div class="ht-left">
-                    <div class="mail-service">
-                        <i class=" fa fa-envelope"></i>
-                        support@gujjuemarket.com
-                    </div>
-                </div>
-                <div class="ht-right">
-                    <a href="/register.html" class="login-panel"><i class="fa fa-user"></i>Register Here</a>
-                    <div class="top-social">
-                        <a href="/index.html">Track Order</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+<header class="header-section">
         <div class="container-fluid">
             <div class="inner-header">
                 <div class="row">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                         <div class="logo">
                             <a href="./index.html">
-                               <img src="img/lg.jpg" alt="" style="height: 48px; width: 105px;">
+                               <img src="img/lg.jpg" alt="Gujjue Market Logo">
                             </a>
                         </div>
                     </div>
@@ -30,8 +13,7 @@
                         <div class="advanced-search">
                             <button type="button" class="category-btn">Search</button>
                             <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <!-- <button type="button"><i class="ti-search"></i></button> -->
+                                <input type="text" placeholder="What do you need?" aria-label="Search products">
                             </div>
                         </div>
                     </div>
@@ -88,12 +70,10 @@
                                         <h5>Rs 8500.00</h5>
                                     </div>
                                     <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
+                                        <a href="#" class="primary-btn view-card">VIEW CART</a>
                                         <a href="/check-out.html" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
-                                    
                                 </div>
-                                
                             </li>
                             <li class="cart-price">Rs 150.00</li>
                         </ul>
@@ -339,27 +319,15 @@
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li class="active"><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
-                        <li><a href="collection.html">Collection</a>
-                            <!-- <ul class="dropdown">
-                                <li><a href="/shop.html">Men's</a></li>
-                                <li><a href="/shop.html">Women's</a></li>
-                                <li><a href="/shop.html">Electronics</a></li>
-                            </ul> -->
-                        </li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./category-view.html">Categories</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
-                                <li><a href="./faq.html">Faq</a></li>
-                                <li><a href="./register.html">Register</a></li>
-                                <li><a href="./login.html">Login</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="./shop.html">Electronics</a></li>
+                        <li><a href="./collection.html">Men</a></li>
+                        <li><a href="./blog.html">Women</a></li>
+                        <li><a href="./contact.html">Kids</a></li>
+                        <li><a href="#">GENZ</a></li>
+                        <li><a href="#">Mobile</a></li>
+                        <li><a href="#">Laptop</a></li>
+                        <li><a href="#">Fashion</a></li>
+                        <li><a href="#">See More</a></li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -368,126 +336,19 @@
     </header>
 
 <style>
-/* Responsive Navbar Styles */
-.navbar-links {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.navbar-links a {
-    font-size: 14px;
-    color: #1c1c1c;
-    white-space: nowrap;
-}
-
-@media (max-width: 991px) {
-    .navbar-links {
-        margin-top: 15px;
-        margin-bottom: 10px;
-    }
-}
-
-@media (max-width: 767px) {
-    .advanced-search {
-        margin-top: 10px;
-    }
-    
-    .navbar-links {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .nav-right {
-        justify-content: flex-end;
-    }
-}
-
-@media (max-width: 575px) {
-    .logo img {
-        height: 40px !important;
-        width: 90px !important;
-    }
-}
-
-/* Multi-Level Dropdown Navigation Styles */
-.nav-item .nav-depart .depart-btn .depart-hover .sub-menu {
-    position: absolute;
-    left: 100%;
-    top: 0;
-    width: 100%;
-    background: #ffffff;
-    opacity: 0;
-    visibility: hidden;
-    box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
-    padding-bottom: 29px;
-    z-index: 99;
-    transition: all 0.3s;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-sub-menu {
-    position: absolute;
-    left: 100%;
-    top: 0;
-    width: 100%;
-    background: #ffffff;
-    opacity: 0;
-    visibility: hidden;
-    box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
-    padding-bottom: 29px;
-    z-index: 100;
-    transition: all 0.3s;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover li:hover > .sub-menu {
-    opacity: 1;
-    visibility: visible;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-menu li:hover > .sub-sub-menu {
-    opacity: 1;
-    visibility: visible;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-menu li {
-    list-style: none;
-    position: relative;
-    margin: 0;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-menu li a {
-    display: block;
-    font-size: 16px;
-    color: #000000;
-    padding-left: 40px;
-    padding-top: 16px;
-    padding-right: 30px;
-    transition: all 0.3s;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-menu li a:hover {
-    color: #F4631E;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-sub-menu li {
-    list-style: none;
-    position: relative;
-    margin: 0;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-sub-menu li a {
-    display: block;
-    font-size: 16px;
-    color: #000000;
-    padding-left: 40px;
-    padding-top: 16px;
-    padding-right: 30px;
-    transition: all 0.3s;
-}
-
-.nav-item .nav-depart .depart-btn .depart-hover .sub-sub-menu li a:hover {
-    color: #F4631E;
-}
+.logo img{height:48px;width:105px}
+.navbar-links{display:flex;align-items:center;gap:15px;justify-content:center;margin-top:10px}
+.navbar-links a{font-size:14px;color:#1c1c1c;white-space:nowrap}
+.nav-item .nav-depart .depart-btn .depart-hover,.nav-menu>ul>li .mega-dropdown{position:absolute;top:100%;left:0;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.15);opacity:0;visibility:hidden;transform:translateY(-10px);transition:all .3s ease;min-width:900px;padding:25px 30px;display:flex;flex-wrap:wrap;gap:40px;z-index:9999;list-style:none}
+.nav-item .nav-depart .depart-btn:hover .depart-hover,.nav-menu>ul>li:hover .mega-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-item .nav-depart .depart-btn .depart-hover>li,.nav-menu>ul>li .mega-dropdown>li{list-style:none;position:relative;margin:0;min-width:180px;display:flex;flex-direction:column}
+.nav-item .nav-depart .depart-btn .depart-hover>li>a,.nav-menu>ul>li .mega-dropdown>li>a{display:block;font-size:14px;font-weight:700;color:#e91e63!important;padding:0!important;margin-bottom:15px;text-transform:uppercase;letter-spacing:.5px;transition:all .3s}
+.nav-item .nav-depart .depart-btn .depart-hover .sub-menu,.nav-menu>ul>li .mega-dropdown .sub-menu{position:static!important;opacity:1!important;visibility:visible!important;box-shadow:none!important;padding:0!important;background:0 0!important;display:flex!important;flex-direction:column;gap:10px;width:auto!important;left:auto!important;top:auto!important;transform:none!important}
+.nav-item .nav-depart .depart-btn .depart-hover .sub-menu li,.nav-menu>ul>li .mega-dropdown .sub-menu li{list-style:none;position:relative;margin:0}
+.nav-item .nav-depart .depart-btn .depart-hover .sub-menu li a,.nav-menu>ul>li .mega-dropdown .sub-menu li a{display:block;font-size:13px;color:#333!important;padding:0!important;transition:all .2s;line-height:1.6}
+.nav-item .nav-depart .depart-btn .depart-hover .sub-menu li a:hover{color:#e91e63!important;padding-left:5px!important}
+.nav-item .nav-depart .depart-btn .depart-hover .sub-sub-menu{display:none!important}
+@media (max-width:991px){.navbar-links{margin-top:15px;margin-bottom:10px}}
+@media (max-width:767px){.advanced-search{margin-top:10px}.navbar-links{flex-direction:column;gap:10px}.nav-right{justify-content:flex-end}}
+@media (max-width:575px){.logo img{height:40px!important;width:90px!important}}
 </style>

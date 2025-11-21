@@ -666,7 +666,8 @@ ol {
 	position: relative;
 }
 
-.nav-item .nav-depart .depart-btn:hover .depart-hover {
+.nav-item .nav-depart .depart-btn span:hover~.depart-hover,
+.nav-item .nav-depart .depart-btn .depart-hover:hover {
 	top: 52px;
 	opacity: 1;
 	visibility: visible;
@@ -1373,10 +1374,10 @@ ol {
 -----------------------*/
 
 .deal-of-week {
-	padding-top: 80px;
-	padding-bottom: 80px;
-	margin-left: 65px;
-	margin-right: 65px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	/* margin-left: 65px;
+	margin-right: 65px; */
 }
 
 .countdown-timer {

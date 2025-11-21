@@ -425,9 +425,9 @@ ol {
 
 .inner-header .advanced-search {
 	height: 50px;
-	/* border: 1px solid #ebebeb; */
-	border: 1px solid #D1D5DB; /* Tailwind gray-300 */
-
+	border: 1px solid #D1D5DB;
+	position: relative;
+	display: flex;
 }
 
 .inner-header .advanced-search .category-btn {
@@ -465,12 +465,14 @@ ol {
 }
 
 .inner-header .advanced-search .input-group {
-	max-width: 70%;
+	flex: 1;
 	height: 100%;
+	position: relative;
+	display: flex;
 }
 
 .inner-header .advanced-search .input-group input {
-	width: 100%;
+	flex: 1;
 	height: 100%;
 	border: none;
 	font-size: 16px;
@@ -481,13 +483,12 @@ ol {
 .inner-header .advanced-search .input-group button {
 	font-size: 16px;
 	color: #ffffff;
-	position: absolute;
-	right: -3px;
-	top: -1px;
-	border: 1px solid #F4631E;
+	height: 100%;
+	border: none;
 	background: #F4631E;
-	padding: 12px 16px 12px;
+	padding: 0 20px;
 	cursor: pointer;
+	flex-shrink: 0;
 }
 
 .inner-header .nav-right {

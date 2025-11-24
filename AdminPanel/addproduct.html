@@ -360,18 +360,35 @@
             <div class="form-group">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <label style="margin: 0;">Product Image</label>
-                    <a href="#" style="color: var(--primary-orange); text-decoration: none; font-size: 14px; font-weight: 500;">Add media from URL</a>
                 </div>
-                <div class="image-upload-area" id="uploadArea">
-                    <input type="file" name="productImages" accept="image/*" id="mainImage" multiple style="display: none;">
-                    <div class="upload-icon">
-                        <i class="fas fa-upload"></i>
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--dark-gray);">Product Images</label>
+                        <div class="image-upload-area" id="uploadArea">
+                            <input type="file" name="productImages" accept="image/*" id="mainImage" multiple style="display: none;">
+                            <div class="upload-icon">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop images here</p>
+                            <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
+                            <button type="button" class="browse-btn">Browse images</button>
+                        </div>
+                        <div class="images-grid" id="imagesGrid"></div>
                     </div>
-                    <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop images here</p>
-                    <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
-                    <button type="button" class="browse-btn">Browse images</button>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--dark-gray);">Item thumbnail</label>
+                        <div class="image-upload-area" id="thumbnailArea">
+                            <input type="file" name="thumbnail" accept="image/*" id="thumbnailImage" multiple style="display: none;">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop thumbnail here</p>
+                            <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
+                            <button type="button" class="browse-btn">Browse thumbnail</button>
+                        </div>
+                        <div class="images-grid" id="thumbnailGrid"></div>
+                    </div>
                 </div>
-                <div class="images-grid" id="imagesGrid"></div>
             </div>
 
             <div class="tabs">
@@ -614,6 +631,117 @@
         const imagesGrid = document.getElementById('imagesGrid');
         let uploadedFiles = [];
 
+        // Thumbnail Upload - Same functionality as main upload
+        const thumbnailArea = document.getElementById('thumbnailArea');
+        const thumbnailInput = document.getElementById('thumbnailImage');
+        const thumbnailGrid = document.getElementById('thumbnailGrid');
+        let thumbnailFiles = [];
+
+        // Thumbnail click handler
+        thumbnailArea.addEventListener('click', (e) => {
+            if (e.target.closest('.image-preview') || e.target.classList.contains('remove-link')) {
+                return;
+            }
+            if (e.target === thumbnailArea || 
+                e.target.closest('.upload-icon') || 
+                e.target.tagName === 'P' ||
+                e.target.classList.contains('browse-btn')) {
+                e.preventDefault();
+                thumbnailInput.click();
+            }
+        });
+
+        // Thumbnail drag and drop
+        thumbnailArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            thumbnailArea.style.borderColor = 'var(--primary-orange)';
+            thumbnailArea.style.background = 'var(--light-orange)';
+        });
+
+        thumbnailArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            thumbnailArea.style.borderColor = '#d0d0d0';
+            thumbnailArea.style.background = '#fafafa';
+        });
+
+        thumbnailArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            thumbnailArea.style.borderColor = '#d0d0d0';
+            thumbnailArea.style.background = '#fafafa';
+            
+            if (e.dataTransfer.files.length) {
+                handleThumbnailFiles(e.dataTransfer.files);
+            }
+        });
+
+        thumbnailInput.addEventListener('change', function(e) {
+            e.stopPropagation();
+            if (this.files.length) {
+                handleThumbnailFiles(this.files);
+            }
+            this.value = '';
+        });
+
+        function handleThumbnailFiles(files) {
+            const imageFiles = Array.from(files).filter(file => {
+                if (!file.type.startsWith('image/')) {
+                    console.warn(`Skipped non-image file: ${file.name}`);
+                    return false;
+                }
+                if (file.size > 10 * 1024 * 1024) {
+                    console.warn(`Skipped large file (>10MB): ${file.name}`);
+                    return false;
+                }
+                return true;
+            });
+
+            if (imageFiles.length === 0) return;
+
+            imageFiles.forEach(file => {
+                thumbnailFiles.push(file);
+                displayThumbnailImage(file);
+            });
+        }
+
+        function displayThumbnailImage(file) {
+            const reader = new FileReader();
+            const index = thumbnailFiles.indexOf(file);
+            
+            reader.onload = (e) => {
+                const preview = document.createElement('div');
+                preview.className = 'image-preview';
+                preview.dataset.index = index;
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="${file.name}">
+                    <div class="image-info" title="${file.name}">${file.name}</div>
+                    <div class="image-size">${(file.size / 1024).toFixed(0)} KB</div>
+                    <a class="remove-link" data-index="${index}">Remove</a>
+                `;
+                thumbnailGrid.appendChild(preview);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        // Remove thumbnail handler
+        thumbnailGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-link')) {
+                e.preventDefault();
+                e.stopPropagation();
+                const index = parseInt(e.target.dataset.index);
+                removeThumbnailImage(index);
+            }
+        });
+
+        function removeThumbnailImage(index) {
+            thumbnailFiles.splice(index, 1);
+            thumbnailGrid.innerHTML = '';
+            thumbnailFiles.forEach(file => displayThumbnailImage(file));
+        }
+
         // Click handler - only trigger on specific targets
         uploadArea.addEventListener('click', (e) => {
             // Don't trigger if clicking on image previews or remove links
@@ -739,6 +867,10 @@
             formData.delete('productImages');
             uploadedFiles.forEach((file, i) => formData.append(`productImages[${i}]`, file));
             
+            // Add thumbnails to form data
+            formData.delete('thumbnail');
+            thumbnailFiles.forEach((file, i) => formData.append(`thumbnails[${i}]`, file));
+            
             const data = Object.fromEntries(formData.entries());
             ['short', 'long', 'features', 'included'].forEach(tab => {
                 data[`${tab}Description`] = document.querySelector(`#${tab} .editor-content`).innerHTML;
@@ -746,7 +878,8 @@
             
             console.log('Product Data:', data);
             console.log('Uploaded Images:', uploadedFiles.length, 'files');
-            alert(`Product saved successfully with ${uploadedFiles.length} image(s)!`);
+            console.log('Thumbnails:', thumbnailFiles.length, 'files');
+            alert(`Product saved successfully with ${uploadedFiles.length} image(s) and ${thumbnailFiles.length} thumbnail(s)!`);
         });
 
         // Editor placeholder effect
@@ -772,36 +905,58 @@
             variationRow.innerHTML = `
                 <button type="button" class="btn-remove-variation" onclick="removeVariation(${variationCount})"><i class="fas fa-times"></i></button>
                 <div class="form-group">
+                    <label>Product Title</label>
+                    <input type="text" name="variations[${variationCount}][productTitle]" placeholder="Enter product title">
+                </div>
+                <div class="form-group">
                     <label>Variation Title</label>
-                    <input type="text" name="variations[${variationCount}][title]" placeholder="e.g., Color, Size">
+                    <input type="text" name="variations[${variationCount}][variationTitle]" placeholder="e.g., Red Large, Blue Medium">
+                </div>
+                <div class="form-group">
+                    <label>Color</label>
+                    <select name="variations[${variationCount}][color]">
+                        <option value="">Select Color</option>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="pink">Pink</option>
+                        <option value="purple">Purple</option>
+                        <option value="orange">Orange</option>
+                        <option value="brown">Brown</option>
+                        <option value="gray">Gray</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Size</label>
-                    <input type="text" name="variations[${variationCount}][size]" placeholder="e.g., M, L, XL">
+                    <input type="text" name="variations[${variationCount}][size]" placeholder="e.g., S, M, L, XL, XXL">
                 </div>
                 <div class="form-group">
                     <label>MRP</label>
-                    <input type="number" name="variations[${variationCount}][mrp]" step="0.01" min="0">
+                    <input type="number" name="variations[${variationCount}][mrp]" step="0.01" min="0" placeholder="Maximum Retail Price">
                 </div>
                 <div class="form-group">
-                    <label>Cost Price</label>
-                    <input type="number" name="variations[${variationCount}][costPrice]" step="0.01" min="0">
+                    <label>Cost Price (Optional)</label>
+                    <input type="number" name="variations[${variationCount}][costPrice]" step="0.01" min="0" placeholder="Cost price (optional)">
                 </div>
                 <div class="form-group">
-                    <label>Sell Price</label>
-                    <input type="number" name="variations[${variationCount}][sellPrice]" step="0.01" min="0">
+                    <label>Selling Price</label>
+                    <input type="number" name="variations[${variationCount}][sellingPrice]" step="0.01" min="0" placeholder="Selling price" required>
                 </div>
                 <div class="form-group">
                     <label>Quantity</label>
-                    <input type="number" name="variations[${variationCount}][quantity]" min="0">
+                    <input type="number" name="variations[${variationCount}][quantity]" min="0" placeholder="Available quantity" required>
                 </div>
                 <div class="form-group">
                     <label>Variation SKU</label>
-                    <input type="text" name="variations[${variationCount}][sku]" placeholder="Unique SKU">
+                    <input type="text" name="variations[${variationCount}][variationSku]" placeholder="Unique variation SKU" required>
                 </div>
                 <div class="form-group">
-                    <label>Upload Image</label>
-                    <input type="file" name="variations[${variationCount}][image]" accept="image/*" style="padding: 8px;">
+                    <label>Upload Images</label>
+                    <input type="file" id="variationImages-${variationCount}" name="variations[${variationCount}][images]" accept="image/*" multiple style="padding: 8px;" onchange="handleVariationImages(${variationCount}, this)">
+                    <div id="variationPreview-${variationCount}" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"></div>
                 </div>
             `;
             container.appendChild(variationRow);
@@ -810,6 +965,61 @@
         function removeVariation(id) {
             const element = document.getElementById(`variation-${id}`);
             if (element) element.remove();
+        }
+
+        // Variation image handling
+        let variationImages = {};
+
+        function handleVariationImages(variationId, input) {
+            const files = Array.from(input.files);
+            const previewContainer = document.getElementById(`variationPreview-${variationId}`);
+            
+            if (!variationImages[variationId]) {
+                variationImages[variationId] = [];
+            }
+            
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    variationImages[variationId].push(file);
+                    displayVariationImage(variationId, file, variationImages[variationId].length - 1);
+                }
+            });
+        }
+
+        function displayVariationImage(variationId, file, index) {
+            const previewContainer = document.getElementById(`variationPreview-${variationId}`);
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'variation-image-item';
+                imageDiv.style.cssText = 'position:relative;width:80px;height:80px;border:1px solid #ddd;border-radius:8px;overflow:hidden;flex-shrink:0';
+                imageDiv.innerHTML = `
+                    <img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover;" alt="${file.name}">
+                    <button type="button" onclick="removeVariationImage(${variationId}, ${index})" 
+                            style="position: absolute; top: 2px; right: 2px; background: #ff4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        ×
+                    </button>
+                `;
+                imageDiv.dataset.index = index;
+                previewContainer.appendChild(imageDiv);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function removeVariationImage(variationId, index) {
+            if (variationImages[variationId]) {
+                variationImages[variationId].splice(index, 1);
+                
+                // Re-render images with updated indices
+                const previewContainer = document.getElementById(`variationPreview-${variationId}`);
+                previewContainer.innerHTML = '';
+                
+                variationImages[variationId].forEach((file, newIndex) => {
+                    displayVariationImage(variationId, file, newIndex);
+                });
+            }
         }
     </script>
 </body>

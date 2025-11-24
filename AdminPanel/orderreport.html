@@ -6,7 +6,9 @@
     .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; }
     h1 { margin-bottom: 30px; color: #1d1d1f; font-size: 24px; }
     .controls { display: flex; gap: 15px; margin-bottom: 30px; align-items: center; flex-wrap: wrap; }
-    select { padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
+    select, input[type="date"] { padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
+    .date-range { display: none; gap: 10px; align-items: center; }
+    .date-range.show { display: flex; }
     .download-btns { display: flex; gap: 10px; }
     button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
     .btn-excel { background: #217346; color: white; }
@@ -22,16 +24,24 @@
     <div class="container">
         <h1>Order Report</h1>
         <div class="controls">
-            <label>Select days for report:</label>
-            <select id="daysSelect">
-                <option value="7">7 days</option>
+            <label>Select day for report:</label>
+            <select id="daysSelect" onchange="toggleDateRange()">
+                <option value="1">Yesterday</option>
+                <option value="7">7 day</option>
                 <option value="10">10 days</option>
-                <option value="15">15 days</option>
+                <option value="15">15 day</option>
                 <option value="30">1 month</option>
-                <option value="90">3 months</option>
-                <option value="180">6 months</option>
-                <option value="365">12 months</option>
+                <option value="90">3 month</option>
+                <option value="180">6 Month</option>
+                <option value="365">12 Month</option>
+                <option value="custom">Custom date range</option>
             </select>
+            <div class="date-range" id="dateRange">
+                <label>From:</label>
+                <input type="date" id="startDate" onchange="setEndDateMin()">
+                <label>To:</label>
+                <input type="date" id="endDate">
+            </div>
             <div class="download-btns">
                 <button class="btn-excel" onclick="downloadExcel()">Download Excel</button>
                 <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>
@@ -49,6 +59,7 @@
                         <th>Product Name</th>
                         <th>Quantity Purchased</th>
                         <th>Item Price</th>
+                        <th>Item Discount</th>
                         <th>Item Tax</th>
                         <th>Ship Address 1</th>
                         <th>Ship City</th>
@@ -68,6 +79,7 @@
                         <td>Wireless Mouse</td>
                         <td>2</td>
                         <td>$25.00</td>
+                        <td>$2.50</td>
                         <td>$3.50</td>
                         <td>123 Main Street</td>
                         <td>New York</td>
@@ -85,6 +97,7 @@
                         <td>Laptop Stand</td>
                         <td>1</td>
                         <td>$75.00</td>
+                        <td>$7.50</td>
                         <td>$5.25</td>
                         <td>456 Oak Avenue</td>
                         <td>Los Angeles</td>
@@ -102,6 +115,7 @@
                         <td>Mechanical Keyboard</td>
                         <td>1</td>
                         <td>$120.00</td>
+                        <td>$12.00</td>
                         <td>$8.40</td>
                         <td>789 Pine Road</td>
                         <td>Chicago</td>
@@ -119,6 +133,7 @@
                         <td>Monitor 27 inch</td>
                         <td>1</td>
                         <td>$350.00</td>
+                        <td>$35.00</td>
                         <td>$24.50</td>
                         <td>321 Elm Street</td>
                         <td>Houston</td>
@@ -136,6 +151,7 @@
                         <td>Webcam HD</td>
                         <td>3</td>
                         <td>$85.00</td>
+                        <td>$8.50</td>
                         <td>$17.85</td>
                         <td>654 Maple Drive</td>
                         <td>Phoenix</td>
@@ -150,6 +166,31 @@
 </div>
 
 <script>
+        function toggleDateRange() {
+            const select = document.getElementById('daysSelect');
+            const dateRange = document.getElementById('dateRange');
+            if (select.value === 'custom') {
+                dateRange.classList.add('show');
+                setTodayAsMax();
+            } else {
+                dateRange.classList.remove('show');
+            }
+        }
+
+        function setTodayAsMax() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').max = today;
+            document.getElementById('endDate').max = today;
+        }
+
+        function setEndDateMin() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate');
+            if (startDate) {
+                endDate.min = startDate;
+            }
+        }
+
         function getTableData() {
             const rows = document.querySelectorAll('#orderTable tbody tr');
             const data = [];
@@ -164,13 +205,14 @@
                     productName: cells[5].textContent,
                     quantityPurchased: cells[6].textContent,
                     itemPrice: cells[7].textContent,
-                    itemTax: cells[8].textContent,
-                    shipAddress1: cells[9].textContent,
-                    shipCity: cells[10].textContent,
-                    state: cells[11].textContent,
-                    postalCode: cells[12].textContent,
-                    paymentMethod: cells[13].textContent,
-                    paymentReceivedAmount: cells[14].textContent
+                    itemDiscount: cells[8].textContent,
+                    itemTax: cells[9].textContent,
+                    shipAddress1: cells[10].textContent,
+                    shipCity: cells[11].textContent,
+                    state: cells[12].textContent,
+                    postalCode: cells[13].textContent,
+                    paymentMethod: cells[14].textContent,
+                    paymentReceivedAmount: cells[15].textContent
                 });
             });
             return data;
@@ -187,6 +229,7 @@
                 'product-name': item.productName,
                 'quantity-purchased': item.quantityPurchased,
                 'item-price': item.itemPrice,
+                'item-discount': item.itemDiscount,
                 'item-tax': item.itemTax,
                 'ship-address-1': item.shipAddress1,
                 'ship-city': item.shipCity,

@@ -10,6 +10,10 @@
     td:nth-child(5), td:nth-child(6) { text-align: center; }
     .status-active { color: #2e7d32; font-weight: 600; }
     .status-inactive { color: #c62828; font-weight: 600; }
+    .btn-edit { padding: 6px 12px; background: #FF6B35; color: white; border: none; border-radius: 6px; cursor: pointer; margin-left: 15px; margin-right: 5px; font-size: 13px; }
+    .btn-save { padding: 6px 12px; background: #2e7d32; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+    .btn-edit:hover, .btn-save:hover { opacity: 0.9; }
+    .edit-input { width: 80px; padding: 4px; border: 1px solid #d2d2d7; border-radius: 4px; font-size: 13px; margin-right: 5px; }
 </style>
 <div class="container">
     <h1>Inventory Management</h1>
@@ -20,8 +24,8 @@
                 <th>Product Image</th>
                 <th>Product Title</th>
                 <th>SKU</th>
-                <th>Quantity</th>
-                <th>Price</th>
+                <th>Quantity (Edit/Save)</th>
+                <th>Price (Edit/Save)</th>
                 <th>Product Status</th>
             </tr>
         </thead>
@@ -31,8 +35,18 @@
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Wireless Mouse</td>
                 <td>SKU001</td>
-                <td>150</td>
-                <td>$25.00</td>
+                <td>
+                    <span id="qty-1">150</span>
+                    <input type="number" id="qty-input-1" class="edit-input" value="150" style="display:none;">
+                    <button class="btn-edit" onclick="editField('qty', 1)">Edit</button>
+                    <button class="btn-save" onclick="saveField('qty', 1)" style="display:none;">Save</button>
+                </td>
+                <td>
+                    <span id="price-1">$25.00</span>
+                    <input type="text" id="price-input-1" class="edit-input" value="25.00" style="display:none;">
+                    <button class="btn-edit" onclick="editField('price', 1)">Edit</button>
+                    <button class="btn-save" onclick="saveField('price', 1)" style="display:none;">Save</button>
+                </td>
                 <td><span class="status-active">Active</span></td>
             </tr>
             <tr>
@@ -40,8 +54,18 @@
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Laptop Stand</td>
                 <td>SKU002</td>
-                <td>85</td>
-                <td>$75.00</td>
+                <td>
+                    <span id="qty-2">850</span>
+                    <input type="number" id="qty-input-2" class="edit-input" value="85" style="display:none;">
+                    <button class="btn-edit" onclick="editField('qty', 2)">Edit</button>
+                    <button class="btn-save" onclick="saveField('qty', 2)" style="display:none;">Save</button>
+                </td>
+                <td>
+                    <span id="price-2">$75.00</span>
+                    <input type="text" id="price-input-2" class="edit-input" value="75.00" style="display:none;">
+                    <button class="btn-edit" onclick="editField('price', 2)">Edit</button>
+                    <button class="btn-save" onclick="saveField('price', 2)" style="display:none;">Save</button>
+                </td>
                 <td><span class="status-active">Active</span></td>
             </tr>
             <tr>
@@ -49,8 +73,18 @@
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Mechanical Keyboard</td>
                 <td>SKU003</td>
-                <td>0</td>
-                <td>$120.00</td>
+                <td>
+                    <span id="qty-3">100</span>
+                    <input type="number" id="qty-input-3" class="edit-input" value="0" style="display:none;">
+                    <button class="btn-edit" onclick="editField('qty', 3)">Edit</button>
+                    <button class="btn-save" onclick="saveField('qty', 3)" style="display:none;">Save</button>
+                </td>
+                <td>
+                    <span id="price-3">$12.00</span>
+                    <input type="text" id="price-input-3" class="edit-input" value="120.00" style="display:none;">
+                    <button class="btn-edit" onclick="editField('price', 3)">Edit</button>
+                    <button class="btn-save" onclick="saveField('price', 3)" style="display:none;">Save</button>
+                </td>
                 <td><span class="status-inactive">Inactive</span></td>
             </tr>
             <tr>
@@ -58,8 +92,18 @@
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Monitor 27 inch</td>
                 <td>SKU004</td>
-                <td>45</td>
-                <td>$350.00</td>
+                <td>
+                    <span id="qty-4">405</span>
+                    <input type="number" id="qty-input-4" class="edit-input" value="45" style="display:none;">
+                    <button class="btn-edit" onclick="editField('qty', 4)">Edit</button>
+                    <button class="btn-save" onclick="saveField('qty', 4)" style="display:none;">Save</button>
+                </td>
+                <td>
+                    <span id="price-4">$35.00</span>
+                    <input type="text" id="price-input-4" class="edit-input" value="350.00" style="display:none;">
+                    <button class="btn-edit" onclick="editField('price', 4)">Edit</button>
+                    <button class="btn-save" onclick="saveField('price', 4)" style="display:none;">Save</button>
+                </td>
                 <td><span class="status-active">Active</span></td>
             </tr>
             <tr>
@@ -67,10 +111,56 @@
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Webcam HD</td>
                 <td>SKU005</td>
-                <td>120</td>
-                <td>$85.00</td>
+                <td>
+                    <span id="qty-5">170</span>
+                    <input type="number" id="qty-input-5" class="edit-input" value="120" style="display:none;">
+                    <button class="btn-edit" onclick="editField('qty', 5)">Edit</button>
+                    <button class="btn-save" onclick="saveField('qty', 5)" style="display:none;">Save</button>
+                </td>
+                <td>
+                    <span id="price-5">$15.00</span>
+                    <input type="text" id="price-input-5" class="edit-input" value="85.00" style="display:none;">
+                    <button class="btn-edit" onclick="editField('price', 5)">Edit</button>
+                    <button class="btn-save" onclick="saveField('price', 5)" style="display:none;">Save</button>
+                </td>
                 <td><span class="status-active">Active</span></td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<script>
+    function editField(type, id) {
+        const span = document.getElementById(`${type}-${id}`);
+        const input = document.getElementById(`${type}-input-${id}`);
+        const editBtn = span.parentElement.querySelector('.btn-edit');
+        const saveBtn = span.parentElement.querySelector('.btn-save');
+        
+        span.style.display = 'none';
+        input.style.display = 'inline-block';
+        editBtn.style.display = 'none';
+        saveBtn.style.display = 'inline-block';
+        input.focus();
+    }
+    
+    function saveField(type, id) {
+        const span = document.getElementById(`${type}-${id}`);
+        const input = document.getElementById(`${type}-input-${id}`);
+        const editBtn = span.parentElement.querySelector('.btn-edit');
+        const saveBtn = span.parentElement.querySelector('.btn-save');
+        
+        let newValue = input.value;
+        if (type === 'price') {
+            newValue = '$' + parseFloat(newValue).toFixed(2);
+        }
+        
+        span.textContent = newValue;
+        span.style.display = 'inline-block';
+        input.style.display = 'none';
+        editBtn.style.display = 'inline-block';
+        saveBtn.style.display = 'none';
+        
+        // Here you would typically make an API call to save the data
+        console.log(`Updated ${type} for item ${id}: ${newValue}`);
+    }
+</script>

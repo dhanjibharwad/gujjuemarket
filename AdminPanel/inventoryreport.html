@@ -6,7 +6,9 @@
     .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; }
     h1 { margin-bottom: 30px; color: #1d1d1f; font-size: 24px; }
     .controls { display: flex; gap: 15px; margin-bottom: 30px; align-items: center; flex-wrap: wrap; }
-    select { padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
+    select, input[type="date"] { padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
+    .date-range { display: none; gap: 10px; align-items: center; }
+    .date-range.show { display: flex; }
     .download-btns { display: flex; gap: 10px; }
     button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
     .btn-excel { background: #217346; color: white; }
@@ -20,16 +22,24 @@
 <div class="container">
     <h1>Inventory Report</h1>
     <div class="controls">
-        <label>Select days for report:</label>
-        <select id="daysSelect">
-            <option value="7">7 days</option>
+        <label>Select day for report:</label>
+        <select id="daysSelect" onchange="toggleDateRange()">
+            <option value="1">Yesterday</option>
+            <option value="7">7 day</option>
             <option value="10">10 days</option>
-            <option value="15">15 days</option>
+            <option value="15">15 day</option>
             <option value="30">1 month</option>
-            <option value="90">3 months</option>
-            <option value="180">6 months</option>
-            <option value="365">12 months</option>
+            <option value="90">3 month</option>
+            <option value="180">6 Month</option>
+            <option value="365">12 Month</option>
+            <option value="custom">Custom date range</option>
         </select>
+        <div class="date-range" id="dateRange">
+            <label>From:</label>
+            <input type="date" id="startDate" onchange="setEndDateMin()">
+            <label>To:</label>
+            <input type="date" id="endDate">
+        </div>
         <div class="download-btns">
             <button class="btn-excel" onclick="downloadExcel()">Download Excel</button>
             <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>
@@ -38,46 +48,81 @@
     <table id="inventoryTable">
         <thead>
             <tr>
+                <th>Product Name</th>
                 <th>SKU</th>
-                <th>Price</th>
+                <th>Selling Price</th>
+                <th>Cost Price</th>
                 <th>Quantity</th>
-                <th>Business Price</th>
+                <th>Total Value</th>
             </tr>
         </thead>
         <tbody id="tableBody">
             <tr>
+                <td>Wireless Mouse</td>
                 <td>SKU001</td>
                 <td>$25.00</td>
+                <td>$18.00</td>
                 <td>150</td>
-                <td>$22.50</td>
+                <td>$3,750.00</td>
             </tr>
             <tr>
+                <td>Laptop Stand</td>
                 <td>SKU002</td>
                 <td>$45.00</td>
+                <td>$32.00</td>
                 <td>85</td>
-                <td>$40.50</td>
+                <td>$3,825.00</td>
             </tr>
             <tr>
+                <td>USB Cable</td>
                 <td>SKU003</td>
                 <td>$15.00</td>
+                <td>$8.00</td>
                 <td>200</td>
-                <td>$13.50</td>
+                <td>$3,000.00</td>
             </tr>
         </tbody>
     </table>
 </div>
 
 <script>
+    function toggleDateRange() {
+        const select = document.getElementById('daysSelect');
+        const dateRange = document.getElementById('dateRange');
+        if (select.value === 'custom') {
+            dateRange.classList.add('show');
+            setTodayAsMax();
+        } else {
+            dateRange.classList.remove('show');
+        }
+    }
+
+    function setTodayAsMax() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('startDate').max = today;
+        document.getElementById('endDate').max = today;
+    }
+
+    function setEndDateMin() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate');
+        if (startDate) {
+            endDate.min = startDate;
+        }
+    }
+
     function getTableData() {
         const rows = document.querySelectorAll('#inventoryTable tbody tr');
         const data = [];
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
             data.push({
-                sku: cells[0].textContent,
-                price: cells[1].textContent,
-                quantity: cells[2].textContent,
-                businessPrice: cells[3].textContent
+                productName: cells[0].textContent,
+                sku: cells[1].textContent,
+                sellingPrice: cells[2].textContent,
+                costPrice: cells[3].textContent,
+                quantity: cells[4].textContent,
+                totalValue: cells[5].textContent
             });
         });
         return data;
@@ -86,36 +131,41 @@
     function downloadExcel() {
         const data = getTableData();
         const ws = XLSX.utils.json_to_sheet(data.map(item => ({
+            'Product Name': item.productName,
             'SKU': item.sku,
-            'Price': item.price,
+            'Selling Price': item.sellingPrice,
+            'Cost Price': item.costPrice,
             'Quantity': item.quantity,
-            'Business Price': item.businessPrice
+            'Total Value': item.totalValue
         })));
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Inventory Report');
         const days = document.getElementById('daysSelect').value;
-        XLSX.writeFile(wb, `inventory_report_${days}days.xlsx`);
+        const fileName = days === 'custom' ? 'inventory_report_custom.xlsx' : `inventory_report_${days}days.xlsx`;
+        XLSX.writeFile(wb, fileName);
     }
 
     function downloadPDF() {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        const doc = new jsPDF('l', 'mm', 'a4');
         const days = document.getElementById('daysSelect').value;
         
         doc.setFontSize(18);
         doc.text('Inventory Report', 14, 20);
         doc.setFontSize(11);
-        doc.text(`Report Period: ${days} days`, 14, 28);
+        const periodText = days === 'custom' ? 'Custom Date Range' : `${days} days`;
+        doc.text(`Report Period: ${periodText}`, 14, 28);
         
         const data = getTableData();
-        const tableData = data.map(item => [item.sku, item.price, item.quantity, item.businessPrice]);
+        const tableData = data.map(item => [item.productName, item.sku, item.sellingPrice, item.costPrice, item.quantity, item.totalValue]);
         
         doc.autoTable({
-            head: [['SKU', 'Price', 'Quantity', 'Business Price']],
+            head: [['Product Name', 'SKU', 'Selling Price', 'Cost Price', 'Quantity', 'Total Value']],
             body: tableData,
             startY: 35
         });
         
-        doc.save(`inventory_report_${days}days.pdf`);
+        const fileName = days === 'custom' ? 'inventory_report_custom.pdf' : `inventory_report_${days}days.pdf`;
+        doc.save(fileName);
     }
 </script>

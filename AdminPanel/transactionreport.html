@@ -1,20 +1,63 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; }
     h1 { margin-bottom: 30px; color: #1d1d1f; font-size: 24px; }
-    table { width: 100%; border-collapse: collapse; }
+    .controls { display: flex; gap: 15px; margin-bottom: 30px; align-items: center; flex-wrap: wrap; }
+    select, input[type="date"] { padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; cursor: pointer; }
+    .date-range { display: none; gap: 10px; align-items: center; }
+    .date-range.show { display: flex; }
+    .download-btns { display: flex; gap: 10px; }
+    button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    .btn-excel { background: #217346; color: white; }
+    .btn-pdf { background: #d32f2f; color: white; }
+    button:hover { opacity: 0.9; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
     th, td { padding: 12px; text-align: left; border-bottom: 1px solid #f5f5f7; }
     th { background: #fafafa; font-weight: 600; color: #86868b; font-size: 12px; text-transform: uppercase; }
     tr:hover { background: #fafafa; }
+    .checkbox { width: 16px; height: 16px; cursor: pointer; }
+    td:nth-child(1), td:nth-child(2) { text-align: center; }
+    th:nth-child(1), th:nth-child(2) { text-align: center; }
+    td:nth-child(9), td:nth-child(10), td:nth-child(11) { text-align: right; }
+    th:nth-child(9), th:nth-child(10), th:nth-child(11) { text-align: right; }
     .status-completed { color: #2e7d32; font-weight: 600; }
     .status-pending { color: #f57c00; font-weight: 600; }
     .status-failed { color: #c62828; font-weight: 600; }
 </style>
 <div class="container">
     <h1>Transaction Report</h1>
-    <table>
+    <div class="controls">
+        <label>Select day for report:</label>
+        <select id="daysSelect" onchange="toggleDateRange()">
+            <option value="1">Yesterday</option>
+            <option value="7">7 day</option>
+            <option value="10">10 days</option>
+            <option value="15">15 day</option>
+            <option value="30">1 month</option>
+            <option value="90">3 month</option>
+            <option value="180">6 Month</option>
+            <option value="365">12 Month</option>
+            <option value="custom">Custom date range</option>
+        </select>
+        <div class="date-range" id="dateRange">
+            <label>From:</label>
+            <input type="date" id="startDate" onchange="setEndDateMin()">
+            <label>To:</label>
+            <input type="date" id="endDate">
+        </div>
+        <div class="download-btns">
+            <button class="btn-excel" onclick="downloadExcel()">Download Excel</button>
+            <button class="btn-pdf" onclick="downloadPDF()">Download PDF</button>
+        </div>
+    </div>
+    <table id="transactionTable">
         <thead>
             <tr>
+                <th><input type="checkbox" class="checkbox" id="selectAll"></th>
+                <th>SI</th>
                 <th>Date and Time</th>
                 <th>Payment Status</th>
                 <th>Payment Type</th>
@@ -27,8 +70,10 @@
                 <th>Payment Method</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>1</td>
                 <td>2024-01-15 14:30</td>
                 <td><span class="status-completed">Completed</span></td>
                 <td>Purchase</td>
@@ -41,6 +86,8 @@
                 <td>Credit Card</td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>2</td>
                 <td>2024-01-14 10:15</td>
                 <td><span class="status-completed">Completed</span></td>
                 <td>Purchase</td>
@@ -53,6 +100,8 @@
                 <td>PayPal</td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>3</td>
                 <td>2024-01-13 16:45</td>
                 <td><span class="status-pending">Pending</span></td>
                 <td>Refund</td>
@@ -65,6 +114,8 @@
                 <td>Credit Card</td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>4</td>
                 <td>2024-01-12 09:20</td>
                 <td><span class="status-completed">Completed</span></td>
                 <td>Purchase</td>
@@ -77,6 +128,8 @@
                 <td>Debit Card</td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>5</td>
                 <td>2024-01-11 13:10</td>
                 <td><span class="status-failed">Failed</span></td>
                 <td>Purchase</td>
@@ -89,5 +142,107 @@
                 <td>Credit Card</td>
             </tr>
         </tbody>
+    </table>
+</div>
+
+<script>
+    function toggleDateRange() {
+        const select = document.getElementById('daysSelect');
+        const dateRange = document.getElementById('dateRange');
+        if (select.value === 'custom') {
+            dateRange.classList.add('show');
+            setTodayAsMax();
+        } else {
+            dateRange.classList.remove('show');
+        }
+    }
+
+    function setTodayAsMax() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('startDate').max = today;
+        document.getElementById('endDate').max = today;
+    }
+
+    function setEndDateMin() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate');
+        if (startDate) {
+            endDate.min = startDate;
+        }
+    }
+
+    function getTableData() {
+        const rows = document.querySelectorAll('#transactionTable tbody tr');
+        const data = [];
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            data.push({
+                si: cells[1].textContent,
+                dateTime: cells[2].textContent,
+                paymentStatus: cells[3].textContent,
+                paymentType: cells[4].textContent,
+                transactionId: cells[5].textContent,
+                orderId: cells[6].textContent,
+                productDetails: cells[7].textContent,
+                totalDiscount: cells[8].textContent,
+                otherCharges: cells[9].textContent,
+                totalPayment: cells[10].textContent,
+                paymentMethod: cells[11].textContent
+            });
+        });
+        return data;
+    }
+
+    function downloadExcel() {
+        const data = getTableData();
+        const ws = XLSX.utils.json_to_sheet(data.map(item => ({
+            'SI': item.si,
+            'Date and Time': item.dateTime,
+            'Payment Status': item.paymentStatus,
+            'Payment Type': item.paymentType,
+            'Transaction ID': item.transactionId,
+            'Order ID': item.orderId,
+            'Product Details': item.productDetails,
+            'Total Discount': item.totalDiscount,
+            'Other Charges': item.otherCharges,
+            'Total Payment': item.totalPayment,
+            'Payment Method': item.paymentMethod
+        })));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Transaction Report');
+        const days = document.getElementById('daysSelect').value;
+        const fileName = days === 'custom' ? 'transaction_report_custom.xlsx' : `transaction_report_${days}days.xlsx`;
+        XLSX.writeFile(wb, fileName);
+    }
+
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('l', 'mm', 'a4');
+        const days = document.getElementById('daysSelect').value;
+        
+        doc.setFontSize(18);
+        doc.text('Transaction Report', 14, 20);
+        doc.setFontSize(11);
+        const periodText = days === 'custom' ? 'Custom Date Range' : `${days} days`;
+        doc.text(`Report Period: ${periodText}`, 14, 28);
+        
+        const data = getTableData();
+        const tableData = data.map(item => [item.si, item.dateTime, item.paymentStatus, item.paymentType, item.transactionId, item.orderId, item.productDetails, item.totalDiscount, item.otherCharges, item.totalPayment, item.paymentMethod]);
+        
+        doc.autoTable({
+            head: [['SI', 'Date and Time', 'Payment Status', 'Payment Type', 'Transaction ID', 'Order ID', 'Product Details', 'Total Discount', 'Other Charges', 'Total Payment', 'Payment Method']],
+            body: tableData,
+            startY: 35
+        });
+        
+        const fileName = days === 'custom' ? 'transaction_report_custom.pdf' : `transaction_report_${days}days.pdf`;
+        doc.save(fileName);
+    }
+
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
+</script>
     </table>
 </div>

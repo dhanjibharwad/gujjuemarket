@@ -18,6 +18,11 @@
     th, td { padding: 12px; text-align: left; border-bottom: 1px solid #f5f5f7; }
     th { background: #fafafa; font-weight: 600; color: #86868b; font-size: 12px; text-transform: uppercase; }
     tr:hover { background: #fafafa; }
+    .checkbox { width: 16px; height: 16px; cursor: pointer; }
+    td:nth-child(1), td:nth-child(2) { text-align: center; }
+    th:nth-child(1), th:nth-child(2) { text-align: center; }
+    td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8) { text-align: right; }
+    th:nth-child(5), th:nth-child(6), th:nth-child(7), th:nth-child(8) { text-align: right; }
 </style>
 <div class="container">
     <h1>Inventory Report</h1>
@@ -48,6 +53,8 @@
     <table id="inventoryTable">
         <thead>
             <tr>
+                <th><input type="checkbox" class="checkbox" id="selectAll"></th>
+                <th>SI</th>
                 <th>Product Name</th>
                 <th>SKU</th>
                 <th>Selling Price</th>
@@ -58,6 +65,8 @@
         </thead>
         <tbody id="tableBody">
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>1</td>
                 <td>Wireless Mouse</td>
                 <td>SKU001</td>
                 <td>$25.00</td>
@@ -66,6 +75,8 @@
                 <td>$3,750.00</td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>2</td>
                 <td>Laptop Stand</td>
                 <td>SKU002</td>
                 <td>$45.00</td>
@@ -74,6 +85,8 @@
                 <td>$3,825.00</td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>3</td>
                 <td>USB Cable</td>
                 <td>SKU003</td>
                 <td>$15.00</td>
@@ -117,12 +130,13 @@
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
             data.push({
-                productName: cells[0].textContent,
-                sku: cells[1].textContent,
-                sellingPrice: cells[2].textContent,
-                costPrice: cells[3].textContent,
-                quantity: cells[4].textContent,
-                totalValue: cells[5].textContent
+                si: cells[1].textContent,
+                productName: cells[2].textContent,
+                sku: cells[3].textContent,
+                sellingPrice: cells[4].textContent,
+                costPrice: cells[5].textContent,
+                quantity: cells[6].textContent,
+                totalValue: cells[7].textContent
             });
         });
         return data;
@@ -131,6 +145,7 @@
     function downloadExcel() {
         const data = getTableData();
         const ws = XLSX.utils.json_to_sheet(data.map(item => ({
+            'SI': item.si,
             'Product Name': item.productName,
             'SKU': item.sku,
             'Selling Price': item.sellingPrice,
@@ -157,10 +172,10 @@
         doc.text(`Report Period: ${periodText}`, 14, 28);
         
         const data = getTableData();
-        const tableData = data.map(item => [item.productName, item.sku, item.sellingPrice, item.costPrice, item.quantity, item.totalValue]);
+        const tableData = data.map(item => [item.si, item.productName, item.sku, item.sellingPrice, item.costPrice, item.quantity, item.totalValue]);
         
         doc.autoTable({
-            head: [['Product Name', 'SKU', 'Selling Price', 'Cost Price', 'Quantity', 'Total Value']],
+            head: [['SI', 'Product Name', 'SKU', 'Selling Price', 'Cost Price', 'Quantity', 'Total Value']],
             body: tableData,
             startY: 35
         });
@@ -168,4 +183,9 @@
         const fileName = days === 'custom' ? 'inventory_report_custom.pdf' : `inventory_report_${days}days.pdf`;
         doc.save(fileName);
     }
+
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
 </script>

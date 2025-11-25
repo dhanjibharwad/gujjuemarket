@@ -953,10 +953,10 @@
                     <label>Variation SKU</label>
                     <input type="text" name="variations[${variationCount}][variationSku]" placeholder="Unique variation SKU" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label>Upload Images</label>
                     <input type="file" id="variationImages-${variationCount}" name="variations[${variationCount}][images]" accept="image/*" multiple style="padding: 8px;" onchange="handleVariationImages(${variationCount}, this)">
-                    <div id="variationPreview-${variationCount}" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"></div>
+                    <div id="variationPreview-${variationCount}" style="margin-top:10px;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:10px;width:100%"></div>
                 </div>
             `;
             container.appendChild(variationRow);

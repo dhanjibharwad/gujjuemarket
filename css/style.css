@@ -819,7 +819,7 @@ ol {
 -----------------------*/
 
 .hero-items .single-hero-items {
-	height: 525px;
+	height: 300px;
 	padding-top: 210px;
 }
 
@@ -976,16 +976,16 @@ ol {
 .category-item {
 	text-align: center;
 	margin-bottom: 30px;
-	border: 1px solid #ebebeb;
+	/* border: 1px solid #ebebeb; */
 	padding: 20px 15px;
 	border-radius: 5px;
 	transition: all 0.3s;
 }
 
 .category-item:hover {
-	border-color: #F4631E;
+	/* border-color: #F4631E; */
 	transform: translateY(-5px);
-	box-shadow: 0 5px 15px rgba(244, 99, 30, 0.2);
+	/* box-shadow: 0 5px 15px rgba(244, 99, 30, 0.2); */
 }
 
 .category-item .ci-pic {

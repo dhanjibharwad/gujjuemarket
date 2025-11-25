@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart Style Category Navigation</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Flipkart Category Navigation Styles */
+        .flipkart-category-nav {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .category-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .category-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-item:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover .category-icon {
+            transform: scale(1.05);
+        }
+
+        .category-icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #212121;
+            text-align: center;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+
+
+        /* Special styling for specific categories */
+        .category-item.new::after {
+            content: 'NEW';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 8px;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .category-container {
+                justify-content: flex-start;
+                padding: 0 15px;
+            }
+            
+            .category-item {
+                min-width: 100px;
+                padding: 6px 8px;
+            }
+            
+            .category-icon {
+                width: 56px;
+                height: 56px;
+            }
+            
+            .category-icon img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .category-name {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flipkart-category-nav {
+                padding: 8px 0;
+            }
+            
+            .category-item {
+                min-width: 80px;
+                padding: 4px 6px;
+            }
+            
+            .category-icon {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .category-icon img {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .category-name {
+                font-size: 12px;
+            }
+            
+
+        }
+
+        @media (max-width: 480px) {
+            .category-item {
+                min-width: 70px;
+                padding: 4px;
+            }
+            
+            .category-icon {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 4px;
+            }
+            
+            .category-icon img {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .category-name {
+                font-size: 11px;
+            }
+            
+
+        }
+
+        /* Scroll indicators for mobile */
+        .category-nav-wrapper {
+            position: relative;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scroll-indicator:hover {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .scroll-left {
+            left: 10px;
+        }
+
+        .scroll-right {
+            right: 10px;
+        }
+
+        @media (min-width: 769px) {
+            .scroll-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <div class="flipkart-category-nav">
+        <div class="container-fluid">
+            <div class="category-nav-wrapper">
+                <div class="scroll-indicator scroll-left" onclick="scrollCategories('left')">
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+                
+                <div class="category-container" id="categoryContainer">
+                    <!-- Minutes -->
+                    <a href="#" class="category-item new">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2021/01/20/13/56/gift-5934316_1280.png" alt="Minutes">
+                        </div>
+                        <div class="category-name">Todays Deal</div>
+                    </a>
+
+                    <!-- Mobiles & Tablets -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2013/07/12/18/39/smartphone-153650_640.png" alt="Mobiles">
+                        </div>
+                        <div class="category-name">Mobiles & Tablets</div>
+                    </a>
+
+                    <!-- Fashion -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2017/09/06/22/49/man-2723392_640.png" alt="Fashion">
+                        </div>
+                        <div class="category-name">Men</div>
+                    </a>
+
+                     <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2012/04/24/18/03/dress-40706_640.png" alt="Fashion">
+                        </div>
+                        <div class="category-name">Women</div>
+                    </a>
+
+                    <!-- Kids -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2022/03/25/13/32/child-7091091_640.png" alt="Grocery">
+                        </div>
+                        <div class="category-name">Kids</div>
+                    </a>
+
+                    <!-- Electronics -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2023/03/29/03/59/computer-7884572_640.png" alt="Electronics">
+                        </div>
+                        <div class="category-name">Electronics</div>
+                    </a>
+
+                    <!-- Home & Furniture -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2013/07/13/13/14/chair-160606_640.png" alt="Home">
+                        </div>
+                        <div class="category-name">Home & Furniture</div>
+                    </a>
+
+                    <!-- TVs & Appliances -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2024/07/12/17/35/flat-screen-8890791_640.png" alt="TVs">
+                        </div>
+                        <div class="category-name">TVs & Appliances</div>
+                    </a>
+
+                     <!-- Beauty, Food -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2021/04/27/01/51/bear-6210295_640.png" alt="Beauty">
+                        </div>
+                        <div class="category-name">Gifts & Toys</div>
+                    </a>
+
+                    <!-- Laptop -->
+                    <a href="#" class="category-item">
+                        <div class="category-icon">
+                            <img src="https://cdn.pixabay.com/photo/2013/07/12/19/05/notebook-154358_640.png" alt="Flights">
+                        </div>
+                        <div class="category-name">Laptops</div>
+                    </a>
+
+                   
+
+                    
+                </div>
+                
+                <div class="scroll-indicator scroll-right" onclick="scrollCategories('right')">
+                    <i class="fa fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        // Horizontal scroll functionality for mobile
+        function scrollCategories(direction) {
+            const container = document.getElementById('categoryContainer');
+            const scrollAmount = 200;
+            
+            if (direction === 'left') {
+                container.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                container.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Show/hide scroll indicators based on scroll position
+        function updateScrollIndicators() {
+            const container = document.getElementById('categoryContainer');
+            const leftIndicator = document.querySelector('.scroll-left');
+            const rightIndicator = document.querySelector('.scroll-right');
+            
+            if (container.scrollLeft <= 0) {
+                leftIndicator.style.opacity = '0.5';
+            } else {
+                leftIndicator.style.opacity = '1';
+            }
+            
+            if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+                rightIndicator.style.opacity = '0.5';
+            } else {
+                rightIndicator.style.opacity = '1';
+            }
+        }
+
+        // Initialize scroll indicators
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('categoryContainer');
+            container.addEventListener('scroll', updateScrollIndicators);
+            updateScrollIndicators();
+        });
+
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let scrollLeft = 0;
+
+        document.getElementById('categoryContainer').addEventListener('touchstart', function(e) {
+            startX = e.touches[0].pageX - this.offsetLeft;
+            scrollLeft = this.scrollLeft;
+        });
+
+        document.getElementById('categoryContainer').addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            const x = e.touches[0].pageX - this.offsetLeft;
+            const walk = (x - startX) * 2;
+            this.scrollLeft = scrollLeft - walk;
+        });
+    </script>
+</body>
+</html>

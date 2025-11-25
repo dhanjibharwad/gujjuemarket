@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Deals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f3f6;
+        }
+        
+        .top-deals-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 20px auto;
+            gap: 20px;
+            padding: 0 20px;
+        }
+        
+        .deals-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            flex: 1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .deals-header {
+            font-size: 20px;
+            font-weight: bold;
+            color: #212121;
+            margin-bottom: 20px;
+        }
+        
+        .deals-grid {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+        }
+        
+        .deal-card {
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        .deal-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .deal-title {
+            font-size: 14px;
+            color: #212121;
+            margin-bottom: 5px;
+        }
+        
+        .deal-price {
+            font-size: 14px;
+            font-weight: bold;
+            /* color: #388e3c; */
+            color:#F4631E;
+        }
+        
+        .shop-now {
+            color: #2874f0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .refresh-btn {
+            background: #374151;
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .refresh-btn:before {
+            content: "↻";
+            font-size: 16px;
+        }
+   
+        
+        .flipkart-logo {
+            background: white;
+            color: #2874f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .lowest-fare {
+            background: #ffd700;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 10px;
+        }
+        .nav-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #f0f0f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .nav-arrow:hover {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-deals-container">
+        <div class="deals-section">
+            <h2 class="deals-header">Best Deals</h2>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <img src="https://cdn.pixabay.com/photo/2013/07/12/13/28/pocket-watch-147107_640.png" alt="Projector" class="deal-image">
+                    <div class="deal-title">StopWatch</div>
+                    <div class="deal-price">From ₹6990</div>
+                </div>
+                
+                <div class="deal-card">
+                    <img src="https://cdn.pixabay.com/photo/2013/07/13/11/49/computer-158743_1280.png" alt="Mobile" class="deal-image">
+                    <div class="deal-title">Best Selling PC S...</div>
+                    <div class="deal-price">From ₹4999</div>
+                </div>
+                
+                <div class="deal-card">
+                    <img src="https://cdn.pixabay.com/photo/2012/04/13/21/32/rocking-horse-33719_1280.png" alt="Monitor" class="deal-image">
+                    <div class="deal-title">Toys</div>
+                    <div class="deal-price">From ₹699</div>
+                </div>
+                
+                <div class="deal-card">
+                    <img src="https://cdn.pixabay.com/photo/2013/07/13/10/08/shirt-156638_640.png" alt="Monitor" class="deal-image">
+                    <div class="deal-title">T Shirt</div>
+                    <div class="deal-price">From ₹200</div>
+                </div>
+                
+                <div class="deal-card">
+                    <img src="https://cdn.pixabay.com/photo/2014/04/03/10/10/shoes-310006_640.png" alt="Camera" class="deal-image">
+                    <div class="deal-title">Top Shoes...</div>
+                    <!-- <div class="shop-now">Shop Now!</div> -->
+                     <div class="deal-price">From ₹699</div>
+                </div>
+                
+                <div class="deal-card">
+                    <img src="https://cdn.pixabay.com/photo/2012/04/13/17/00/camera-32871_640.png" alt="Smartwatch" class="deal-image">
+                    <div class="deal-title">Cameras...</div>
+                    <div class="deal-price">From ₹1,999</div>
+                </div>
+
+                 <div class="deal-card">
+                    <img src="https://cdn.pixabay.com/photo/2022/01/21/10/17/anarkali-kurta-6954377_640.jpg" alt="Smartwatch" class="deal-image">
+                    <div class="deal-title">Cameras...</div>
+                    <div class="deal-price">From ₹1,999</div>
+                </div>
+
+
+                
+                
+                <button class="nav-arrow">›</button>
+            </div>
+            
+            <button class="refresh-btn">Explore More</button>
+        </div>
+        
+    </div>
+</body>
+</html>

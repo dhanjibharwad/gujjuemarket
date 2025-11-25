@@ -7,7 +7,8 @@
     th { background: #fafafa; font-weight: 600; color: #86868b; font-size: 12px; text-transform: uppercase; }
     tr:hover { background: #fafafa; }
     .product-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-    td:nth-child(5), td:nth-child(6) { text-align: center; }
+    td:nth-child(7), td:nth-child(8) { text-align: center; }
+    .checkbox { width: 16px; height: 16px; cursor: pointer; }
     .status-active { color: #2e7d32; font-weight: 600; }
     .status-inactive { color: #c62828; font-weight: 600; }
     .btn-edit { padding: 6px 12px; background: #FF6B35; color: white; border: none; border-radius: 6px; cursor: pointer; margin-left: 15px; margin-right: 5px; font-size: 13px; }
@@ -20,6 +21,8 @@
     <table>
         <thead>
             <tr>
+                <th><input type="checkbox" class="checkbox" id="selectAll"></th>
+                <th>SI</th>
                 <th>Create Date</th>
                 <th>Product Image</th>
                 <th>Product Title</th>
@@ -31,6 +34,8 @@
         </thead>
         <tbody>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>1</td>
                 <td>2024-01-15</td>
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Wireless Mouse</td>
@@ -50,6 +55,8 @@
                 <td><span class="status-active">Active</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>2</td>
                 <td>2024-01-14</td>
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Laptop Stand</td>
@@ -69,6 +76,8 @@
                 <td><span class="status-active">Active</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>3</td>
                 <td>2024-01-13</td>
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Mechanical Keyboard</td>
@@ -88,6 +97,8 @@
                 <td><span class="status-inactive">Inactive</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>4</td>
                 <td>2024-01-12</td>
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Monitor 27 inch</td>
@@ -107,6 +118,8 @@
                 <td><span class="status-active">Active</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>5</td>
                 <td>2024-01-11</td>
                 <td><img src="https://via.placeholder.com/60" alt="Product" class="product-img"></td>
                 <td>Webcam HD</td>
@@ -163,4 +176,9 @@
         // Here you would typically make an API call to save the data
         console.log(`Updated ${type} for item ${id}: ${newValue}`);
     }
+    
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
 </script>

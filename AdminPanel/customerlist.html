@@ -6,7 +6,8 @@
     th, td { padding: 12px; text-align: left; border-bottom: 1px solid #f5f5f7; }
     th { background: #fafafa; font-weight: 600; color: #86868b; font-size: 12px; text-transform: uppercase; }
     tr:hover { background: #fafafa; }
-    td:nth-child(5), td:nth-child(6), td:nth-child(7) { text-align: center; }
+    td:nth-child(7), td:nth-child(8), td:nth-child(9) { text-align: center; }
+    .checkbox { width: 16px; height: 16px; cursor: pointer; }
     .btn-send-mail { padding: 8px 16px; background: #007aff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.2s; }
     .btn-send-mail:hover { background: #0056cc; }
     .header-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
@@ -21,6 +22,8 @@
     <table>
         <thead>
             <tr>
+                <th><input type="checkbox" class="checkbox" id="selectAll"></th>
+                <th>SI</th>
                 <th>Customer Name</th>
                 <th>Contact No.</th>
                 <th>Email Id.</th>
@@ -32,6 +35,8 @@
         </thead>
         <tbody>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>1</td>
                 <td>John Smith</td>
                 <td>+1 (555) 123-4567</td>
                 <td>john.smith@email.com</td>
@@ -41,6 +46,8 @@
                 <td><button class="btn-send-mail" onclick="sendPromotionalMail('john.smith@email.com', 'John Smith')">Send Mail</button></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>2</td>
                 <td>Sarah Johnson</td>
                 <td>+1 (555) 234-5678</td>
                 <td>sarah.j@email.com</td>
@@ -50,6 +57,8 @@
                 <td><button class="btn-send-mail" onclick="sendPromotionalMail('sarah.j@email.com', 'Sarah Johnson')">Send Mail</button></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>3</td>
                 <td>Michael Brown</td>
                 <td>+1 (555) 345-6789</td>
                 <td>m.brown@email.com</td>
@@ -59,6 +68,8 @@
                 <td><button class="btn-send-mail" onclick="sendPromotionalMail('m.brown@email.com', 'Michael Brown')">Send Mail</button></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>4</td>
                 <td>Emily Davis</td>
                 <td>+1 (555) 456-7890</td>
                 <td>emily.d@email.com</td>
@@ -68,6 +79,8 @@
                 <td><button class="btn-send-mail" onclick="sendPromotionalMail('emily.d@email.com', 'Emily Davis')">Send Mail</button></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>5</td>
                 <td>David Wilson</td>
                 <td>+1 (555) 567-8901</td>
                 <td>d.wilson@email.com</td>
@@ -115,4 +128,9 @@
             // });
         }
     }
+    
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
 </script>

@@ -7,7 +7,8 @@
     th { background: #fafafa; font-weight: 600; color: #86868b; font-size: 12px; text-transform: uppercase; }
     tr:hover { background: #fafafa; }
     .defect-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-    td:nth-child(5) { text-align: center; }
+    td:nth-child(7) { text-align: center; }
+    .checkbox { width: 16px; height: 16px; cursor: pointer; }
     .status-pending { color: #f57c00; font-weight: 600; }
     .status-approved { color: #2e7d32; font-weight: 600; }
     .status-rejected { color: #c62828; font-weight: 600; }
@@ -17,6 +18,8 @@
     <table>
         <thead>
             <tr>
+                <th><input type="checkbox" class="checkbox" id="selectAll"></th>
+                <th>SI</th>
                 <th>Date</th>
                 <th>Order Id</th>
                 <th>Customer Name</th>
@@ -28,6 +31,8 @@
         </thead>
         <tbody>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>1</td>
                 <td>2024-01-15</td>
                 <td>ORD-10001</td>
                 <td>John Smith</td>
@@ -37,6 +42,8 @@
                 <td><span class="status-pending">Pending</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>2</td>
                 <td>2024-01-14</td>
                 <td>ORD-10002</td>
                 <td>Sarah Johnson</td>
@@ -46,6 +53,8 @@
                 <td><span class="status-approved">Approved</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>3</td>
                 <td>2024-01-13</td>
                 <td>ORD-10003</td>
                 <td>Michael Brown</td>
@@ -55,15 +64,19 @@
                 <td><span class="status-rejected">Rejected</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>4</td>
                 <td>2024-01-12</td>
                 <td>ORD-10004</td>
                 <td>Emily Davis</td>
                 <td>Monitor 27 inch</td>
                 <td>$350.00</td>
                 <td><img src="https://via.placeholder.com/60" alt="Defect" class="defect-img"></td>
-                <td><span class="status-approved">Approved</span>
+                <td><span class="status-approved">Approved</span></td>
             </tr>
             <tr>
+                <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                <td>5</td>
                 <td>2024-01-11</td>
                 <td>ORD-10005</td>
                 <td>David Wilson</td>
@@ -75,3 +88,10 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
+</script>

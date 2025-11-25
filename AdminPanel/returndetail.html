@@ -8,7 +8,8 @@
     th { background: #fafafa; font-weight: 600; color: #86868b; white-space: nowrap; font-size: 12px; text-transform: uppercase; }
     tr:hover { background: #fafafa; }
     .defect-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-    td:nth-child(5) { text-align: center; }
+    td:nth-child(7) { text-align: center; }
+    .checkbox { width: 16px; height: 16px; cursor: pointer; }
     .btn-accept { padding: 6px 12px; background: #2e7d32; color: white; border: none; border-radius: 6px; cursor: pointer; margin-right: 5px; font-size: 13px; }
     .btn-reject { padding: 6px 12px; background: #c62828; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
     .btn-accept:hover, .btn-reject:hover { opacity: 0.9; }
@@ -19,6 +20,8 @@
         <table>
             <thead>
                 <tr>
+                    <th><input type="checkbox" class="checkbox" id="selectAll"></th>
+                    <th>SI</th>
                     <th>Date</th>
                     <th>Order Id</th>
                     <th>Customer Name</th>
@@ -31,6 +34,8 @@
             </thead>
             <tbody>
                 <tr>
+                    <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                    <td>1</td>
                     <td>2024-01-15</td>
                     <td>ORD-10001</td>
                     <td>John Smith</td>
@@ -44,6 +49,8 @@
                     <td>Button not working properly</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                    <td>2</td>
                     <td>2024-01-14</td>
                     <td>ORD-10002</td>
                     <td>Sarah Johnson</td>
@@ -57,6 +64,8 @@
                     <td>Broken hinge on delivery</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                    <td>3</td>
                     <td>2024-01-13</td>
                     <td>ORD-10003</td>
                     <td>Michael Brown</td>
@@ -70,6 +79,8 @@
                     <td>Keys sticking, not responsive</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                    <td>4</td>
                     <td>2024-01-12</td>
                     <td>ORD-10004</td>
                     <td>Emily Davis</td>
@@ -83,6 +94,8 @@
                     <td>Dead pixels on screen</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" class="checkbox row-checkbox"></td>
+                    <td>5</td>
                     <td>2024-01-11</td>
                     <td>ORD-10005</td>
                     <td>David Wilson</td>
@@ -99,3 +112,10 @@
         </table>
     </div>
 </div>
+
+<script>
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
+</script>

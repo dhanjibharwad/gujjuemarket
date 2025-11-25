@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon List</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 12px; padding: 24px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .header h2 { color: #1d1d1f; font-size: 24px; display: flex; align-items: center; gap: 8px; }
+        .coupon-count { background: #e5e5ea; color: #86868b; padding: 4px 8px; border-radius: 12px; font-size: 14px; font-weight: 500; }
+        .search-bar { flex: 1; max-width: 300px; margin-left: auto; }
+        .search-bar input { width: 100%; padding: 10px 14px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 14px; background: white; outline: none; }
+        .search-bar input::placeholder { color: #86868b; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+        .btn-primary { background: #FF6B35; color: white; margin-left: 12px; }
+        .btn-primary:hover { background: #e55a2b; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 12px; color: #86868b; font-size: 12px; font-weight: 600; text-transform: uppercase; border-bottom: 1px solid #e5e5ea; background: #f9f9f9; }
+        td { padding: 16px 12px; border-bottom: 1px solid #f5f5f7; vertical-align: middle; font-size: 14px; }
+        .sr-number { font-weight: 600; color: #1d1d1f; }
+        .coupon-title { font-weight: 500; color: #1d1d1f; }
+        .coupon-code { font-family: 'Courier New', monospace; background: #f5f5f7; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .discount-value { font-weight: 600; color: #0d6832; }
+        .budget { color: #86868b; }
+        .date { color: #86868b; font-size: 13px; }
+        .toggle { position: relative; width: 44px; height: 24px; background: #d2d2d7; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        .toggle.active { background: #e55a2b; }
+        .toggle::after { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; background: white; top: 2px; left: 2px; transition: 0.3s; }
+        .toggle.active::after { left: 22px; }
+        .actions { display: flex; gap: 8px; }
+        .action-btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; transition: 0.2s; }
+        .edit-btn { background: #ff9500; color: white; }
+        .edit-btn:hover { background: #e6850e; }
+        .delete-btn { background: #ff3b30; color: white; }
+        .delete-btn:hover { background: #d70015; }
+        .type-badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; text-transform: uppercase; }
+        .type-store { background: #e3f2fd; color: #1976d2; }
+        .discount-type { color: #86868b; font-size: 13px; }
+        tr:hover { background: #fafafa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Coupon List</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Ex: Coupon Title Or Code">
+            </div>
+            <button class="btn btn-primary">+ Create New</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>SI</th>
+                    <th>COUPON TITLE</th>
+                    <th>COUPON CODE</th>
+                    <th>DISCOUNT TYPE</th>
+                    <th>DISCOUNT VALUE</th>
+                    <th>TOTAL BUDGET</th>
+                    <th>START DATE</th>
+                    <th>EXPIRE DATE</th>
+                    <th>STATUS</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody id="couponTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const coupons = [
+            {
+                id: 1,
+                title: "HOLI Offer",
+                code: "fest",
+                discountType: "Percent %",
+                discountValue: 25,
+                totalBudget: 300.00,
+                startDate: "01 Oct 2022",
+                expireDate: "05 Jul 2025",
+                status: true
+            },
+            {
+                id: 2,
+                title: "DIWALI Offer",
+                code: "10",
+                discountType: "Percent %",
+                discountValue: 30,
+                totalBudget: 0.00,
+                startDate: "23 Mar 2022",
+                expireDate: "05 Jul 2025",
+                status: true
+            }
+        ];
+
+        const tbody = document.getElementById('couponTable');
+        const couponCount = document.getElementById('couponCount');
+        
+        function renderCoupons(data = coupons) {
+            tbody.innerHTML = data.map(coupon => `
+                <tr>
+                    <td class="sr-number">${coupon.id}</td>
+                    <td class="coupon-title">${coupon.title}</td>
+                    <td><span class="coupon-code">${coupon.code}</span></td>
+                    <td class="discount-type">${coupon.discountType}</td>
+                    <td class="discount-value">${coupon.discountValue}</td>
+                    <td class="budget">$ ${coupon.totalBudget.toFixed(2)}</td>
+                    <td class="date">${coupon.startDate}</td>
+                    <td class="date">${coupon.expireDate}</td>
+                    <td>
+                        <div class="toggle ${coupon.status ? 'active' : ''}" onclick="toggleStatus(${coupon.id})"></div>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn edit-btn" onclick="editCoupon(${coupon.id})">Edit</button>
+                            <button class="action-btn delete-btn" onclick="deleteCoupon(${coupon.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            couponCount.textContent = data.length;
+        }
+
+        function toggleStatus(id) {
+            const coupon = coupons.find(c => c.id === id);
+            if (coupon) {
+                coupon.status = !coupon.status;
+                renderCoupons();
+            }
+        }
+
+        function editCoupon(id) {
+            alert(`Edit coupon with ID: ${id}`);
+        }
+
+        function deleteCoupon(id) {
+            if (confirm('Are you sure you want to delete this coupon?')) {
+                const index = coupons.findIndex(c => c.id === id);
+                if (index > -1) {
+                    coupons.splice(index, 1);
+                    renderCoupons();
+                }
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = coupons.filter(coupon => 
+                coupon.title.toLowerCase().includes(searchTerm) || 
+                coupon.code.toLowerCase().includes(searchTerm)
+            );
+            renderCoupons(filtered);
+        });
+
+        // Initial render
+        renderCoupons();
+    </script>
+</body>
+</html>

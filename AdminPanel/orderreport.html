@@ -210,6 +210,7 @@
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
                 data.push({
+                    si: cells[1].textContent,
                     orderId: cells[2].textContent,
                     purchaseDate: cells[3].textContent,
                     buyerName: cells[4].textContent,
@@ -234,22 +235,23 @@
         function downloadExcel() {
             const data = getTableData();
             const ws = XLSX.utils.json_to_sheet(data.map(item => ({
-                'order-id': item.orderId,
-                'purchase-date': item.purchaseDate,
-                'buyer-name': item.buyerName,
-                'buyer-email': item.buyerEmail,
-                'sku': item.sku,
-                'product-name': item.productName,
-                'quantity-purchased': item.quantityPurchased,
-                'item-price': item.itemPrice,
-                'item-discount': item.itemDiscount,
-                'item-tax': item.itemTax,
-                'ship-address-1': item.shipAddress1,
-                'ship-city': item.shipCity,
+                'SI': item.si,
+                'Order ID': item.orderId,
+                'Purchase Date': item.purchaseDate,
+                'Buyer Name': item.buyerName,
+                'Buyer Email': item.buyerEmail,
+                'SKU': item.sku,
+                'Product Name': item.productName,
+                'Quantity Purchased': item.quantityPurchased,
+                'Item Price': item.itemPrice,
+                'Item Discount': item.itemDiscount,
+                'Item Tax': item.itemTax,
+                'Ship Address 1': item.shipAddress1,
+                'Ship City': item.shipCity,
                 'State': item.state,
-                'Postal code': item.postalCode,
-                'payment-method': item.paymentMethod,
-                'payment received amount': item.paymentReceivedAmount
+                'Postal Code': item.postalCode,
+                'Payment Method': item.paymentMethod,
+                'Payment Received Amount': item.paymentReceivedAmount
             })));
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Order Report');
@@ -269,19 +271,19 @@
             
             const data = getTableData();
             const tableData = data.map(item => [
-                item.orderId, item.purchaseDate, item.buyerName, item.buyerEmail, 
+                item.si, item.orderId, item.purchaseDate, item.buyerName, item.buyerEmail, 
                 item.sku, item.productName, item.quantityPurchased, item.itemPrice, 
-                item.itemTax, item.shipAddress1, item.shipCity, item.state, 
+                item.itemDiscount, item.itemTax, item.shipAddress1, item.shipCity, item.state, 
                 item.postalCode, item.paymentMethod, item.paymentReceivedAmount
             ]);
             
             doc.autoTable({
-                head: [['Order ID', 'Purchase Date', 'Buyer Name', 'Buyer Email', 'SKU', 'Product Name', 
-                        'Qty', 'Price', 'Tax', 'Address', 'City', 'State', 'Postal', 'Payment', 'Amount']],
+                head: [['SI', 'Order ID', 'Purchase Date', 'Buyer Name', 'Buyer Email', 'SKU', 'Product Name', 
+                        'Qty', 'Price', 'Discount', 'Tax', 'Address', 'City', 'State', 'Postal', 'Payment', 'Amount']],
                 body: tableData,
                 startY: 28,
-                styles: { fontSize: 7 },
-                headStyles: { fontSize: 8 }
+                styles: { fontSize: 6 },
+                headStyles: { fontSize: 7 }
             });
             
             doc.save(`order_report_${days}days.pdf`);

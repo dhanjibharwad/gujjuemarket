@@ -99,7 +99,7 @@ a:hover,
 a:focus {
 	text-decoration: none;
 	outline: none;
-	color: #fff;
+	color: #252525;
 }
 
 ul,
@@ -444,7 +444,7 @@ ol {
 	position: relative;
 }
 
-.inner-header .advanced-search .category-btn:before {
+/* .inner-header .advanced-search .category-btn:before {
 	position: absolute;
 	right: 0;
 	top: 14px;
@@ -462,7 +462,7 @@ ol {
 	font-family: "ElegantIcons";
 	font-size: 16px;
 	color: #b2b2b2;
-}
+} */
 
 .inner-header .advanced-search .input-group {
 	flex: 1;

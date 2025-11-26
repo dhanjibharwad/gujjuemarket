@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,67 +13,94 @@
             --light-orange: #FFF4EF;
             --dark-gray: #5e5873;
             --medium-gray: #6e6b7b;
-            --light-gray: #b4b7bd;
+            --light-gray: #b4b7bd
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #f5f5f5;
-            padding: 20px;
+            padding: 20px
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: white;
+            background: #fff;
             padding: 30px;
-            border-radius: 8px;
+            border-radius: 8px
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 20px
         }
 
-        .form-group { display: flex; flex-direction: column; }
+        .form-group {
+            display: flex;
+            flex-direction: column
+        }
 
         label {
             font-size: 14px;
             font-weight: 500;
             margin-bottom: 8px;
-            color: var(--dark-gray);
+            color: var(--dark-gray)
         }
 
-        input, select {
+        input,
+        select,
+        textarea {
             padding: 10px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
-            outline: none;
+            outline: 0;
             color: var(--dark-gray);
+            font-family: inherit
         }
 
-        input:focus, select:focus { border-color: var(--primary-orange); }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary-orange)
+        }
 
         select {
             appearance: none;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%235e5873' d='M6 9L1 4h10z'/%3E%3C/svg%3E") no-repeat right 12px center;
-            padding-right: 36px;
+            padding-right: 36px
         }
 
-        h2 { font-size: 20px; margin-bottom: 20px; color: var(--dark-gray); }
+        textarea {
+            resize: vertical;
+            min-height: 100px
+        }
 
-        h1 { margin-bottom: 30px; color: #1d1d1f; font-size: 24px; }
+        h1 {
+            margin-bottom: 30px;
+            color: #1d1d1f;
+            font-size: 24px
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--dark-gray)
+        }
 
         .tabs {
             display: flex;
             gap: 20px;
             border-bottom: 2px solid #eee;
-            margin-bottom: 20px;
+            margin-bottom: 20px
         }
 
         .tab {
@@ -81,15 +109,18 @@
             color: var(--medium-gray);
             font-weight: 500;
             border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
+            margin-bottom: -2px
         }
 
-        .tab.active { color: var(--primary-orange); border-bottom-color: var(--primary-orange); }
+        .tab.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange)
+        }
 
         .editor {
             border: 1px solid #ddd;
             border-radius: 4px;
-            overflow: hidden;
+            overflow: hidden
         }
 
         .editor-toolbar {
@@ -97,31 +128,41 @@
             gap: 8px;
             padding: 10px;
             background: #f9f9f9;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #ddd
         }
 
-        .editor-toolbar button, .editor-toolbar select {
-            background: none;
-            border: none;
+        .editor-toolbar button,
+        .editor-toolbar select {
+            background: 0;
+            border: 0;
             padding: 6px 10px;
             cursor: pointer;
             border-radius: 3px;
-            color: var(--medium-gray);
+            color: var(--medium-gray)
         }
 
-        .editor-toolbar button:hover { background: #e9e9e9; }
+        .editor-toolbar button:hover {
+            background: #e9e9e9
+        }
 
         .editor-content {
             padding: 15px;
             min-height: 120px;
-            outline: none;
-            color: var(--light-gray);
+            outline: 0;
+            color: var(--light-gray)
         }
 
-        .editor-content:focus { color: var(--dark-gray); }
+        .editor-content:focus {
+            color: var(--dark-gray)
+        }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content {
+            display: none
+        }
+
+        .tab-content.active {
+            display: block
+        }
 
         .image-upload-area {
             border: 2px dashed #d0d0d0;
@@ -130,12 +171,12 @@
             text-align: center;
             background: #fafafa;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all .3s
         }
 
         .image-upload-area:hover {
             border-color: var(--primary-orange);
-            background: var(--light-orange);
+            background: var(--light-orange)
         }
 
         .upload-icon {
@@ -146,56 +187,62 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
+            margin-bottom: 16px
         }
 
-        .upload-icon i { font-size: 24px; color: var(--light-gray); }
+        .upload-icon i {
+            font-size: 24px;
+            color: var(--light-gray)
+        }
 
-        .browse-btn, .btn-save {
-            border: none;
+        .browse-btn,
+        .btn-save {
+            border: 0;
             padding: 10px 24px;
             border-radius: 6px;
             font-size: 14px;
             font-weight: 500;
-            cursor: pointer;
+            cursor: pointer
         }
 
         .browse-btn {
             background: var(--light-orange);
-            color: var(--primary-orange);
+            color: var(--primary-orange)
         }
 
-        .browse-btn:hover { background: #ffe8dc; }
+        .browse-btn:hover {
+            background: #ffe8dc
+        }
 
         .btn-save {
             background: var(--primary-orange);
-            color: white;
+            color: #fff;
             padding: 15px 40px;
             font-size: 16px;
             width: 100%;
-            margin-top: 30px;
+            margin-top: 30px
         }
 
-        .btn-save:hover { 
+        .btn-save:hover {
             background: var(--secondary-orange);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, .3)
         }
 
         .images-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 15px;
-            margin-top: 15px;
+            margin-top: 15px
         }
 
         .image-preview {
             position: relative;
-            background: white;
+            background: #fff;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             padding: 12px;
-            text-align: center;
+            text-align: center
         }
 
         .image-preview img {
@@ -203,75 +250,181 @@
             height: 120px;
             object-fit: cover;
             border-radius: 4px;
-            margin-bottom: 8px;
+            margin-bottom: 8px
         }
 
-        .image-info { font-size: 12px; color: var(--medium-gray); margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .image-size { font-size: 11px; color: var(--light-gray); margin-bottom: 8px; }
+        .image-info {
+            font-size: 12px;
+            color: var(--medium-gray);
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .image-size {
+            font-size: 11px;
+            color: var(--light-gray);
+            margin-bottom: 8px
+        }
 
         .remove-link {
             color: #dc3545;
             text-decoration: none;
             font-size: 12px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 500
         }
 
-        .remove-link:hover { color: #c82333; text-decoration: underline; }
+        .remove-link:hover {
+            color: #c82333;
+            text-decoration: underline
+        }
 
-        .custom-select { position: relative; }
-        .custom-select select { display: none; }
+        .custom-select {
+            position: relative
+        }
+
+        .custom-select select {
+            display: none
+        }
+
         .select-selected {
             padding: 10px 36px 10px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
             cursor: pointer;
-            background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%235e5873' d='M6 9L1 4h10z'/%3E%3C/svg%3E") no-repeat right 12px center;
-            color: var(--dark-gray);
+            background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%235e5873' d='M6 9L1 4h10z'/%3E%3C/svg%3E") no-repeat right 12px center;
+            color: var(--dark-gray)
         }
+
         .select-items {
             position: absolute;
-            background: white;
+            background: #fff;
             border: 1px solid #ddd;
             border-radius: 6px;
-            box-shadow: 0 4px 16px rgba(0,0,0,.12);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
             z-index: 99;
             width: 100%;
             max-height: 280px;
             overflow-y: auto;
             display: none;
-            margin-top: 4px;
+            margin-top: 4px
         }
-        .select-items.show { display: block; }
-        .select-search-wrapper { padding: 12px; border-bottom: 1px solid #e8e8e8; background: #fafafa; }
-        .select-search { padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; width: 100%; font-size: 14px; outline: none; }
-        .select-search:focus { border-color: #F7931E; box-shadow: 0 0 0 3px rgba(94,90,219,.1); }
-        .select-item { padding: 10px 12px; cursor: pointer; font-size: 14px; color: var(--dark-gray); }
-        .select-item:hover { background: #f5f5f5; }
 
-        textarea { padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; outline: none; color: var(--dark-gray); font-family: inherit; resize: vertical; min-height: 100px; }
-        textarea:focus { border-color: var(--primary-orange); }
+        .select-items.show {
+            display: block
+        }
 
-        .variation-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; padding: 15px; background: #f9f9f9; border-radius: 6px; margin-bottom: 15px; position: relative; }
-        .variation-row input { background: white; }
-        .btn-add-variation { background: var(--light-orange); color: var(--primary-orange); border: 1px dashed var(--primary-orange); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; width: 100%; margin-top: 10px; }
-        .btn-add-variation:hover { background: #ffe8dc; }
-        .btn-remove-variation { position: absolute; top: 10px; right: 10px; background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
-        .btn-remove-variation:hover { background: #c82333; }
-        .form-group.full-width { grid-column: 1 / -1; }
-        .section-title { font-size: 18px; font-weight: 600; color: var(--dark-gray); margin: 30px 0 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        .select-search-wrapper {
+            padding: 12px;
+            border-bottom: 1px solid #e8e8e8;
+            background: #fafafa
+        }
 
-        @media (max-width: 768px) {
-            .form-row { grid-template-columns: 1fr; }
-            .variation-row { grid-template-columns: 1fr; }
+        .select-search {
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 14px;
+            outline: 0
+        }
+
+        .select-search:focus {
+            border-color: #F7931E;
+            box-shadow: 0 0 0 3px rgba(94, 90, 219, .1)
+        }
+
+        .select-item {
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--dark-gray)
+        }
+
+        .select-item:hover {
+            background: #f5f5f5
+        }
+
+        .variation-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            position: relative
+        }
+
+        .variation-row input {
+            background: #fff
+        }
+
+        .btn-add-variation {
+            background: var(--light-orange);
+            color: var(--primary-orange);
+            border: 1px dashed var(--primary-orange);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .btn-add-variation:hover {
+            background: #ffe8dc
+        }
+
+        .btn-remove-variation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: #fff;
+            border: 0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px
+        }
+
+        .btn-remove-variation:hover {
+            background: #c82333
+        }
+
+        .form-group.full-width {
+            grid-column: 1/-1
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin: 30px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee
+        }
+
+        @media(max-width:768px) {
+            .form-row {
+                grid-template-columns: 1fr
+            }
+
+            .variation-row {
+                grid-template-columns: 1fr
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Add New Product</h1>
-        
         <form id="productForm">
             <div class="form-row">
                 <div class="form-group">
@@ -283,7 +436,6 @@
                     <input type="text" name="sku">
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label>Select Category</label>
@@ -323,7 +475,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label>Quantity</label>
@@ -334,7 +485,6 @@
                     <input type="text" name="colorName">
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label>MRP (Price)</label>
@@ -345,7 +495,6 @@
                     <input type="number" name="costPrice" step="0.01" min="0">
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label>Discount Price</label>
@@ -356,52 +505,53 @@
                     <input type="text" name="leadTime" placeholder="e.g., 3-5 days">
                 </div>
             </div>
-
             <div class="form-group">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <label style="margin: 0;">Product Image</label>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <label style="margin:0">Product Image</label>
                 </div>
-                <div style="display: flex; gap: 20px;">
-                    <div style="flex: 1;">
-                        <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--dark-gray);">Product Images</label>
+                <div style="display:flex;gap:20px">
+                    <div style="flex:1">
+                        <label style="display:block;margin-bottom:8px;font-size:14px;color:var(--dark-gray)">Product
+                            Images</label>
                         <div class="image-upload-area" id="uploadArea">
-                            <input type="file" name="productImages" accept="image/*" id="mainImage" multiple style="display: none;">
+                            <input type="file" name="productImages" accept="image/*" id="mainImage" multiple
+                                style="display:none">
                             <div class="upload-icon">
                                 <i class="fas fa-upload"></i>
                             </div>
-                            <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop images here</p>
-                            <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
+                            <p style="color:#555;font-size:16px;margin:16px 0 8px">Drag and drop images here</p>
+                            <p style="color:#999;font-size:14px;margin-bottom:16px">or</p>
                             <button type="button" class="browse-btn">Browse images</button>
                         </div>
                         <div class="images-grid" id="imagesGrid"></div>
                     </div>
-                    <div style="flex: 1;">
-                        <label style="display: block; margin-bottom: 8px; font-size: 14px; color: var(--dark-gray);">Item thumbnail</label>
+                    <div style="flex:1">
+                        <label style="display:block;margin-bottom:8px;font-size:14px;color:var(--dark-gray)">Item
+                            thumbnail</label>
                         <div class="image-upload-area" id="thumbnailArea">
-                            <input type="file" name="thumbnail" accept="image/*" id="thumbnailImage" multiple style="display: none;">
+                            <input type="file" name="thumbnail" accept="image/*" id="thumbnailImage" multiple
+                                style="display:none">
                             <div class="upload-icon">
                                 <i class="fas fa-cloud-upload-alt"></i>
                             </div>
-                            <p style="color: #555; font-size: 16px; margin: 16px 0 8px;">Drag and drop thumbnail here</p>
-                            <p style="color: #999; font-size: 14px; margin-bottom: 16px;">or</p>
+                            <p style="color:#555;font-size:16px;margin:16px 0 8px">Drag and drop thumbnail here</p>
+                            <p style="color:#999;font-size:14px;margin-bottom:16px">or</p>
                             <button type="button" class="browse-btn">Browse thumbnail</button>
                         </div>
                         <div class="images-grid" id="thumbnailGrid"></div>
                     </div>
                 </div>
             </div>
-
             <div class="tabs">
                 <div class="tab active" data-tab="short">Short Description</div>
                 <div class="tab" data-tab="long">Long Description</div>
                 <div class="tab" data-tab="features">Features</div>
                 <div class="tab" data-tab="included">What's Included</div>
             </div>
-
             <div class="tab-content active" id="short">
                 <div class="editor">
                     <div class="editor-toolbar">
-                        <select style="border: none; background: none; padding: 4px;">
+                        <select style="border:0;background:0;padding:4px">
                             <option>Normal</option>
                             <option>Heading 1</option>
                             <option>Heading 2</option>
@@ -417,11 +567,10 @@
                     <div class="editor-content" contenteditable="true">Enter short description here...</div>
                 </div>
             </div>
-
             <div class="tab-content" id="long">
                 <div class="editor">
                     <div class="editor-toolbar">
-                        <select style="border: none; background: none; padding: 4px;">
+                        <select style="border:0;background:0;padding:4px">
                             <option>Normal</option>
                             <option>Heading 1</option>
                             <option>Heading 2</option>
@@ -437,11 +586,10 @@
                     <div class="editor-content" contenteditable="true">Enter long description here...</div>
                 </div>
             </div>
-
             <div class="tab-content" id="features">
                 <div class="editor">
                     <div class="editor-toolbar">
-                        <select style="border: none; background: none; padding: 4px;">
+                        <select style="border:0;background:0;padding:4px">
                             <option>Normal</option>
                             <option>Heading 1</option>
                             <option>Heading 2</option>
@@ -457,11 +605,10 @@
                     <div class="editor-content" contenteditable="true">Enter product features here...</div>
                 </div>
             </div>
-
             <div class="tab-content" id="included">
                 <div class="editor">
                     <div class="editor-toolbar">
-                        <select style="border: none; background: none; padding: 4px;">
+                        <select style="border:0;background:0;padding:4px">
                             <option>Normal</option>
                             <option>Heading 1</option>
                             <option>Heading 2</option>
@@ -477,11 +624,10 @@
                     <div class="editor-content" contenteditable="true">Enter what's included here...</div>
                 </div>
             </div>
-
             <h2 class="section-title">Variation Options</h2>
             <div id="variationsContainer"></div>
-            <button type="button" class="btn-add-variation" onclick="addVariation()"><i class="fas fa-plus"></i> Add Variation</button>
-
+            <button type="button" class="btn-add-variation" onclick="addVariation()"><i class="fas fa-plus"></i> Add
+                Variation</button>
             <h2 class="section-title">Packing Details</h2>
             <div class="form-row">
                 <div class="form-group">
@@ -503,7 +649,6 @@
                     <input type="number" name="weight" step="0.01" min="0">
                 </div>
             </div>
-
             <h2 class="section-title">Tax Information</h2>
             <div class="form-row">
                 <div class="form-group">
@@ -522,23 +667,21 @@
                     </select>
                 </div>
             </div>
-
             <button type="submit" class="btn-save">Save Product</button>
         </form>
     </div>
-
     <script>
+        const uploadedFiles = [], thumbnailFiles = [], variationImages = {};
+        let variationCount = 0;
+
         // Custom Searchable Dropdown
         document.querySelectorAll('.custom-select').forEach(customSelect => {
-            const select = customSelect.querySelector('select');
-            const selected = document.createElement('div');
+            const select = customSelect.querySelector('select'), selected = document.createElement('div');
             selected.className = 'select-selected';
             selected.textContent = select.options[0].text;
             customSelect.appendChild(selected);
-
             const itemsDiv = document.createElement('div');
             itemsDiv.className = 'select-items';
-            
             const searchWrapper = document.createElement('div');
             searchWrapper.className = 'select-search-wrapper';
             const searchInput = document.createElement('input');
@@ -547,7 +690,6 @@
             searchInput.placeholder = 'Search...';
             searchWrapper.appendChild(searchInput);
             itemsDiv.appendChild(searchWrapper);
-
             for (let i = 1; i < select.options.length; i++) {
                 const item = document.createElement('div');
                 item.className = 'select-item';
@@ -556,25 +698,20 @@
                 itemsDiv.appendChild(item);
             }
             customSelect.appendChild(itemsDiv);
-
-            selected.addEventListener('click', (e) => {
+            selected.addEventListener('click', e => {
                 e.stopPropagation();
-                document.querySelectorAll('.select-items').forEach(el => {
-                    if (el !== itemsDiv) el.classList.remove('show');
-                });
+                document.querySelectorAll('.select-items').forEach(el => { if (el !== itemsDiv) el.classList.remove('show') });
                 itemsDiv.classList.toggle('show');
                 if (itemsDiv.classList.contains('show')) searchInput.focus();
             });
-
-            searchInput.addEventListener('input', function() {
+            searchInput.addEventListener('input', function () {
                 const filter = this.value.toLowerCase();
                 itemsDiv.querySelectorAll('.select-item').forEach(item => {
                     item.style.display = item.textContent.toLowerCase().includes(filter) ? 'block' : 'none';
                 });
             });
-
             itemsDiv.querySelectorAll('.select-item').forEach(item => {
-                item.addEventListener('click', function() {
+                item.addEventListener('click', function () {
                     select.value = this.dataset.value;
                     selected.textContent = this.textContent;
                     itemsDiv.classList.remove('show');
@@ -590,7 +727,7 @@
 
         // Tab switching
         document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
+            tab.addEventListener('click', function () {
                 document.querySelectorAll('.tab, .tab-content').forEach(el => el.classList.remove('active'));
                 this.classList.add('active');
                 document.getElementById(this.dataset.tab).classList.add('active');
@@ -599,18 +736,10 @@
 
         // Editor toolbar
         document.querySelectorAll('.editor-toolbar button').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 const icon = this.querySelector('i').classList;
-                const commands = {
-                    'fa-bold': 'bold',
-                    'fa-italic': 'italic',
-                    'fa-underline': 'underline',
-                    'fa-list-ul': 'insertUnorderedList',
-                    'fa-list-ol': 'insertOrderedList',
-                    'fa-remove-format': 'removeFormat'
-                };
-                
+                const commands = { 'fa-bold': 'bold', 'fa-italic': 'italic', 'fa-underline': 'underline', 'fa-list-ul': 'insertUnorderedList', 'fa-list-ol': 'insertOrderedList', 'fa-remove-format': 'removeFormat' };
                 for (let [cls, cmd] of Object.entries(commands)) {
                     if (icon.contains(cls)) {
                         if (cls === 'fa-link') {
@@ -625,257 +754,91 @@
             });
         });
 
-        // Multi-Image Upload - Optimized
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('mainImage');
-        const imagesGrid = document.getElementById('imagesGrid');
-        let uploadedFiles = [];
-
-        // Thumbnail Upload - Same functionality as main upload
-        const thumbnailArea = document.getElementById('thumbnailArea');
-        const thumbnailInput = document.getElementById('thumbnailImage');
-        const thumbnailGrid = document.getElementById('thumbnailGrid');
-        let thumbnailFiles = [];
-
-        // Thumbnail click handler
-        thumbnailArea.addEventListener('click', (e) => {
-            if (e.target.closest('.image-preview') || e.target.classList.contains('remove-link')) {
-                return;
-            }
-            if (e.target === thumbnailArea || 
-                e.target.closest('.upload-icon') || 
-                e.target.tagName === 'P' ||
-                e.target.classList.contains('browse-btn')) {
-                e.preventDefault();
-                thumbnailInput.click();
-            }
-        });
-
-        // Thumbnail drag and drop
-        thumbnailArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            thumbnailArea.style.borderColor = 'var(--primary-orange)';
-            thumbnailArea.style.background = 'var(--light-orange)';
-        });
-
-        thumbnailArea.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            thumbnailArea.style.borderColor = '#d0d0d0';
-            thumbnailArea.style.background = '#fafafa';
-        });
-
-        thumbnailArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            thumbnailArea.style.borderColor = '#d0d0d0';
-            thumbnailArea.style.background = '#fafafa';
-            
-            if (e.dataTransfer.files.length) {
-                handleThumbnailFiles(e.dataTransfer.files);
-            }
-        });
-
-        thumbnailInput.addEventListener('change', function(e) {
-            e.stopPropagation();
-            if (this.files.length) {
-                handleThumbnailFiles(this.files);
-            }
-            this.value = '';
-        });
-
-        function handleThumbnailFiles(files) {
-            const imageFiles = Array.from(files).filter(file => {
-                if (!file.type.startsWith('image/')) {
-                    console.warn(`Skipped non-image file: ${file.name}`);
-                    return false;
+        // Image upload handlers
+        function setupImageUpload(areaId, inputId, gridId, filesArray) {
+            const area = document.getElementById(areaId), input = document.getElementById(inputId), grid = document.getElementById(gridId);
+            area.addEventListener('click', e => {
+                if (e.target.closest('.image-preview') || e.target.classList.contains('remove-link')) return;
+                if (e.target === area || e.target.closest('.upload-icon') || e.target.tagName === 'P' || e.target.classList.contains('browse-btn')) {
+                    e.preventDefault();
+                    input.click();
                 }
-                if (file.size > 10 * 1024 * 1024) {
-                    console.warn(`Skipped large file (>10MB): ${file.name}`);
-                    return false;
-                }
-                return true;
             });
-
-            if (imageFiles.length === 0) return;
-
-            imageFiles.forEach(file => {
-                thumbnailFiles.push(file);
-                displayThumbnailImage(file);
+            ['dragover', 'dragleave', 'drop'].forEach(eventName => {
+                area.addEventListener(eventName, e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (eventName === 'dragover') {
+                        area.style.borderColor = 'var(--primary-orange)';
+                        area.style.background = 'var(--light-orange)';
+                    } else if (eventName === 'dragleave') {
+                        area.style.borderColor = '#d0d0d0';
+                        area.style.background = '#fafafa';
+                    } else if (eventName === 'drop') {
+                        area.style.borderColor = '#d0d0d0';
+                        area.style.background = '#fafafa';
+                        if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files, filesArray, grid);
+                    }
+                });
+            });
+            input.addEventListener('change', function (e) {
+                e.stopPropagation();
+                if (this.files.length) handleFiles(this.files, filesArray, grid);
+                this.value = '';
+            });
+            grid.addEventListener('click', e => {
+                if (e.target.classList.contains('remove-link')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    removeImage(index, filesArray, grid);
+                }
             });
         }
 
-        function displayThumbnailImage(file) {
-            const reader = new FileReader();
-            const index = thumbnailFiles.indexOf(file);
-            
-            reader.onload = (e) => {
+        function handleFiles(files, filesArray, grid) {
+            Array.from(files).filter(file => {
+                if (!file.type.startsWith('image/') || file.size > 10 * 1024 * 1024) return false;
+                return true;
+            }).forEach(file => {
+                filesArray.push(file);
+                displayImage(file, filesArray, grid);
+            });
+        }
+
+        function displayImage(file, filesArray, grid) {
+            const reader = new FileReader(), index = filesArray.indexOf(file);
+            reader.onload = e => {
                 const preview = document.createElement('div');
                 preview.className = 'image-preview';
                 preview.dataset.index = index;
-                preview.innerHTML = `
-                    <img src="${e.target.result}" alt="${file.name}">
-                    <div class="image-info" title="${file.name}">${file.name}</div>
-                    <div class="image-size">${(file.size / 1024).toFixed(0)} KB</div>
-                    <a class="remove-link" data-index="${index}">Remove</a>
-                `;
-                thumbnailGrid.appendChild(preview);
+                preview.innerHTML = `<img src="${e.target.result}" alt="${file.name}"><div class="image-info" title="${file.name}">${file.name}</div><div class="image-size">${(file.size / 1024).toFixed(0)} KB</div><a class="remove-link" data-index="${index}">Remove</a>`;
+                grid.appendChild(preview);
             };
-            
             reader.readAsDataURL(file);
         }
 
-        // Remove thumbnail handler
-        thumbnailGrid.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-link')) {
-                e.preventDefault();
-                e.stopPropagation();
-                const index = parseInt(e.target.dataset.index);
-                removeThumbnailImage(index);
-            }
-        });
-
-        function removeThumbnailImage(index) {
-            thumbnailFiles.splice(index, 1);
-            thumbnailGrid.innerHTML = '';
-            thumbnailFiles.forEach(file => displayThumbnailImage(file));
+        function removeImage(index, filesArray, grid) {
+            filesArray.splice(index, 1);
+            grid.innerHTML = '';
+            filesArray.forEach(file => displayImage(file, filesArray, grid));
         }
 
-        // Click handler - only trigger on specific targets
-        uploadArea.addEventListener('click', (e) => {
-            // Don't trigger if clicking on image previews or remove links
-            if (e.target.closest('.image-preview') || e.target.classList.contains('remove-link')) {
-                return;
-            }
-            // Trigger on upload area, icon, text, or browse button
-            if (e.target === uploadArea || 
-                e.target.closest('.upload-icon') || 
-                e.target.tagName === 'P' ||
-                e.target.classList.contains('browse-btn')) {
-                e.preventDefault();
-                fileInput.click();
-            }
-        });
-
-        // Drag and drop handlers
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            uploadArea.style.borderColor = 'var(--primary-orange)';
-            uploadArea.style.background = 'var(--light-orange)';
-        });
-
-        uploadArea.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            uploadArea.style.borderColor = '#d0d0d0';
-            uploadArea.style.background = '#fafafa';
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            uploadArea.style.borderColor = '#d0d0d0';
-            uploadArea.style.background = '#fafafa';
-            
-            if (e.dataTransfer.files.length) {
-                handleFiles(e.dataTransfer.files);
-            }
-        });
-
-        // File input change handler
-        fileInput.addEventListener('change', function(e) {
-            e.stopPropagation();
-            if (this.files.length) {
-                handleFiles(this.files);
-            }
-            // Reset to allow same files to be selected again
-            this.value = '';
-        });
-
-        // Handle and validate files
-        function handleFiles(files) {
-            const imageFiles = Array.from(files).filter(file => {
-                if (!file.type.startsWith('image/')) {
-                    console.warn(`Skipped non-image file: ${file.name}`);
-                    return false;
-                }
-                if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                    console.warn(`Skipped large file (>10MB): ${file.name}`);
-                    return false;
-                }
-                return true;
-            });
-
-            if (imageFiles.length === 0) return;
-
-            imageFiles.forEach(file => {
-                uploadedFiles.push(file);
-                displayImage(file);
-            });
-        }
-
-        // Display image preview
-        function displayImage(file) {
-            const reader = new FileReader();
-            const index = uploadedFiles.indexOf(file);
-            
-            reader.onload = (e) => {
-                const preview = document.createElement('div');
-                preview.className = 'image-preview';
-                preview.dataset.index = index;
-                preview.innerHTML = `
-                    <img src="${e.target.result}" alt="${file.name}">
-                    <div class="image-info" title="${file.name}">${file.name}</div>
-                    <div class="image-size">${(file.size / 1024).toFixed(0)} KB</div>
-                    <a class="remove-link" data-index="${index}">Remove</a>
-                `;
-                imagesGrid.appendChild(preview);
-            };
-            
-            reader.onerror = () => {
-                console.error(`Failed to read file: ${file.name}`);
-            };
-            
-            reader.readAsDataURL(file);
-        }
-
-        // Remove image handler using event delegation
-        imagesGrid.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-link')) {
-                e.preventDefault();
-                e.stopPropagation();
-                const index = parseInt(e.target.dataset.index);
-                removeImage(index);
-            }
-        });
-
-        function removeImage(index) {
-            uploadedFiles.splice(index, 1);
-            // Re-render all images with updated indices
-            imagesGrid.innerHTML = '';
-            uploadedFiles.forEach(file => displayImage(file));
-        }
+        setupImageUpload('uploadArea', 'mainImage', 'imagesGrid', uploadedFiles);
+        setupImageUpload('thumbnailArea', 'thumbnailImage', 'thumbnailGrid', thumbnailFiles);
 
         // Form submission
-        document.getElementById('productForm').addEventListener('submit', function(e) {
+        document.getElementById('productForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
-            
-            // Remove default file input and add uploaded files
             formData.delete('productImages');
             uploadedFiles.forEach((file, i) => formData.append(`productImages[${i}]`, file));
-            
-            // Add thumbnails to form data
             formData.delete('thumbnail');
             thumbnailFiles.forEach((file, i) => formData.append(`thumbnails[${i}]`, file));
-            
             const data = Object.fromEntries(formData.entries());
             ['short', 'long', 'features', 'included'].forEach(tab => {
                 data[`${tab}Description`] = document.querySelector(`#${tab} .editor-content`).innerHTML;
             });
-            
             console.log('Product Data:', data);
             console.log('Uploaded Images:', uploadedFiles.length, 'files');
             console.log('Thumbnails:', thumbnailFiles.length, 'files');
@@ -885,80 +848,21 @@
         // Editor placeholder effect
         document.querySelectorAll('.editor-content').forEach(editor => {
             const placeholder = editor.textContent;
-            editor.addEventListener('focus', function() {
+            editor.addEventListener('focus', function () {
                 if (this.textContent === placeholder) this.textContent = '';
             });
-            editor.addEventListener('blur', function() {
+            editor.addEventListener('blur', function () {
                 if (!this.textContent.trim()) this.textContent = placeholder;
             });
         });
 
         // Variation Management
-        let variationCount = 0;
-
         function addVariation() {
             variationCount++;
-            const container = document.getElementById('variationsContainer');
-            const variationRow = document.createElement('div');
+            const container = document.getElementById('variationsContainer'), variationRow = document.createElement('div');
             variationRow.className = 'variation-row';
             variationRow.id = `variation-${variationCount}`;
-            variationRow.innerHTML = `
-                <button type="button" class="btn-remove-variation" onclick="removeVariation(${variationCount})"><i class="fas fa-times"></i></button>
-                <div class="form-group">
-                    <label>Product Title</label>
-                    <input type="text" name="variations[${variationCount}][productTitle]" placeholder="Enter product title">
-                </div>
-                <div class="form-group">
-                    <label>Variation Title</label>
-                    <input type="text" name="variations[${variationCount}][variationTitle]" placeholder="e.g., Red Large, Blue Medium">
-                </div>
-                <div class="form-group">
-                    <label>Color</label>
-                    <select name="variations[${variationCount}][color]">
-                        <option value="">Select Color</option>
-                        <option value="red">Red</option>
-                        <option value="blue">Blue</option>
-                        <option value="green">Green</option>
-                        <option value="black">Black</option>
-                        <option value="white">White</option>
-                        <option value="yellow">Yellow</option>
-                        <option value="pink">Pink</option>
-                        <option value="purple">Purple</option>
-                        <option value="orange">Orange</option>
-                        <option value="brown">Brown</option>
-                        <option value="gray">Gray</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Size</label>
-                    <input type="text" name="variations[${variationCount}][size]" placeholder="e.g., S, M, L, XL, XXL">
-                </div>
-                <div class="form-group">
-                    <label>MRP</label>
-                    <input type="number" name="variations[${variationCount}][mrp]" step="0.01" min="0" placeholder="Maximum Retail Price">
-                </div>
-                <div class="form-group">
-                    <label>Cost Price (Optional)</label>
-                    <input type="number" name="variations[${variationCount}][costPrice]" step="0.01" min="0" placeholder="Cost price (optional)">
-                </div>
-                <div class="form-group">
-                    <label>Selling Price</label>
-                    <input type="number" name="variations[${variationCount}][sellingPrice]" step="0.01" min="0" placeholder="Selling price" required>
-                </div>
-                <div class="form-group">
-                    <label>Quantity</label>
-                    <input type="number" name="variations[${variationCount}][quantity]" min="0" placeholder="Available quantity" required>
-                </div>
-                <div class="form-group">
-                    <label>Variation SKU</label>
-                    <input type="text" name="variations[${variationCount}][variationSku]" placeholder="Unique variation SKU" required>
-                </div>
-                <div class="form-group full-width">
-                    <label>Upload Images</label>
-                    <input type="file" id="variationImages-${variationCount}" name="variations[${variationCount}][images]" accept="image/*" multiple style="padding: 8px;" onchange="handleVariationImages(${variationCount}, this)">
-                    <div id="variationPreview-${variationCount}" style="margin-top:10px;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:10px;width:100%"></div>
-                </div>
-            `;
+            variationRow.innerHTML = `<button type="button" class="btn-remove-variation" onclick="removeVariation(${variationCount})"><i class="fas fa-times"></i></button><div class="form-group"><label>Product Title</label><input type="text" name="variations[${variationCount}][productTitle]" placeholder="Enter product title"></div><div class="form-group"><label>Variation Title</label><input type="text" name="variations[${variationCount}][variationTitle]" placeholder="e.g., Red Large, Blue Medium"></div><div class="form-group"><label>Color</label><select name="variations[${variationCount}][color]"><option value="">Select Color</option><option value="red">Red</option><option value="blue">Blue</option><option value="green">Green</option><option value="black">Black</option><option value="white">White</option><option value="yellow">Yellow</option><option value="pink">Pink</option><option value="purple">Purple</option><option value="orange">Orange</option><option value="brown">Brown</option><option value="gray">Gray</option></select></div><div class="form-group"><label>Size</label><input type="text" name="variations[${variationCount}][size]" placeholder="e.g., S, M, L, XL, XXL"></div><div class="form-group"><label>MRP</label><input type="number" name="variations[${variationCount}][mrp]" step="0.01" min="0" placeholder="Maximum Retail Price"></div><div class="form-group"><label>Cost Price (Optional)</label><input type="number" name="variations[${variationCount}][costPrice]" step="0.01" min="0" placeholder="Cost price (optional)"></div><div class="form-group"><label>Selling Price</label><input type="number" name="variations[${variationCount}][sellingPrice]" step="0.01" min="0" placeholder="Selling price" required></div><div class="form-group"><label>Quantity</label><input type="number" name="variations[${variationCount}][quantity]" min="0" placeholder="Available quantity" required></div><div class="form-group"><label>Variation SKU</label><input type="text" name="variations[${variationCount}][variationSku]" placeholder="Unique variation SKU" required></div><div class="form-group full-width"><label>Upload Images</label><input type="file" id="variationImages-${variationCount}" name="variations[${variationCount}][images]" accept="image/*" multiple style="padding:8px" onchange="handleVariationImages(${variationCount}, this)"><div id="variationPreview-${variationCount}" style="margin-top:10px;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:10px;width:100%"></div></div>`;
             container.appendChild(variationRow);
         }
 
@@ -967,17 +871,9 @@
             if (element) element.remove();
         }
 
-        // Variation image handling
-        let variationImages = {};
-
         function handleVariationImages(variationId, input) {
             const files = Array.from(input.files);
-            const previewContainer = document.getElementById(`variationPreview-${variationId}`);
-            
-            if (!variationImages[variationId]) {
-                variationImages[variationId] = [];
-            }
-            
+            if (!variationImages[variationId]) variationImages[variationId] = [];
             files.forEach(file => {
                 if (file.type.startsWith('image/')) {
                     variationImages[variationId].push(file);
@@ -987,35 +883,23 @@
         }
 
         function displayVariationImage(variationId, file, index) {
-            const previewContainer = document.getElementById(`variationPreview-${variationId}`);
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
+            const previewContainer = document.getElementById(`variationPreview-${variationId}`), reader = new FileReader();
+            reader.onload = function (e) {
                 const imageDiv = document.createElement('div');
                 imageDiv.className = 'variation-image-item';
                 imageDiv.style.cssText = 'position:relative;width:80px;height:80px;border:1px solid #ddd;border-radius:8px;overflow:hidden;flex-shrink:0';
-                imageDiv.innerHTML = `
-                    <img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover;" alt="${file.name}">
-                    <button type="button" onclick="removeVariationImage(${variationId}, ${index})" 
-                            style="position: absolute; top: 2px; right: 2px; background: #ff4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                        ×
-                    </button>
-                `;
+                imageDiv.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover" alt="${file.name}"><button type="button" onclick="removeVariationImage(${variationId}, ${index})" style="position:absolute;top:2px;right:2px;background:#ff4444;color:#fff;border:0;border-radius:50%;width:20px;height:20px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>`;
                 imageDiv.dataset.index = index;
                 previewContainer.appendChild(imageDiv);
             };
-            
             reader.readAsDataURL(file);
         }
 
         function removeVariationImage(variationId, index) {
             if (variationImages[variationId]) {
                 variationImages[variationId].splice(index, 1);
-                
-                // Re-render images with updated indices
                 const previewContainer = document.getElementById(`variationPreview-${variationId}`);
                 previewContainer.innerHTML = '';
-                
                 variationImages[variationId].forEach((file, newIndex) => {
                     displayVariationImage(variationId, file, newIndex);
                 });
@@ -1023,4 +907,5 @@
         }
     </script>
 </body>
+
 </html>

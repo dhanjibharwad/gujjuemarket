@@ -5301,14 +5301,14 @@ ol {
     max-width: none;
 }
 /* Modern Price Section Styles */
-.price-container {
+/* .price-container {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border: 2px solid #e74c3c;
     border-radius: 12px;
     padding: 20px;
     margin: 20px 0;
     box-shadow: 0 4px 15px rgba(231, 76, 60, 0.1);
-}
+} */
 
 .price-header {
     display: flex;

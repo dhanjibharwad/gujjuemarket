@@ -5058,7 +5058,7 @@ ol {
 }
 
 .deal-badge {
-    background-color: #cc0c39;
+    background-color: #F4631E;
     color: white;
     padding: 4px 8px;
     font-size: 12px;
@@ -5299,4 +5299,116 @@ ol {
 .zoom-panel img {
     position: absolute;
     max-width: none;
+}
+/* Modern Price Section Styles */
+.price-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #e74c3c;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.1);
+}
+
+.price-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.deal-tag {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.discount-percent {
+    background: #27ae60;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+.price-display {
+    margin-bottom: 15px;
+}
+
+.current-price {
+    font-size: 36px;
+    font-weight: 700;
+    color: #e74c3c;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.price-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mrp-text {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.mrp-text strike {
+    color: #adb5bd;
+}
+
+.savings {
+    color: #27ae60;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.price-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+}
+
+.fulfillment-info, .stock-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #495057;
+}
+
+.fulfillment-info i {
+    color: #3498db;
+}
+
+.stock-status i {
+    color: #27ae60;
+}
+
+@media (max-width: 768px) {
+    .price-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .current-price {
+        font-size: 28px;
+    }
+    
+    .price-footer {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
 }

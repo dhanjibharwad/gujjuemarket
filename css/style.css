@@ -4611,13 +4611,13 @@ ol {
 	flex: 1;
 	border-radius: 12px;
 	overflow: hidden;
-	box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+	/* box-shadow: 0 8px 25px rgba(0,0,0,0.1); */
 }
 
 .product-details-pic-item-large {
 	width: 100%;
 	height: auto;
-	transition: transform 0.3s ease;
+	/* transition: transform 0.3s ease; */
 }
 
 .product-details-pic-item:hover .product-details-pic-item-large {
@@ -5343,9 +5343,9 @@ ol {
 }
 
 .current-price {
-    font-size: 36px;
+    font-size: 30px;
     font-weight: 700;
-    color: #e74c3c;
+    color: #000000;
     line-height: 1;
     margin-bottom: 8px;
 }
